@@ -36,7 +36,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $userTypes = UserType::select('id','role')->where('role','!=','Player')->get();
+        return view('users.create', compact('userTypes'));
     }
 
     /**
@@ -47,7 +48,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
