@@ -45,6 +45,8 @@
     </div>
 </body>
 
+<script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/min/backend.min.js') }}"></script>
+@yield('script')
 </html>
 

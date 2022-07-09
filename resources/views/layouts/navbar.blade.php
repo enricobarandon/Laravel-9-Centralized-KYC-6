@@ -85,6 +85,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/supervisor" class="nav-link">
+              <i class="nav-icon fa fa-info"></i>
+              <p>
+                Supervisor
+              </p>
+            </a>
+          </li>
           <li class="nav-item menu-is-opening menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-list"></i>

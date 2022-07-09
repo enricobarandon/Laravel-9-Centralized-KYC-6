@@ -16,7 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
     .sourceMaps()
     .js([
         //backend js
-        'public/js/jquery.min.js',
+        // 'public/js/jquery.min.js',
         // 'public/plugins/bootstrap/bootstrap.min.js',
         'public/plugins/bootstrap/js/bootstrap.bundle.min.js',
         'public/dist/js/adminlte.min.js',
