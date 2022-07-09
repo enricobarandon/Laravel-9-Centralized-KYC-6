@@ -25,4 +25,5 @@ mix.js('resources/js/app.js', 'public/js')
     .styles([
         'public/css/jquery-ui.css',
         'public/dist/css/adminlte.min.css',
+        'public/css/backend.css',
    ], 'public/css/min/backend.min.css');
