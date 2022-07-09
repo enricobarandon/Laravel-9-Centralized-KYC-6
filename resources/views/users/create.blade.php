@@ -24,19 +24,30 @@
                         </div>
                     @endif
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="post" action="{{ route('users.store') }}">
                         @csrf
-                        <input type="text" name="first-name" value="{{ old('first-name') }}">
-                        <input type="text" name="last-name" value="{{ old('last-name') }}">
-                        <select name="user-type-id">
+                        <input type="text" name="first_name" value="{{ old('first_name') }}" placeholder="first_name">
+                        <input type="text" name="last_name" value="{{ old('last_name') }}" placeholder="last_name">
+                        <input type="text" name="contact" value="{{ old('contact') }}" placeholder="contact">
+                        <select name="user_type_id">
                             <option selected disable>Select Role</option>
                             @foreach($userTypes as $type)
                                 <option value="{{ $type->id }}">{{ $type->role }}</option>
                             @endforeach
                         </select>
-                        <input type="text" name="username" value="{{ old('username') }}">
-                        <input type="password" name="password">
-                        <input type="password" name="confirm-password">
+                        <input type="text" name="username" value="{{ old('username') }}" placeholder="username">
+                        <input type="password" name="password" placeholder="password">
+                        <input type="password" name="password_confirmation" placeholder="password_confirmation">
 
                         <button type="submit">Submit</button>
                         

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserType;
+use App\Http\Requests\UserRequests;
+use App\Models\ActivityLog;
+use Auth;
 
 class UserController extends Controller
 {
@@ -46,9 +49,24 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequests $request)
     {
-        dd($request->all());
+        $create = User::create($request->validated());
+        $user = Auth::User();
+        if ($create) {
+            ActivityLog::create([
+                'type' => 'create-user',
+                'user_id' => $user->id, // guest middlware
+                'assets' => json_encode([
+                    'action' => 'created a user account',
+                    'name' => $request->first_name . ' ' . $request->last_name,
+                    'email' => $request->email,
+                    'role' => 'Player'
+                ])
+            ]);
+            return redirect('/users')->with('success','New user account created.');
+        }
+        return redirect('/users')->with('error','Something went wrong!');
     }
 
     /**
