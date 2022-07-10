@@ -24,43 +24,71 @@
                         </div>
                     @endif
 
-                    supervisor
-
                     <div>
-                        <input type="text" name="qrcode" id="qrcode" placeholder="QR CODE">
-                        
+                        <div class="col-md-6 m-auto">
+                            <input type="text" class="form-control" name="qrcode" id="qrcode" placeholder="QR CODE" autofocus>
+                        </div>                        
                         
                         <div class="row-element">
                             <div class="qrscanner" id="scanner">
                             </div>
                         </div>
-                        <!-- <div class="row-element">
-                            <div class="form-field form-field-memo">
-                            <div class="form-field-caption-panel">
-                                <div class="gwt-Label form-field-caption">
-                                Scanned text
-                                </div>
-                            </div>
-                            <div class="FlexPanel form-field-input-panel">
-                                <textarea id="scannedTextMemo" class="textInput form-memo form-field-input textInput-readonly" rows="3">
-                                </textarea>
-                            </div>
-                            </div>
-                            <div class="form-field form-field-memo">
-                            <div class="form-field-caption-panel">
-                                <div class="gwt-Label form-field-caption">
-                                Scanned text history
-                                </div>
-                            </div>
-                            </div>
+                        <!-- <div id="playerInfo">
+                            <span id="append"></span>
                         </div> -->
 
-                        <div id="playerInfo">
-                            <span id="append"></span>
+
+                        <div class="row justify-content-center align-items-center h-100 css-hide" id="playerInfo">
+                            <div class="col col-12">
+                                <div class="card mb-3" style="border-radius: .5rem;">
+                                    <div class="row g-0">
+                                        <div class="col-md-4 gradient-custom text-center text-white profile-div">
+                                            <img src="/img/icons/avatar.png" 
+                                                alt="Avatar" class="img-fluid my-4 img-avatar" />
+                                            <h5 id="pFullName"></h5>
+                                            <p id="pUsername"></p>
+                                            <p id="pContact"></p>
+                                            <p id="pAddress"></p>
+                                            <!-- <i class="far fa-edit mb-5"></i> -->
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="card-body p-4">
+
+                                                <h6>Information</h6>
+
+                                                <hr class="mt-0 mb-4">
+
+                                                <div class="row pt-1">
+                                                    <div class="col-6 mb-3">
+                                                        <h6>Date of Birth</h6>
+                                                        <p class="text-muted" id="pDateBirth"></p>
+                                                    </div>
+                                                    <div class="col-6 mb-3">
+                                                        <h6>Place of Birth</h6>
+                                                        <p class="text-muted" id="pPlaceBirth"></p>
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-4">
+
+                                                <div class="row pt-1">
+                                                    <div class="col-6 mb-3">
+                                                        <h6>Source of Income</h6>
+                                                        <p class="text-muted" id="pIncome"></p>
+                                                    </div>
+                                                    <div class="col-6 mb-3">
+                                                        <h6>Occupation</h6>
+                                                        <p class="text-muted" id="pOccupation"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-
-
                         
                     </div>
 

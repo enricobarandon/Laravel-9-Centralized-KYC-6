@@ -242,10 +242,27 @@
     color: #fff;
     height: 40px;
 }
-#source_of_income {
+.selectCSS {
     padding: 9px 16px !important;
 }
-#source_of_income option {
+.selectCSS option {
     padding: 6px 16px !important;
     color: #171717;
+}
+.fileCSS {
+    padding: 3px 5px !important;
+}
+.view-password,
+.view-password1,
+.view-password2 {
+    width: 35px;
+    position: absolute;
+    right: 5px;
+    top: 40px;
+}
+.css-hide {
+    display: none;
+}
+.m-auto{
+    margin: auto;
 }

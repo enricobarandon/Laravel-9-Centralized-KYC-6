@@ -66,9 +66,11 @@ class RegisterController extends Controller
             'contact' =>        ['required', 'digits:11', 'unique:users'],
 
             'date_of_birth' =>  ['required'],
-            'place_of_birth' =>  ['required'],
-            'nationality' =>  ['required'],
-            'country' =>  ['required'],
+            'place_of_birth' => ['required'],
+            'nationality' =>    ['required'],
+            'country' =>        ['required'],
+            'id_picture' =>     ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg|max:2048'],
+            'selfie_with_id' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg|max:2048'],
         ]);
     }
 
@@ -95,24 +97,38 @@ class RegisterController extends Controller
             'updated_at' =>     Carbon::now()
         ]);
 
+        $id_picture = 'ID'.$userId.time().'.'.$data['id_picture']->extension();  
+        $selfie_with_id = 'SID'.$userId.time().'.'.$data['selfie_with_id']->extension();  
+        
+        if($userId) {
+            //ID picture
+            $data['id_picture']->move(public_path('img/id_picture'), $id_picture);
+            //selfie with id picture
+            $data['selfie_with_id']->move(public_path('/img/id_picture_selfie'), $selfie_with_id);
+        }
+
         return UserDetails::create([
             'user_id' =>            $userId,
-            'date_of_birth' =>      $data['date_of_birth'],
+            'date_of_birth' =>      date("Y-m-d",strtotime($data['date_of_birth'])),
             'place_of_birth' =>     $data['place_of_birth'],
             'nationality' =>        $data['nationality'],
             'country' =>            $data['country'],
             'present_address' =>    json_encode([
-                'house_number' =>       $data['house_number'],
-                'street' =>             $data['street'],
+                'house_number' =>   $data['house_number'],
+                'street' =>         $data['street'],
+                'barangay' =>       $data['barangay'],
+                'city' =>           $data['city'],
+                'zipcode' =>        $data['zipcode'],
             ]),
             'province' =>           $data['province'],
             'occupation' =>         $data['occupation'],
             'source_of_income' =>   $data['source_of_income'],
             'facebook' =>           $data['facebook'],
             'valid_id_type' =>      $data['valid_id_type'],
-            'id_picture' =>         $data['id_picture'],
-            'selfie_with_id' =>     $data['selfie_with_id'],
+            'id_picture' =>         $id_picture,
+            'selfie_with_id' =>     $selfie_with_id,
         ]);
+        
 
     }
 

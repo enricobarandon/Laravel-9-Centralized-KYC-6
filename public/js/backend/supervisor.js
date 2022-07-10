@@ -12,6 +12,9 @@ $('document').ready(function() {
         }, 1000 );
 
     });
+    
+    // $('#playerInfo').hide();
+
 });
 
 var delay = (function () {
@@ -35,24 +38,38 @@ const getUserInfo = async () => {
         let present_address = JSON.parse(playerDetails.present_address);
         let permanent_address = JSON.parse(playerDetails.permanent_address);
         console.log(permanent_address);
-        $('#append').append("<p> Full Name: "+ player.first_name + " " + player.middle_name + " " + player.last_name +"</p>")
-                    .append("<p> Username: "+ player.username +"</p>")
-                    .append("<p> Contact: "+ player.contact +"</p>")
-                    .append("<p> Is Active: "+ (player.is_active ? "Active" : "Deactivated") +"</p>")
-                    .append("<p> Account Status: "+ (player.status ? player.status.toUpperCase() : "") +"</p>")
-                    .append("<p> Country: "+ playerDetails.country +"</p>")
-                    .append("<p> Nationality: "+ playerDetails.nationality +"</p>")
-                    .append("<p> Date of Birth: "+ playerDetails.date_of_birth +"</p>")
-                    .append("<p> Place of Birth: "+ playerDetails.place_of_birth +"</p>")
-                    .append("<p> House Number: "+ present_address.house_number +"</p>")
-                    .append("<p> Street: "+ present_address.street +"</p>")
-                    ;
+        // $('#append').append("<p> Full Name: "+ player.first_name + " " + player.middle_name + " " + player.last_name +"</p>")
+        //             .append("<p> Username: "+ player.username +"</p>")
+        //             .append("<p> Contact: "+ player.contact +"</p>")
+        //             .append("<p> Is Active: "+ (player.is_active ? "Active" : "Deactivated") +"</p>")
+        //             .append("<p> Account Status: "+ (player.status ? player.status.toUpperCase() : "") +"</p>")
+        //             .append("<p> Country: "+ playerDetails.country +"</p>")
+        //             .append("<p> Nationality: "+ playerDetails.nationality +"</p>")
+        //             .append("<p> Date of Birth: "+ playerDetails.date_of_birth +"</p>")
+        //             .append("<p> Place of Birth: "+ playerDetails.place_of_birth +"</p>")
+        //             .append("<p> House Number: "+ present_address.house_number +"</p>")
+        //             .append("<p> Street: "+ present_address.street +"</p>")
+        //             ;
+        $('#playerInfo').show();
+        $('#pFullName').text(player.first_name + " " + player.middle_name + " " + player.last_name);
+        $('#pUsername').text("Username: " + player.username);
+        $('#pContact').text("Contact: " + player.contact);
+        $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.city);
+        $('#pDateBirth').text(my_date_format(playerDetails.date_of_birth));
+        $('#pPlaceBirth').text(playerDetails.place_of_birth);
+        $('#pIncome').text(playerDetails.source_of_income);
+        $('#pOccupation').text(playerDetails.occupation);
     } else {
-
+        alert("null");
     }
 }
 
-
+function my_date_format(input){
+    var d = new Date(Date.parse(input.replace(/-/g, "/")));
+    var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var date = month[d.getMonth()] + ". " + d.getDate()   + ", " + d.getFullYear();
+    return (date);  
+};
 
 // function onQRCodeScanned(scannedText)
 // {
