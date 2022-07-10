@@ -54,7 +54,7 @@ const getUserInfo = async () => {
         $('#pFullName').text(player.first_name + " " + player.middle_name + " " + player.last_name);
         $('#pUsername').text("Username: " + player.username);
         $('#pContact').text("Contact: " + player.contact);
-        $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.city);
+        $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.barangay + ", " + present_address.city + ", " + present_address.province);
         $('#pDateBirth').text(my_date_format(playerDetails.date_of_birth));
         $('#pPlaceBirth').text(playerDetails.place_of_birth);
         $('#pIncome').text(playerDetails.source_of_income);
