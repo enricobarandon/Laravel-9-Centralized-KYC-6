@@ -19,4 +19,4 @@ use App\Http\Controllers\Api\v1\UserController;
 //     return $request->user();
 // });
 
-Route::get('/users',[UserController::class, 'index']);
+Route::get('/users',[UserController::class, 'show']);

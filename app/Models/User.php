@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\UserType;
+use App\Models\UserDetails;
 
 class User extends Authenticatable
 {
@@ -69,5 +70,11 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    
+    public function user_details()
+    {
+        return $this->belongsTo(UserDetails::class,'id','user_id');
     }
 }

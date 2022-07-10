@@ -56,7 +56,7 @@
                         </div> -->
 
                         <div id="playerInfo">
-                            
+                            <span id="append"></span>
                         </div>
 
 
