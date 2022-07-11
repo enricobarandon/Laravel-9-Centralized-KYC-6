@@ -21,9 +21,17 @@
                     </div>
                 @endif
 
-                {{ __('You are logged in!') }}
                 <div class="text-center">
-                    {!! $img !!}
+                    @if(Auth::user()->user_type_id == 5)
+                        @if(Auth::user()->status == 'verified')
+                            {!! $img !!}
+                        @else
+                            <h5><strong><i class="fa fa-info-circle"></i> Your account is not yet verified</strong></h5>
+                            <h5>Please wait for your account to be verified!</h5>
+                        @endif
+                    @else
+                        {{ __('You are logged in!') }}
+                    @endif
                 </div>
             </div>
         </div>

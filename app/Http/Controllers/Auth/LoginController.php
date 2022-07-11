@@ -74,15 +74,15 @@ class LoginController extends Controller
                 ]);
             }
 
-            if (Auth::user()->status == 'pending') {
-                Auth::logout();
-                $request->session()->flush();
-                $request->session()->regenerate();
-                return back()
-                    ->withErrors([
-                        'error' => 'Your account is waiting for approval.',
-                ]);
-            }
+            // if (Auth::user()->status == 'pending') {
+            //     Auth::logout();
+            //     $request->session()->flush();
+            //     $request->session()->regenerate();
+            //     return back()
+            //         ->withErrors([
+            //             'error' => 'Your account is waiting for approval.',
+            //     ]);
+            // }
 
             return $this->sendLoginResponse($request);
         }

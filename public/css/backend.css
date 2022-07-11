@@ -103,3 +103,12 @@ strong.active {
     background: transparent;
     border-color: #ffffff;
 }
+.custom-active {
+    background: #dee2e638;
+    border-radius: 5px;
+}
+
+.custom-active i {
+    color: #007bff;
+    font-weight: 600;
+}

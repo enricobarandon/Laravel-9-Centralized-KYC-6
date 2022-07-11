@@ -1,4 +1,7 @@
 <!-- Navbar -->
+@php 
+  $users = Auth::user();
+@endphp
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -69,27 +72,14 @@
               </p>
             </a>
           </li>
+        @if($users->user_type_id != 5)
+
+          @if($users->user_type_id == 1)
           <li class="nav-item">
             <a href="/users" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-users"></i>
               <p>
                 Users
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/helpdesk" class="nav-link {{ (request()->is('helpdesk*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-user-circle"></i>
-              <p>
-                Players
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/supervisor" class="nav-link {{ (request()->is('supervisor*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-address-card"></i>
-              <p>
-                Supervisor
               </p>
             </a>
           </li>
@@ -101,32 +91,42 @@
               </p>
             </a>
           </li>
-          <!-- <li class="nav-item menu-is-opening menu-open">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-list"></i>
-              <p>List<i class="right fas fa-angle-left"></i></p>
+          @endif
+
+          @if(in_array($users->user_type_id, [1,2,3]))
+          <li class="nav-item {{ (request()->is('helpdesk*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
+            <a href="#" class="nav-link {{ (request()->is('helpdesk*')) ? 'active' : '' }}">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>Players Management<i class="right fas fa-angle-left"></i></p>
             </a>
-            <ul class="nav nav-treeview" style="display: block;">
+            <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>List 1</p>
+                <a href="/helpdesk" class="nav-link {{ (request()->is('helpdesk')) ? 'custom-active' : '' }}">
+                  <i class="far fa-user-circle nav-icon"></i>
+                  <p>Verified Players</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>List 2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>List 3</p>
+                <a href="/helpdesk/for-approval" class="nav-link {{ (request()->is('helpdesk/for-approval*')) ? 'custom-active' : '' }}">
+                <i class="far fa-user-circle  nav-icon"></i>
+                <p>For Approval</p>
                 </a>
               </li>
             </ul>
-          </li> -->
+          </li>
+          @endif
+
+          @if(in_array($users->user_type_id, [1,2,4]))
+          <li class="nav-item">
+            <a href="/supervisor" class="nav-link {{ (request()->is('supervisor*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-address-card"></i>
+              <p>
+                Supervisor
+              </p>
+            </a>
+          </li>
+          @endif
+        @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

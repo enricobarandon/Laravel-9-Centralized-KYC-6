@@ -21,6 +21,14 @@ $id_type = [
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Player Details</h3>
+                    @if($user->status == 'pending')
+                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                        @csrf
+                            <button type="button" class="btn btn-info btn-normal float-right submit-approval">
+                                <i class="fas fa-check"></i> Click to Approve
+                            </button>
+                        </form>
+                    @endif
                 </div>
 
                 <div class="card-body">
@@ -47,10 +55,14 @@ $id_type = [
                                     <div class="col-md-4 gradient-custom text-center text-white profile-div">
                                         <img src="/img/icons/avatar.png" alt="Avatar" class="img-fluid my-4 img-avatar" />
                                         <h5>{{ strtoupper($user->first_name . ' ' . $user->middle_name  . ' ' . $user->last_name) }}</h5>
-                                        <p>{{ $id_type[$userDetails->valid_id_type] }}</p>
-                                        
+                                        <p>{{ isset($userDetails->valid_id_type) ? $id_type[$userDetails->valid_id_type] : '--' }}</p>
+                                        @if(isset($userDetails->id_picture))
                                         <img src="/img/id_picture/{{ $userDetails->id_picture }}" alt="Avatar" class="img-responsive my-2 id-img img-thumbnail" />
+                                        @endif
+
+                                        @if(isset($userDetails->selfie_with_id))
                                         <img src="/img/id_picture_selfie/{{ $userDetails->selfie_with_id }}" alt="Avatar" class="img-responsive my-5 id-img img-thumbnail" />
+                                        @endif
                                     </div>
 
                                     <div class="col-md-8">
@@ -63,12 +75,12 @@ $id_type = [
                                             <div class="row pt-1">
                                                 <div class="col-6 mb-1">
                                                     <h6>Contact Number</h6>
-                                                    <p class="text-muted">{{ $user->username }}</p>
+                                                    <p class="text-muted">{{ isset($user->username) ? $user->username : '--' }}</p>
                                                 </div>
                                                 <div class="col-6 mb-1">
                                                     <h6>Status</h6>
                                                     <p class="text-muted">
-                                                        <strong class="{{ $user->status }}">{{ strtoupper($user->status) }}</strong>
+                                                        <strong class="{{ $user->status }}">{{ isset($user->status) ? strtoupper($user->status) : '--' }}</strong>
                                                         <!-- <a class="update-status pull-right"><i class="fa fa-edit"></i></a> -->
                                                     </p>
                                                 </div>
@@ -79,11 +91,11 @@ $id_type = [
                                             <div class="row pt-1">
                                                 <div class="col-6 mb-1">
                                                     <h6>Date of Birth</h6>
-                                                    <p class="text-muted">{{ date("M. d, Y",strtotime($userDetails->date_of_birth)) }}</p>
+                                                    <p class="text-muted">{{ isset($userDetails->date_of_birth) ? date("M. d, Y",strtotime($userDetails->date_of_birth)) : '--' }}</p>
                                                 </div>
                                                 <div class="col-6 mb-1">
                                                     <h6>Place of Birth</h6>
-                                                    <p class="text-muted">{{ $userDetails->place_of_birth }}</p>
+                                                    <p class="text-muted">{{ isset($userDetails->place_of_birth) ? $userDetails->place_of_birth : '--' }}</p>
                                                 </div>
                                             </div>
 
@@ -95,7 +107,7 @@ $id_type = [
                                                     <p class="text-muted">
                                                         @php
                                                         $presentAddress = '';
-                                                            if($userDetails->present_address){
+                                                            if(isset($userDetails->present_address)){
                                                                 $address = json_decode($userDetails->present_address,true);
 
                                                                 $presentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['zipcode'] . " " . $address['province'];
@@ -111,7 +123,7 @@ $id_type = [
                                                     <p class="text-muted">
                                                         @php
                                                         $permanentAddress = '';
-                                                            if($userDetails->permanent_address){
+                                                            if(isset($userDetails->permanent_address)){
                                                                 $address = json_decode($userDetails->permanent_address,true);
 
                                                                 $permanentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['zipcode'] . " " . $address['province'];
@@ -129,11 +141,11 @@ $id_type = [
                                             <div class="row pt-1">
                                                 <div class="col-6 mb-1">
                                                     <h6>Nationality</h6>
-                                                    <p class="text-muted">{{ $userDetails->nationality }}</p>
+                                                    <p class="text-muted">{{ isset($userDetails->nationality) ? $userDetails->nationality : '--' }}</p>
                                                 </div>
                                                 <div class="col-6 mb-1">
                                                     <h6>Country</h6>
-                                                    <p class="text-muted">{{ $userDetails->country }}</p>
+                                                    <p class="text-muted">{{ isset($userDetails->country) ? $userDetails->country : '--' }}</p>
                                                 </div>
                                             </div>
 
@@ -142,11 +154,11 @@ $id_type = [
                                             <div class="row pt-1">
                                                 <div class="col-6 mb-1">
                                                     <h6>Source of Income</h6>
-                                                    <p class="text-muted">{{ $userDetails->source_of_income }}</p>
+                                                    <p class="text-muted">{{ isset($userDetails->source_of_income) ? $userDetails->source_of_income : '--' }}</p>
                                                 </div>
                                                 <div class="col-6 mb-1">
                                                     <h6>Occupation</h6>
-                                                    <p class="text-muted">{{ $userDetails->occupation }}</p>
+                                                    <p class="text-muted">{{ isset($userDetails->occupation) ? $userDetails->occupation : '--' }}</p>
                                                 </div>
                                             </div>
 
@@ -155,11 +167,11 @@ $id_type = [
                                             <div class="row pt-1">
                                                 <div class="col-6 mb-1">
                                                     <h6>Contact</h6>
-                                                    <p class="text-muted">{{ $user->contact }}</p>
+                                                    <p class="text-muted">{{ isset($user->contact) ? $user->contact : '--' }}</p>
                                                 </div>
                                                 <div class="col-6 mb-1">
                                                     <h6>Facebook</h6>
-                                                    <p class="text-muted">{{ $userDetails->facebook }}</p>
+                                                    <p class="text-muted">{{ isset($userDetails->facebook) ? $userDetails->facebook : '--' }}</p>
                                                 </div>
                                             </div>
 
@@ -196,4 +208,24 @@ $id_type = [
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+$('document').ready(function() {
+    $('.submit-approval').on('click', function(){
+        swal({
+            title: "Approve Player",
+            text: "Are you sure you want to approve this player?",
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        }).then((willUpdate) => {
+            if (willUpdate) {
+                $(this).closest('form').submit();
+            }
+        });
+    })
+    });
+</script>
 @endsection
