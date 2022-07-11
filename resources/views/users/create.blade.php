@@ -59,6 +59,15 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="form-group ">
+                                <select class="form-control" name="group_code">
+                                    <option selected disable>Select Group Code</option>
+                                    @foreach($groups as $group)
+                                        <option value="{{ $group->code }}">{{ $group->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             
                             <div class="form-group ">
                                 <input type="text" class="form-control" name="contact" value="{{ old('contact') }}" placeholder="Contact Number">

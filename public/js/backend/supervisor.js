@@ -15,6 +15,10 @@ $('document').ready(function() {
     
     // $('#playerInfo').hide();
 
+    $('#btnApprove').on('click', () => {
+        approve();
+    })
+
 });
 
 var delay = (function () {
@@ -37,7 +41,7 @@ const getUserInfo = async () => {
         let playerDetails = player.user_details;
         let present_address = JSON.parse(playerDetails.present_address);
         let permanent_address = JSON.parse(playerDetails.permanent_address);
-        console.log(permanent_address);
+        // console.log(permanent_address);
         // $('#append').append("<p> Full Name: "+ player.first_name + " " + player.middle_name + " " + player.last_name +"</p>")
         //             .append("<p> Username: "+ player.username +"</p>")
         //             .append("<p> Contact: "+ player.contact +"</p>")
@@ -59,6 +63,8 @@ const getUserInfo = async () => {
         $('#pPlaceBirth').text(playerDetails.place_of_birth);
         $('#pIncome').text(playerDetails.source_of_income);
         $('#pOccupation').text(playerDetails.occupation);
+        $("#userId").val(player.id);
+        // $('#approval').append('<button class="btnApprove" data-id="'+ player.id +'" data.uuid="'+ player.uuid +'">Approve</button>');
     } else {
         alert("null");
     }
@@ -142,3 +148,15 @@ function my_date_format(input){
 //         jbScanner.appendTo(scannerParentElement);
 //     }        
 // }
+
+const approve = async () => {
+    let userId = $('#userId').val();
+    let uuid = $('#qrcode').val();
+    let response = await axios.post('/api/v1/users/approve', { params: { userId, uuid }});
+    if (response.data) {
+        $('#qrcode').val('');
+        alert('approved');
+    } else {
+        alert('something went wrong');
+    }
+}

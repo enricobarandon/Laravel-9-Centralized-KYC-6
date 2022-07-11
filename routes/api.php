@@ -18,5 +18,10 @@ use App\Http\Controllers\Api\v1\UserController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::get('/users',[UserController::class, 'show']);
+    Route::post('users/approve', [UserController::class, 'approve']);
+});
 
-Route::get('/users',[UserController::class, 'show']);
+
+Route::put('/ocbs', [\App\Http\Controllers\Api\v1\OcbsController::class, 'update'])->name('ocbs.update');

@@ -8,6 +8,7 @@ use App\Models\UserType;
 use App\Http\Requests\UserRequests;
 use App\Models\ActivityLog;
 use Auth;
+use App\Models\Group;
 
 class UserController extends Controller
 {
@@ -40,7 +41,8 @@ class UserController extends Controller
     public function create()
     {
         $userTypes = UserType::select('id','role')->where('role','!=','Player')->get();
-        return view('users.create', compact('userTypes'));
+        $groups = Group::select('code','name')->where('is_active',1)->whereNotNull('code')->get();
+        return view('users.create', compact('userTypes','groups'));
     }
 
     /**
@@ -51,6 +53,7 @@ class UserController extends Controller
      */
     public function store(UserRequests $request)
     {
+        // dd($request->validated());
         $create = User::create($request->validated());
         $user = Auth::User();
         if ($create) {

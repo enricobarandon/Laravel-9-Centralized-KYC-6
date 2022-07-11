@@ -29,7 +29,8 @@ class User extends Authenticatable
         'user_type_id',
         'is_active',
         'status',
-        'contact'
+        'contact',
+        'group_code'
     ];
 
     /**

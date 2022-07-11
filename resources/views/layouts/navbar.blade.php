@@ -93,6 +93,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/api-data" class="nav-link">
+              <i class="nav-icon fa fa-info"></i>
+              <p>
+                Api Data
+              </p>
+            </a>
+          </li>
           <li class="nav-item menu-is-opening menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-list"></i>

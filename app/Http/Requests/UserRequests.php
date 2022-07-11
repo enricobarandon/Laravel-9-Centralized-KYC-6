@@ -29,7 +29,8 @@ class UserRequests extends FormRequest
             'username' =>       ['required', 'string', 'max:255', 'unique:users'],
             'password' =>       ['required', 'string', 'min:8', 'confirmed'],
             'contact' =>        ['required', 'digits:11', 'unique:users'],
-            'user_type_id' =>   ['required']
+            'user_type_id' =>   ['required'],
+            'group_code' =>     ['required','string','max:8'] // required for Authenticated user store method
         ];
     }
 }

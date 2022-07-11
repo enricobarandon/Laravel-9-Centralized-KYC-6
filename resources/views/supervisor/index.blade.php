@@ -26,6 +26,7 @@
 
                     <div>
                         <div class="col-md-6 m-auto">
+                            <input type="hidden" id="userId">
                             <input type="text" class="form-control" name="qrcode" id="qrcode" placeholder="QR CODE" autofocus>
                         </div>                        
                         
@@ -88,6 +89,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div id="approval">
+                            <button id="btnApprove" data-id="" data-uuid="">Approve</button>
                         </div>
                         
                     </div>
