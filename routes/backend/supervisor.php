@@ -1,4 +1,7 @@
 <?php
 use App\Http\Controllers\SupervisorController;
 
-Route::get('/supervisor', [SupervisorController::class, 'index']);
+
+Route::middleware('role:Supervisor')->group(function(){
+    Route::get('/supervisor', [SupervisorController::class, 'index']);
+});
