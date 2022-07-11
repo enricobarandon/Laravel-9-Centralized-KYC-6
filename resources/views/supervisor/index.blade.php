@@ -28,7 +28,11 @@
                         <div class="col-md-6 m-auto">
                             <input type="hidden" id="userId">
                             <input type="text" class="form-control" name="qrcode" id="qrcode" placeholder="QR CODE" autofocus>
-                        </div>                        
+                        </div>   
+                        
+                        <div id="approval" class="text-center">
+                            <button id="btnApprove" class="btn btn-success" data-id="" data-uuid=""><i class="fa fa-check"></i> Approve</button>
+                        </div>                     
                         
                         <div class="row-element">
                             <div class="qrscanner" id="scanner">
@@ -89,10 +93,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div id="approval">
-                            <button id="btnApprove" data-id="" data-uuid="">Approve</button>
                         </div>
                         
                     </div>

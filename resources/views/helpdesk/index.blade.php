@@ -7,7 +7,7 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Help Desk Page</h3>
-                    <a href='#' class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Player</a>
+                    <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a>
                 </div>
 
                 <div class="card-body">
@@ -26,7 +26,7 @@
                     @endif
 
 
-                    <table class="table table-bordered table-striped global-table">
+                    <table class="table table-bordered table-striped global-table text-center">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -50,10 +50,14 @@
                                     <td>{{ $player->username }}</td>
                                     <td>{{ $player->role }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
-                                    <td>{{ $player->is_active ? 'Active' : 'Deactivated' }}</td>
-                                    <td>{{ $player->status }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href='{{ url("/helpdesk/user/$player->id") }}'>View Details</a>
+                                        <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
+                                            {{ $player->is_active ? 'Active' : 'Deactivated' }}
+                                        </strong>
+                                    </td>
+                                    <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" href='{{ url("/helpdesk/user/$player->id") }}'>Review Details</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserDetails;
 
 class HelpDeskController extends Controller
 {
@@ -23,6 +24,8 @@ class HelpDeskController extends Controller
 
     public function showPlayerDetails(User $user)
     {
-        return view('helpdesk.user-details', compact('user'));
+        $userDetails = UserDetails::where('user_id', $user->id)->first();
+
+        return view('helpdesk.user-details', compact('user','userDetails'));
     }
 }

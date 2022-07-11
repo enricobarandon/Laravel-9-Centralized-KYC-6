@@ -62,7 +62,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          
           <li class="nav-item">
-            <a href="/home" class="nav-link active">
+            <a href="/home" class="nav-link {{ (request()->is('home')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -70,7 +70,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/users" class="nav-link">
+            <a href="/users" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-users"></i>
               <p>
                 Users
@@ -78,30 +78,30 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/helpdesk" class="nav-link">
-              <i class="nav-icon fa fa-info"></i>
+            <a href="/helpdesk" class="nav-link {{ (request()->is('helpdesk*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-user-circle"></i>
               <p>
                 Players
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/supervisor" class="nav-link">
-              <i class="nav-icon fa fa-info"></i>
+            <a href="/supervisor" class="nav-link {{ (request()->is('supervisor*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-address-card"></i>
               <p>
                 Supervisor
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/api-data" class="nav-link">
+            <a href="/api-data" class="nav-link {{ (request()->is('api-data*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-info"></i>
               <p>
                 Api Data
               </p>
             </a>
           </li>
-          <li class="nav-item menu-is-opening menu-open">
+          <!-- <li class="nav-item menu-is-opening menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-list"></i>
               <p>List<i class="right fas fa-angle-left"></i></p>
@@ -126,7 +126,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

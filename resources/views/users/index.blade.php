@@ -7,7 +7,7 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Users Page</h3>
-                    <a href='{{ url("/users/create") }}' class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create User</a>
+                    <a href='{{ url("/users/create") }}' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create User</a>
                 </div>
 
                 <div class="card-body">
