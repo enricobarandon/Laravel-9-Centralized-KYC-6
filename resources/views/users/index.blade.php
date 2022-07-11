@@ -50,6 +50,20 @@
                                     <td>{{ $userTypes[$user->user_type_id] }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($user->created_at)) }}</td>
                                     <td>{{ $user->is_active ? 'Active' : 'Deactivated' }}</td>
+                                    <td>
+                                        <form action='{{ url("/users/is_active/$user->id") }}' method="POST">
+                                            @csrf
+                                                @if($user->is_active)
+                                                    <button type="button" class="btn btn-danger users-status deactivate">
+                                                        <i class="fas fa-times"></i> Deactivate
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-success users-status activate">
+                                                        <i class="fas fa-plus"></i> Activate
+                                                    </button>
+                                                @endif
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -60,4 +74,29 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $("document").ready(function(){
+        $('.users-status').on('click', function(){
+            if($(this).hasClass('activate') == true){
+                $text = 'activate';
+            }else{
+                $text = 'deactivate';
+            }
+            swal({
+                title: $text.toUpperCase() + " USER",
+                text: "Are you sure you want to " + $text + " this user?",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+            }).then((willUpdate) => {
+                if (willUpdate) {
+                    $(this).closest('form').submit();
+                }
+            });
+        })
+    });
+</script>
 @endsection

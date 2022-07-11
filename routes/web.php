@@ -27,7 +27,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     
-    Route::get('/api-data', [App\Http\Controllers\ApiDataController::class, 'index'])->name('home');
-    Route::post('/api-data/groups', [App\Http\Controllers\ApiDataController::class, 'getGroups'])->name('api.getGroups');
+    Route::middleware('role:Administrator')->group(function(){
+        Route::get('/api-data', [App\Http\Controllers\ApiDataController::class, 'index'])->name('home');
+        Route::post('/api-data/groups', [App\Http\Controllers\ApiDataController::class, 'getGroups'])->name('api.getGroups');
+    });
+    
 });
 

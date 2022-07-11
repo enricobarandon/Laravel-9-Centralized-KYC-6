@@ -9,6 +9,8 @@ use App\Http\Requests\UserRequests;
 use App\Models\ActivityLog;
 use Auth;
 use App\Models\Group;
+use Illuminate\Support\Facades\Hash;
+use DB;
 
 class UserController extends Controller
 {
@@ -53,8 +55,9 @@ class UserController extends Controller
      */
     public function store(UserRequests $request)
     {
-        // dd($request->validated());
-        $create = User::create($request->validated());
+        $form = $request->validated();
+        $form['password'] = Hash::make($form['password']);
+        $create = User::create($form);
         $user = Auth::User();
         if ($create) {
             ActivityLog::create([
@@ -115,5 +118,35 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function toggleIsActive(User $user)
+    {
+        $auth = auth()->user();
+        $userId = $user->id;
+        $update = User::where('id', $userId)->update(['is_active' => DB::raw('!is_active')]);
+        
+        
+        if ($update) {
+
+            if (!$user->is_active == 0) {
+                \Session::getHandler()->destroy($user->session_id);
+            }
+
+            ActivityLog::create([
+                'type' => 'change-user-status',
+                'user_id' => $auth->id,
+                'assets' => json_encode([
+                    'action' => 'Change user status',
+                    'email' => $user->email,
+                    'old status' => $user->is_active,
+                    'new status' => !$user->is_active
+                ])
+            ]);
+            return back()->with('success','User status updated');
+        }else {
+            return back()->with('error','Something went wrong');
+        }
     }
 }
