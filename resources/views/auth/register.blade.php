@@ -161,7 +161,11 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
+                                    <div class="col-sm-12">
+                                        <label>Present Address</label>
+                                    </div>
+
                                     <div class="form-group row">
                                         <div class="col-md-4">
                                             <label for="house_number" >House Number</label>
@@ -221,6 +225,87 @@
                                         <div class="col-md-4">
                                             <label for="province" >Province</label>
                                             <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required autocomplete="province">
+
+                                            @error('province')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <label>Permanent Address</label>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <input class="form-check-input" type="checkbox" value="" id="sameAddress">
+                                            <label class="form-check-label" for="sameAddress">
+                                                    SAME AS PRESENT ADDRESS
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <label for="p_house_number" >House Number</label>
+                                            <input id="p_house_number" type="text" class="form-control @error('house_number') is-invalid @enderror" name="p_house_number" value="{{ old('p_house_number') }}" required autocomplete="p_house_number">
+
+                                            @error('p_house_number')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="p_street" >Street</label>
+                                            <input id="p_street" type="text" class="form-control @error('p_street') is-invalid @enderror" name="p_street" value="{{ old('p_street') }}" required autocomplete="p_street">
+
+                                            @error('p_street')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="p_barangay" >Barangay</label>
+                                            <input id="p_barangay" type="text" class="form-control @error('p_barangay') is-invalid @enderror" name="p_barangay" value="{{ old('p_barangay') }}" required autocomplete="p_barangay">
+
+                                            @error('p_barangay')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <label for="p_city" >City</label>
+                                            <input id="p_city" type="text" class="form-control @error('p_city') is-invalid @enderror" name="p_city" value="{{ old('p_city') }}" required autocomplete="p_city">
+
+                                            @error('p_city')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="p_zipcode" >Zipcode</label>
+                                            <input id="p_zipcode" type="text" class="form-control @error('p_zipcode') is-invalid @enderror" name="p_zipcode" value="{{ old('p_zipcode') }}" required autocomplete="p_zipcode">
+
+                                            @error('p_zipcode')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="p_province" >Province</label>
+                                            <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required autocomplete="p_province">
 
                                             @error('province')
                                                 <span class="invalid-feedback" role="alert">
@@ -357,19 +442,19 @@ $("document").ready(function(){
     });
     $('#sameAddress').change(function() {
         if(this.checked) {
-            $('#phouseNumber').val($('#houseNumber').val());
-            $('#pstreet').val($('#street').val());
-            $('#pbarangay').val($('#barangay').val());
-            $('#pcity').val($('#city').val());
-            $('#pzipCode').val($('#zipCode').val());
-            $('#pprovince').val($('#province').val());
+            $('#p_house_number').val($('#house_number').val());
+            $('#p_street').val($('#street').val());
+            $('#p_barangay').val($('#barangay').val());
+            $('#p_city').val($('#city').val());
+            $('#p_zipcode').val($('#zipcode').val());
+            $('#p_province').val($('#province').val());
         }else{
-            $('#phouseNumber').val("");
-            $('#pstreet').val("");
-            $('#pbarangay').val("");
-            $('#pCity').val("");
-            $('#pzipCode').val("");
-            $('#pprovince').val("");
+            $('#p_house_number').val("");
+            $('#p_street').val("");
+            $('#p_barangay').val("");
+            $('#pCp_cityity').val("");
+            $('#p_zipcode').val("");
+            $('#p_province').val("");
         }
     });
     $('#select_source_of_income').on('change', function() {

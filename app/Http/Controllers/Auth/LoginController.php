@@ -59,7 +59,7 @@ class LoginController extends Controller
                 'user_id' => Auth::id(),
                 'assets' => json_encode([
                     'action' => 'User login',
-                    'email' => $user->email,
+                    'username' => $user->username,
                     'user_role' => UserType::getUserRole($user->user_type_id)->role
                 ])
             ]);

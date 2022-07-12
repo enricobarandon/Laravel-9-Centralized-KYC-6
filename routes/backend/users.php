@@ -6,4 +6,7 @@ use App\Http\Controllers\UserController;
 Route::middleware('role:Administrator')->group(function(){
     Route::resource('users',UserController::class);
     Route::post('users/is_active/{user}', [UserController::class, 'toggleIsActive'])->name('users.toggleIsActive');
+    Route::get('users/update/{id}/info', [UserController::class, 'updateUser'])->name('users.update');
+    Route::get('users/update/{id}/password', [UserController::class, 'updateUser'])->name('users.update');
+    Route::post('submitUser', [UserController::class, 'submitUser'])->name('users.update');
 });

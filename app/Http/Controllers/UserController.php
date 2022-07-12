@@ -12,6 +12,7 @@ use App\Models\Group;
 use Illuminate\Support\Facades\Hash;
 use DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -44,7 +45,7 @@ class UserController extends Controller
     public function create()
     {
         $userTypes = UserType::select('id','role')->where('role','!=','Player')->get();
-        $groups = Group::select('code','name')->where('is_active',1)->whereNotNull('code')->get();
+        $groups = Group::select('code','name')->where('code','!=','')->whereNotNull('code')->get();
         return view('users.create', compact('userTypes','groups'));
     }
 
@@ -68,7 +69,7 @@ class UserController extends Controller
                 'assets' => json_encode([
                     'action' => 'created a user account',
                     'name' => $request->first_name . ' ' . $request->last_name,
-                    'email' => $request->email,
+                    'username' => $request->username,
                     'role' => 'Player'
                 ])
             ]);
@@ -141,7 +142,7 @@ class UserController extends Controller
                 'user_id' => $auth->id,
                 'assets' => json_encode([
                     'action' => 'Change user status',
-                    'email' => $user->email,
+                    'username' => $user->username,
                     'old status' => $user->is_active,
                     'new status' => !$user->is_active
                 ])
@@ -149,6 +150,98 @@ class UserController extends Controller
             return back()->with('success','User status updated');
         }else {
             return back()->with('error','Something went wrong');
+        }
+    }
+
+    public function updateUser(Request $request){
+        $userTypes = UserType::get();
+        
+        $groups = Group::select('code','name')->where('code','!=','')->whereNotNull('code')->get();
+
+        $userId = $request->segment(3);
+
+        $operation =  $request->segment(4);
+
+        $usersInfo = User::select('id','first_name','last_name','user_type_id','contact','group_code')
+                    ->where('users.id', $userId)
+                    ->first();
+        return view('users.update', compact('usersInfo','userTypes','operation','groups'));
+    }
+
+    public function submitUser(User $user, Request $request){
+
+        $auth = auth()->user();
+        
+        $updateUsers = '';
+
+        $logs = '';
+
+        if($request->operation == 'info'){
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'contact' => 'required|unique:users,contact,'.$request->id,
+                'user_type_id' => 'required|numeric'
+            ]);
+            if ($validator->fails()) {
+                return redirect('/users/update/'.$request->id.'/info')
+                    ->withErrors($validator)
+                    ->withInput();
+            }else{
+                $updateUsers = User::where('users.id', $request->id)->update(
+                    array(
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'contact' => $request->contact,
+                        'user_type_id' => $request->user_type_id
+                    )
+                );
+                $logs = array(
+                    'action' => 'Update Users Details',
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'contact' => $request->contact,
+                    'username' => $user->username
+                );
+            }
+        }else{
+            $validator = Validator::make($request->all(), [
+                'cpassword' => 'required|min:8',
+                'ccpassword' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return redirect('/users/update/'.$request->id.'/password')
+                    ->withErrors($validator)
+                    ->withInput();
+            }else{
+                if($request->cpassword == $request->ccpassword){
+
+                    $newPassword = Hash::make($request->cpassword);
+
+                    $updateUsers = User::where('users.id', $request->id)->update(
+                        array(
+                            'password' => $newPassword
+                        )
+                    );
+                    $logs = array(
+                        'action' => 'Update password',
+                        'username' => $user->username
+                    );
+                }else{
+                    return redirect('/users/update/'.$request->id.'/password')
+                    ->withErrors('Password and Confirm password not match!');
+                }
+            }
+
+        }
+        
+        if($updateUsers){
+            ActivityLog::create([
+                'type' => 'update-user',
+                'user_id' => $auth->id,
+                'assets' => json_encode($logs)
+            ]);
+            return redirect('/users')->with('success','User successfully updated.');
         }
     }
 }

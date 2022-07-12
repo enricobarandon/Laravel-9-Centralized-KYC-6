@@ -137,6 +137,17 @@
             </a>
           </li>
           @endif
+          
+          @if($users->user_type_id == 1)
+          <li class="nav-item">
+            <a href="/activity-logs" class="nav-link {{ (request()->is('activity-logs*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Activity Logs
+              </p>
+            </a>
+          </li>
+          @endif
 
         @endif
         </ul>
