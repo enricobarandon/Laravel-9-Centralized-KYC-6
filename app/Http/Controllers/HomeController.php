@@ -7,6 +7,7 @@ use Auth;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 use App\Models\User;
+use App\Models\UserDetails;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,8 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::check()) {
+            $userInfo = auth()->user();
+            $userDetails = UserDetails::where('user_id', $userInfo->id)->first();
             $uuid = auth()->user()->uuid;
             $qrcode = new DNS2D();
             $qrCode = $qrcode->getBarcodeHTML($uuid, 'QRCODE');
@@ -38,7 +41,9 @@ class HomeController extends Controller
             return view('home', [
                 'img' =>        $qrCode,
                 'verified' =>   $verified,
-                'pending' =>    $pending
+                'pending' =>    $pending,
+                'userInfo' =>   $userInfo,
+                'userDetails' => $userDetails
             ]);
         } else {
             return view('login');

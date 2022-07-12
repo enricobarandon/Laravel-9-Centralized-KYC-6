@@ -22,12 +22,23 @@
                 @endif
                 
                 @if(Auth::user()->user_type_id == 5)
-                    @if(Auth::user()->status == 'verified')
-                        {!! $img !!}
-                    @else
+                <div class="row">
+                    @if(Auth::user()->status == 'pending')
+                    <div class="col-md-12 text-center qrcode-div">
                         <h5><strong><i class="fa fa-info-circle"></i> Your account is not yet verified</strong></h5>
                         <h5>Please wait for your account to be verified!</h5>
+                    </div>
                     @endif
+
+                    @include('partials.profile')
+
+                    @if(Auth::user()->status == 'verified')
+                    <div class="col-md-5 text-center qrcode-div">
+                        <h4>Profile QR Code</h4>
+                            {!! $img !!}
+                    </div>
+                    @endif
+                </div>
                 @else
                 
                     @include('partials.cards')
