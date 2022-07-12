@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -26,12 +27,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // return view('home');
         if (Auth::check()) {
             $uuid = auth()->user()->uuid;
             $qrcode = new DNS2D();
             $qrCode = $qrcode->getBarcodeHTML($uuid, 'QRCODE');
-            return view('home', ['img' => $qrCode]);
+
+            $verified = User::where('status','verified')->where('user_type_id', 5)->count();
+            $pending =  User::where('status','pending')->where('user_type_id', 5)->count();
+
+            return view('home', [
+                'img' =>        $qrCode,
+                'verified' =>   $verified,
+                'pending' =>    $pending
+            ]);
         } else {
             return view('login');
         }

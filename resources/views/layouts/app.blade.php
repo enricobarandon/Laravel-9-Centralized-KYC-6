@@ -11,6 +11,7 @@
     
     <link href="{{ asset('css/min/backend.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
 </head>
 <body class="hold-transition sidebar-mini skin-green layout-fixed">

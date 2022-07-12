@@ -11,6 +11,7 @@ use Auth;
 use App\Models\Group;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -57,6 +58,7 @@ class UserController extends Controller
     {
         $form = $request->validated();
         $form['password'] = Hash::make($form['password']);
+        $form['uuid'] = (string) Str::orderedUuid();
         $create = User::create($form);
         $user = Auth::User();
         if ($create) {

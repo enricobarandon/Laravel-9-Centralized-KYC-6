@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Province;
 
 class Group extends Model
 {
@@ -23,4 +24,9 @@ class Group extends Model
         'address',
         'guarantor'
     ];
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 }

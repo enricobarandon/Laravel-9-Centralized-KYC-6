@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class TrackingLog extends Model
 {
@@ -17,4 +18,15 @@ class TrackingLog extends Model
         'group_code',
         'data'
     ];
+
+    public function checkPlayerIfLogged($userId, $groupCode)
+    {
+        $currentDate = date('Y-m-d', time());
+        return DB::table($this->table)
+                    ->whereDate('created_at', $currentDate)
+                    ->where('user_id', $userId)
+                    ->where('group_code', $groupCode)
+                    ->first();
+        // return $log ? 1 : 0;
+    }
 }

@@ -126,6 +126,18 @@
             </a>
           </li>
           @endif
+
+          @if(in_array($users->user_type_id, [1,2]))
+          <li class="nav-item">
+            <a href="/reports" class="nav-link {{ (request()->is('reports*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-file"></i>
+              <p>
+                Reports
+              </p>
+            </a>
+          </li>
+          @endif
+
         @endif
         </ul>
       </nav>

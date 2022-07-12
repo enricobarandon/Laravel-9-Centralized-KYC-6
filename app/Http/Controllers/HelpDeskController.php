@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\ActivityLog;
 use Auth;
+use App\Models\GroupStatistics;
 
 class HelpDeskController extends Controller
 {
@@ -45,7 +46,7 @@ class HelpDeskController extends Controller
     public function changeStatus(User $user)
     {
         $auth = auth()->user();
-
+        
         $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified']);
 
         if($changeStatus){

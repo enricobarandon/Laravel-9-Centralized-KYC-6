@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TrackingLog;
+use App\Models\GroupStatistics;
 
 class UserController extends Controller
 {
@@ -26,6 +27,8 @@ class UserController extends Controller
         $params = request()->params;
         $userId = $params['userId'];
         $uuid = $params['uuid'];
+
+        $updatePlayerGroupCode = User::where('id', $userId)->update(['group_code' => $user->group_code]);
         
         $form = [
             'user_id' =>        $userId,
@@ -36,6 +39,8 @@ class UserController extends Controller
             ])
         ];
 
+        $groupStatModel = new GroupStatistics();
+        $incrementGroupStat = $groupStatModel->incrementGroupStat($userId, $user->group_code);
         $insert = TrackingLog::create($form);
         return $insert;
     }
