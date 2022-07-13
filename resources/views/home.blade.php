@@ -43,14 +43,6 @@
                             </div>
 
                         </div>
-                            <!-- <div class="alert alert-info">
-                                <h4>You have received an interview link! Please take the interview to finish the registration.</h4>
-                                <p>{{ $userDetails->interview_description }}</p>
-                                @if(isset($userDetails->interview_date_time))
-                                    <p><strong>Date & Time: {{ date('M d, Y h:i A', strtotime($userDetails->interview_date_time)) }}</strong></p>
-                                @endif
-                                <a href="{{ $userDetails->interview_link }}" class="btn btn-primary btn-sm">CLICK ME TO JOIN THE MEETING!</a>
-                            </div> -->
                         @endif
 
                     </div>
@@ -67,8 +59,12 @@
                     </div>
                     @endif
                 </div>
-                @else
+                @elseif(Auth::user()->user_type_id == 4)
                 
+                You are logged in!
+
+                @else
+
                     @include('partials.cards')
 
                 @endif

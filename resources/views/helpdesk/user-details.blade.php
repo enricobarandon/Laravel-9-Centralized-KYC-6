@@ -204,21 +204,23 @@ $id_type = [
 
                                                                     <div class="form-group">
                                                                         <label for="interview_description" class="col-12 control-label">Interview Description</label>
-                                                                        <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="interview_description" name="interview_description" placeholder="Description" value="{{ $userDetails->interview_description }}">
+                                                                        <div class="col-sm-12">
+                                                                            <!-- <input type="text" class="form-control" id="interview_description" name="interview_description" placeholder="Description" value="{{ $userDetails->interview_description }}"> -->
+                                                                            <textarea class="form-control" id="interview_description" name="interview_description" placeholder="Description">{{ $userDetails->interview_description }}</textarea>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <label for="interview_link" class="col-12 control-label">Interview Link</label>
-                                                                        <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link" value="{{ $userDetails->interview_link }}">
+                                                                        <div class="col-sm-12">
+                                                                            <!-- <input type="text" class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link" value="{{ $userDetails->interview_link }}"> -->
+                                                                            <textarea class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link">{{ $userDetails->interview_link }}</textarea>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <label for="interview_date_time" class="col-12 control-label">Date and Time</label>
-                                                                        <div class="col-sm-10">
+                                                                        <div class="col-sm-12">
                                                                             <input type="text" class="form-control" id="interview_date_time" name="interview_date_time" placeholder="Date and Time" value="{{ $userDetails->interview_date_time != '' ? date('M d, Y h:i a',strtotime($userDetails->interview_date_time)) : '' }}">
                                                                         </div>
                                                                     </div>

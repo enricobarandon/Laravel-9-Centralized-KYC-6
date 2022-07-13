@@ -25,7 +25,39 @@
                         </div>
                     @endif
 
+                    <div class="callout callout-info">
+                        <form class="form-horizontal" method="get">
+                            <div class="form-group row">
 
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="{{ $keyword }}">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <select class="form-control" name="userType" id="userType">
+                                        <option value="" selected disabled>Select All Type</option>
+                                        @foreach($displayRole as $type)
+                                        <option value="{{ $type->id }}" {{ $userType == $type->id ? 'selected' : '' }}>{{ $type->role }}</option>
+                                        @endforeach
+                                        
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <select class="form-control" name="userStatus" id="userStatus">
+                                        <option value="" selected disabled>Select Status</option>
+                                        <option value="1" {{ $userStatus == '1' ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $userStatus == '0' ? 'selected' : '' }}>Deactivated</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                    <a href="{{ url('/users') }}" class="btn btn-danger"><i class="fas fa-eraser"></i> Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <table class="table table-bordered table-striped global-table">
                         <thead>
                             <tr>
@@ -75,6 +107,12 @@
                             @endforeach
                         </tbody>
                     </table>     
+                    
+                    <div class="col">
+                        <div class="float-right">
+                            {{ $users->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
 
                 </div>
             </div>

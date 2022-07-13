@@ -26,15 +26,36 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $users = User::select('users.id','first_name','middle_name','last_name','email','users.created_at as created_at','is_active','status','username','user_type_id')
-                                ->whereIn('user_type_id', [1,2,3,4])
-                                ->get();
+                                ->whereIn('user_type_id', [1,2,3,4]);
+                                
+        $keyword = $request->keyword;
+
+        if($request->keyword){
+            $users = $users->where(DB::raw('concat(first_name,last_name,username)'), 'like', '%' . $request->keyword . '%');
+        }
+        
+        $userType = $request->userType;
+
+        if($request->userType){
+            $users = $users->where('users.user_type_id', $request->userType);
+        }
+
+        $userStatus = $request->userStatus;
+
+        if($request->userStatus != ''){
+            $users = $users->where('users.is_active', $request->userStatus);
+        }
+
+        $users = $users->paginate(20);
 
         $userTypes = UserType::select('id','role')->get()->pluck('role','id')->toArray();
 
-        return view('users.index', compact('users','userTypes'));
+        $displayRole = UserType::get();
+
+        return view('users.index', compact('users','userTypes','userType','displayRole','userStatus','keyword'));
     }
 
     /**

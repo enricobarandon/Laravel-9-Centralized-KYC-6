@@ -10,6 +10,27 @@
                 </div>
 
                 <div class="card-body">
+
+                    <div class="callout callout-info">
+                        <form class="form-horizontal" method="get">
+                            <div class="form-group row">
+
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="{{ $keyword }}">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="date" id="date" placeholder="Select Date" value="{{ $datepicker != '' ? date('M d, Y',strtotime($datepicker)) : '' }}">
+                                </div>
+
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                    <a href="{{ url('/activity-logs') }}" class="btn btn-danger"><i class="fas fa-eraser"></i> Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <table id="tblLogs" class="table table-bordered global-table table-hover position-relative">
                         <thead>
                             <tr>
@@ -81,4 +102,16 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+$('document').ready(function() {
+    $("#date").datetimepicker({
+        timepicker: false,
+        format: 'M d, Y',
+        maxDate: 0
+    });
+});
+</script>
 @endsection

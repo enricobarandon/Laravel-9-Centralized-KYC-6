@@ -123,3 +123,10 @@ strong.active {
 .qrcode-div > div {
     margin: auto;
 }
+.callout .form-group {
+    margin-bottom: 0 !important;
+}
+.callout a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
