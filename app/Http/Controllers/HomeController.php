@@ -33,7 +33,7 @@ class HomeController extends Controller
             $userDetails = UserDetails::where('user_id', $userInfo->id)->first();
             $uuid = auth()->user()->uuid;
             $qrcode = new DNS2D();
-            $qrCode = $qrcode->getBarcodeHTML($uuid, 'QRCODE');
+            $qrCode = $qrcode->getBarcodePNG($uuid, 'QRCODE',15,15);
 
             $verified = User::where('status','verified')->where('user_type_id', 5)->count();
             $pending =  User::where('status','pending')->where('user_type_id', 5)->count();

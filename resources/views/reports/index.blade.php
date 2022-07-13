@@ -30,19 +30,11 @@
                     
                     <div class="col-xs-12">
                         <div class="box">
-                            <div class="box-header">
-                                <h3 class="box-title">Groups Statistics for {{ $currentDate }}</h3>
-                                <!-- <div class="box-tools">
-                                    <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div> -->
+                            <div class="callout callout-info">
+                                <h5><i class="fas fa-info-circle"></i> Groups Statistics for {{ $currentDate }}</h5>
                             </div>
 
-                            <div class="box-body table-responsive no-padding">
+                            <div class="box-body table-responsive table-striped global-table">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -60,12 +52,12 @@
                                         @endphp
                                         @foreach($groupsStatistics as $group)
                                             <tr>
-                                                <td>{{ ++$groupCount }}</td>
+                                                <td class="text-center">{{ ++$groupCount }}</td>
                                                 <td>{{ $group->group->name }}</td>
                                                 <td>{{ $group->group->group_type }}</td>
                                                 <td>{{ $group->group->province->name }}</td>
-                                                <td><span class="badge bg-green">{{ $group->total_player_registered }}</span></td>
-                                                <td><span class="badge bg-blue">{{ $group->total_player_logged_in }}</span></td>
+                                                <td class="text-center"><span class="badge bg-green">{{ $group->total_player_registered }}</span></td>
+                                                <td class="text-center"><span class="badge bg-blue">{{ $group->total_player_logged_in }}</span></td>
                                             </tr>
                                         @endforeach
                                         <!-- <tr>

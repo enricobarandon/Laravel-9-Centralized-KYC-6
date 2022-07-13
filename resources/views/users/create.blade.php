@@ -61,7 +61,7 @@
                             </div>
 
                             <div class="form-group ">
-                                <select class="form-control" name="group_code">
+                                <select class="form-control" name="group_code" data-live-search="true">
                                     <option selected disable>Select Group Code</option>
                                     @foreach($groups as $group)
                                         <option value="{{ $group->code }}">{{ $group->name }}</option>

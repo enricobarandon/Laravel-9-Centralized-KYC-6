@@ -26,7 +26,7 @@ class InterviewDetailsRequest extends FormRequest
         return [
             'interview_description' => ['required'],
             'interview_link'        => ['required','url'],
-            'interview_date_time'    => ['required','date']
+            'interview_date_time'    => ['required']
         ];
     }
 }

@@ -219,7 +219,7 @@ $id_type = [
                                                                     <div class="form-group">
                                                                         <label for="interview_date_time" class="col-12 control-label">Date and Time</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="interview_date_time" name="interview_date_time" placeholder="Date and Time" value="{{ $userDetails->interview_date_time }}">
+                                                                            <input type="text" class="form-control" id="interview_date_time" name="interview_date_time" placeholder="Date and Time" value="{{ $userDetails->interview_date_time != '' ? date('M d, Y h:i a',strtotime($userDetails->interview_date_time)) : '' }}">
                                                                         </div>
                                                                     </div>
 
@@ -298,6 +298,11 @@ $('document').ready(function() {
     $('#file-input').imoViewer({
       'preview' : '#image-previewer',
     })
+    $("#interview_date_time").datetimepicker({
+        format: 'M d, Y h:i a',
+        validateOnBlur: false,
+        step: 10, 
+    });
 });
 </script>
 @endsection

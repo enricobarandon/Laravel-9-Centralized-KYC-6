@@ -29,14 +29,28 @@
                         <h5>Please wait for your account to be verified!</h5>
 
                         @if($userDetails->interview_link)
-                            <div class="alert alert-info">
+                        <div class="card card-outline card-info mb-2">
+                            <div class="card-header">
+                                <h4><i class="fa fa-info-circle"></i> You have received an interview link! Please take the interview to finish the registration.</h4>
+                            </div>
+
+                            <div class="card-body">
+                            <p>{{ $userDetails->interview_description }}</p>
+                                @if(isset($userDetails->interview_date_time))
+                                    <p><strong>Date & Time: {{ date('M d, Y h:i A', strtotime($userDetails->interview_date_time)) }}</strong></p>
+                                @endif
+                                <a href="{{ $userDetails->interview_link }}" target="_blank" class="btn btn-primary btn-sm">CLICK ME TO JOIN THE MEETING!</a>
+                            </div>
+
+                        </div>
+                            <!-- <div class="alert alert-info">
                                 <h4>You have received an interview link! Please take the interview to finish the registration.</h4>
                                 <p>{{ $userDetails->interview_description }}</p>
                                 @if(isset($userDetails->interview_date_time))
                                     <p><strong>Date & Time: {{ date('M d, Y h:i A', strtotime($userDetails->interview_date_time)) }}</strong></p>
                                 @endif
                                 <a href="{{ $userDetails->interview_link }}" class="btn btn-primary btn-sm">CLICK ME TO JOIN THE MEETING!</a>
-                            </div>
+                            </div> -->
                         @endif
 
                     </div>
@@ -45,9 +59,11 @@
                     @include('partials.profile')
 
                     @if(Auth::user()->status == 'verified')
-                    <div class="col-md-5 text-center qrcode-div">
+                    <div class="col-md-4 text-center qrcode-div">
                         <h4>Profile QR Code</h4>
-                            {!! $img !!}
+                            <!-- {!! $img !!} -->
+                            <img src="data:image/png;base64,{{ $img }}" alt="barcode" style="width: 100%" />
+                            <a class="btn btn-primary mt-3" href="data:image/png;base64,{{ $img }}" download><i class="fa fa-download"></i> Download</a>
                     </div>
                     @endif
                 </div>

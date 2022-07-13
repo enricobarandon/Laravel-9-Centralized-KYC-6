@@ -44,28 +44,32 @@
                             @endphp
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{ ++$usersCount }}</td>
+                                    <td class="text-center">{{ ++$usersCount }}</td>
                                     <td>{{ $user->first_name . ' ' . $user->last_name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $userTypes[$user->user_type_id] }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($user->created_at)) }}</td>
-                                    <td>{{ $user->is_active ? 'Active' : 'Deactivated' }}</td>
-                                    <td>
+                                    <td class="text-center">
+                                        <strong class="{{ $user->is_active ? 'active' : 'deactivated' }}">
+                                            {{ $user->is_active ? 'Active' : 'Deactivated' }}
+                                        </strong>
+                                    </td>
+                                    <td class="text-center">
                                         <form action='{{ url("/users/is_active/$user->id") }}' method="POST">
                                             @csrf
                                                 @if($user->is_active)
-                                                    <button type="button" class="btn btn-danger users-status deactivate">
+                                                    <button type="button" class="btn btn-sm btn-danger users-status deactivate">
                                                         <i class="fas fa-times"></i> Deactivate
                                                     </button>
                                                 @else
-                                                    <button type="button" class="btn btn-success users-status activate">
+                                                    <button type="button" class="btn btn-sm btn-success users-status activate">
                                                         <i class="fas fa-plus"></i> Activate
                                                     </button>
                                                 @endif
                                         </form>
                                         
-                                        <a href='{{ url("users/update/$user->id/info") }}' name="updateUser" class="btn btn-primary"><i class="fas fa-cog"></i> Edit</a>
-                                        <a href='{{ url("users/update/$user->id/password") }}' name="updateUser" class="btn btn-info"><i class="fas fa-cog"></i> Change Password</a>
+                                        <a href='{{ url("users/update/$user->id/info") }}' name="updateUser" class="btn btn-sm btn-primary"><i class="fas fa-cog"></i> Edit</a>
+                                        <a href='{{ url("users/update/$user->id/password") }}' name="updateUser" class="btn btn-sm btn-info"><i class="fas fa-cog"></i> Change Password</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -99,7 +99,14 @@ class HelpDeskController extends Controller
     public function updateInterviewDetails(InterviewDetailsRequest $request, User $user)
     {
         $auth = auth()->user();
-        $update = UserDetails::where('user_id', $user->id)->update($request->validated());
+
+        $interviewDetails = [
+            "interview_description" => $request['interview_description'],
+            "interview_link" => $request['interview_link'],
+            "interview_date_time" => date("Y-m-d H:i:s",strtotime($request['interview_date_time']))
+        ];
+        
+        $update = UserDetails::where('user_id', $user->id)->update($interviewDetails);
         if($update){
             return back()->with('success','Interview details successfully updated');
         }else{

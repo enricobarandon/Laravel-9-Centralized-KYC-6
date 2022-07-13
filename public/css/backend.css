@@ -6,6 +6,9 @@
 [class*=sidebar-dark-] {
     background-color: #173655 !important;
 }
+.content-wrapper {
+    min-height: 660px !important;
+}
 .gradient-custom {
     /* fallback for old browsers */
     background: #173655;
@@ -22,7 +25,7 @@
     border-collapse: separate;
     border-spacing: 0;
     box-shadow: 0px 0px 9px 4px rgb(0 0 0 / 30%);
-    text-align: center;
+    /* text-align: center; */
 }
 .global-table tr th {
     padding: 2px 5px 2px 10px !important;

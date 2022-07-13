@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     
     <link href="{{ asset('css/min/backend.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/jquery.datetimepicker.css')}}">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -48,6 +49,7 @@
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/min/backend.min.js') }}"></script>
+<script src="{{ asset('js/jquery.datetimepicker.full.min.js') }}"></script>
 @yield('script')
 </html>
 
