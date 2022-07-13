@@ -384,7 +384,7 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                            <img src="/img/picture_of_id.png" class="img-fluid img-responsive">
+                                            <img src="/img/picture_of_id.png" id="image-previewer-id" class="img-fluid img-responsive">
                                         </div>
 
                                         
@@ -396,7 +396,7 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                            <img src="/img/holding_id.png" class="img-fluid img-responsive">
+                                            <img src="/img/holding_id.png" id="image-previewer-selfie" class="img-fluid img-responsive">
                                         </div>
                                     </div>
                                     
@@ -428,6 +428,7 @@
 </body>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/jquery.datetimepicker.full.min.js') }}"></script>
+<script src="{{ asset('js/imoViewer-min.js') }}"></script>
 <script>
 $("document").ready(function(){
     $('.view-password1').hover(function () {
@@ -468,10 +469,18 @@ $("document").ready(function(){
     });
     
     $("#date_of_birth").datetimepicker({
-                    timepicker: false,
-                    format: 'M d, Y',
-                    maxDate: 0
-                });
+        timepicker: false,
+        format: 'M d, Y',
+        maxDate: 0
+    });
+    
+    $('#id_picture').imoViewer({
+      'preview' : '#image-previewer-id',
+    })
+
+    $('#selfie_with_id').imoViewer({
+      'preview' : '#image-previewer-selfie',
+    })
 });
 </script>
 </html>

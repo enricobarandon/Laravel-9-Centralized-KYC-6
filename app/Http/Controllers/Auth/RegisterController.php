@@ -73,8 +73,8 @@ class RegisterController extends Controller
             'source_of_income' =>   ['required'],
             'facebook' =>           ['required'],
             'valid_id_type' =>      ['required'],
-            'id_picture' =>     ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg|max:2048'],
-            'selfie_with_id' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg|max:2048'],
+            'id_picture' =>     ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
+            'selfie_with_id' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
         ]);
     }
 

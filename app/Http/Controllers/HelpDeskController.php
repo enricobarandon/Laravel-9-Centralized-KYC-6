@@ -75,7 +75,7 @@ class HelpDeskController extends Controller
         $saveSnapshot = '';
         
         $validator = Validator::make($request->all(), [
-            'snapshot' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg|max:2048']
+            'snapshot' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048']
         ]);
         if ($validator->fails()) {
             return back()
