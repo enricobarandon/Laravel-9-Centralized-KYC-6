@@ -1438,3 +1438,11 @@ strong.active {
     color: #007bff;
     font-weight: 600;
 }
+
+.widget-user .widget-user-image>img {
+    height: 90px !important;
+}
+
+.qrcode-div > div {
+    margin: auto;
+}

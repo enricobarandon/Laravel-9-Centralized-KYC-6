@@ -9,6 +9,7 @@ use App\Models\ActivityLog;
 use Auth;
 use App\Models\GroupStatistics;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\InterviewDetailsRequest;
 
 class HelpDeskController extends Controller
 {
@@ -91,7 +92,18 @@ class HelpDeskController extends Controller
             
             return back()->with('success','Snapshot successfully saved');
         }else{
-            return back()->with('success','Something went wrong');
+            return back()->with('error','Something went wrong');
+        }
+    }
+
+    public function updateInterviewDetails(InterviewDetailsRequest $request, User $user)
+    {
+        $auth = auth()->user();
+        $update = UserDetails::where('user_id', $user->id)->update($request->validated());
+        if($update){
+            return back()->with('success','Interview details successfully updated');
+        }else{
+            return back()->with('error','Something went wrong');
         }
     }
 }

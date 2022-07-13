@@ -30,6 +30,10 @@ return new class extends Migration
             $table->string('id_picture')->nullable();
             $table->string('selfie_with_id')->nullable();
             $table->string('snapshot')->nullable();
+            $table->text('interview_link')->nullable();
+            $table->dateTime('interview_date_time')->nullable();
+            $table->string('interview_description')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

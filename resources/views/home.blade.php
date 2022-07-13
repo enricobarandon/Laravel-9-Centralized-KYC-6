@@ -27,6 +27,18 @@
                     <div class="col-md-12 text-center qrcode-div">
                         <h5><strong><i class="fa fa-info-circle"></i> Your account is not yet verified</strong></h5>
                         <h5>Please wait for your account to be verified!</h5>
+
+                        @if($userDetails->interview_link)
+                            <div class="alert alert-info">
+                                <h4>You have received an interview link! Please take the interview to finish the registration.</h4>
+                                <p>{{ $userDetails->interview_description }}</p>
+                                @if(isset($userDetails->interview_date_time))
+                                    <p><strong>Date & Time: {{ date('M d, Y h:i A', strtotime($userDetails->interview_date_time)) }}</strong></p>
+                                @endif
+                                <a href="{{ $userDetails->interview_link }}" class="btn btn-primary btn-sm">CLICK ME TO JOIN THE MEETING!</a>
+                            </div>
+                        @endif
+
                     </div>
                     @endif
 

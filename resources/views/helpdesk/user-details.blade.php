@@ -46,6 +46,17 @@ $id_type = [
                         </div>
                     @endif
 
+                    
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <!-- {{ $userDetails }} -->
                        
                     <div class="row justify-content-center align-items-center h-100">
@@ -178,38 +189,78 @@ $id_type = [
                                             <hr class="mt-0 mb-0">
 
                                             <div class="pt-1">
-                                                @if ($errors->any())
-                                                    <div class="alert alert-danger">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                                <li>{{ $error }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
-                                                <form class="row" action='{{ url("/helpdesk/snapshot/$user->id") }}' method="POST" enctype="multipart/form-data">
-                                                    @csrf    
-                                                    <input type="hidden" name="hdnId" value="{{ $user->id }}">
-                                                    <div class="col-md-12 mb-1 text-center">
-                                                        <div class="col-md-6" style="margin: auto;">
-                                                            <h6>Snapshot</h6>
-                                                            <input type="file" class="form-control file-css" name="snapshot" placeholder="Snapshot" accept="capture" id="file-input" required>
-                                                            @error('snapshot')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                            @if(isset($userDetails->snapshot))
-                                                            <img src="/img/snapshot/{{ $userDetails->snapshot }}" id="image-previewer" alt="Avatar" class="img-responsive my-2 snapshot-img img-thumbnail" />
-                                                            @else
-                                                            <img src="/img/not-available.gif" alt="No Picture Available" id="image-previewer" class="img-responsive my-2 snapshot-img img-thumbnail" />
-                                                            @endif
-                                                            
-                                                            <input type="submit" class="btn btn-primary" value="Submit">
+
+                                                <div class="row">
+
+                                                    <div class="col-6">
+                                                        <div class="box box-info">
+                                                            <div class="box-header with-border">
+                                                                <h6 class="box-title text-center">Interview Details</h6>
+                                                            </div>
+
+                                                            <form class="form-horizontal" action='{{ url("/helpdesk/updateInterviewDetails/$user->id") }}' method="POST">
+                                                                @csrf
+                                                                <div class="box-body">
+
+                                                                    <div class="form-group">
+                                                                        <label for="interview_description" class="col-12 control-label">Interview Description</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text" class="form-control" id="interview_description" name="interview_description" placeholder="Description" value="{{ $userDetails->interview_description }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="interview_link" class="col-12 control-label">Interview Link</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text" class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link" value="{{ $userDetails->interview_link }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="interview_date_time" class="col-12 control-label">Date and Time</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text" class="form-control" id="interview_date_time" name="interview_date_time" placeholder="Date and Time" value="{{ $userDetails->interview_date_time }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="box-footer text-center">
+                                                                    <button type="submit" class="btn btn-primary">Update Interview Details</button>
+                                                                </div>
+
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    
-                                                </form>
+
+                                                    <div class="col-6">
+                                                        <form action='{{ url("/helpdesk/snapshot/$user->id") }}' method="POST" enctype="multipart/form-data">
+                                                            @csrf    
+                                                            <input type="hidden" name="hdnId" value="{{ $user->id }}">
+                                                            <div class="mb-1 text-center">
+                                                                <div style="margin: auto;">
+                                                                    <h6>Snapshot</h6>
+                                                                    <input type="file" class="form-control file-css" name="snapshot" placeholder="Snapshot" accept="capture" id="file-input" required>
+                                                                    @error('snapshot')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                    @if(isset($userDetails->snapshot))
+                                                                    <img src="/img/snapshot/{{ $userDetails->snapshot }}" id="image-previewer" alt="Avatar" class="img-responsive my-2 snapshot-img img-thumbnail" />
+                                                                    @else
+                                                                    <img src="/img/not-available.gif" alt="No Picture Available" id="image-previewer" class="img-responsive my-2 snapshot-img img-thumbnail" />
+                                                                    @endif
+                                                                    
+                                                                    <input type="submit" class="btn btn-primary" value="Update Snapshot">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+
                                             </div>
 
                                         </div>
