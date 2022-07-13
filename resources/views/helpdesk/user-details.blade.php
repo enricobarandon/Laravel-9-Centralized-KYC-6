@@ -178,21 +178,27 @@ $id_type = [
                                             <hr class="mt-0 mb-0">
 
                                             <div class="pt-1">
-                                                <form class="row">
-                                                    <div class="col-md-6 mb-1">
-                                                        <h6>Snapshot 1</h6>
-                                                        <input type="file" class="form-control file-css" placeholder="Snapshot 1">
-                                                        <img src="/img/not-available.gif" alt="No Picture Available" class="img-responsive my-2 snapshot-img img-thumbnail" />
-                                                    </div>
-                                                    <div class="col-md-6 mb-1">
-                                                        <h6>Snapshot 2</h6>
-                                                        <input type="file" class="form-control file-css" placeholder="Snapshot 1">
-                                                        <img src="/img/not-available.gif" alt="No Picture Available" class="img-responsive my-2 snapshot-img img-thumbnail" />
+                                                <form class="row" action='{{ url("/helpdesk/snapshot/$user->id") }}' method="POST" enctype="multipart/form-data">
+                                                    @csrf    
+                                                    <input type="hidden" name="hdnId" value="{{ $user->id }}">
+                                                    <div class="col-md-12 mb-1 text-center">
+                                                        <div class="col-md-6" style="margin: auto;">
+                                                            <h6>Snapshot</h6>
+                                                            <input type="file" class="form-control file-css" name="snapshot" placeholder="Snapshot" accept="capture" required>
+                                                            @error('snapshot')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                            @if(isset($userDetails->snapshot))
+                                                            <img src="/img/snapshot/{{ $userDetails->snapshot }}" alt="Avatar" class="img-responsive my-2 snapshot-img img-thumbnail" />
+                                                            @else
+                                                            <img src="/img/not-available.gif" alt="No Picture Available" class="img-responsive my-2 snapshot-img img-thumbnail" />
+                                                            @endif
+                                                            <input type="submit" class="btn btn-primary" value="Submit">
+                                                        </div>
                                                     </div>
                                                     
-                                                    <div class="col-md-12 mb-1 text-center">
-                                                        <input type="submit" class="btn btn-primary" value="Submit">
-                                                    </div>
                                                 </form>
                                             </div>
 

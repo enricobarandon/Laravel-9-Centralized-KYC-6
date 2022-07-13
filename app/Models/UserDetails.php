@@ -26,6 +26,7 @@ class UserDetails extends Model
         'valid_id_type',
         'id_picture',
         'selfie_with_id',
+        'snapshot',
 
     ];
 }

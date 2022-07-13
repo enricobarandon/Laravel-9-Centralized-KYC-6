@@ -8,6 +8,7 @@ use App\Models\UserDetails;
 use App\Models\ActivityLog;
 use Auth;
 use App\Models\GroupStatistics;
+use Illuminate\Support\Facades\Validator;
 
 class HelpDeskController extends Controller
 {
@@ -61,6 +62,34 @@ class HelpDeskController extends Controller
             ]);
 
             return back()->with('success','Player account approved');
+        }else{
+            return back()->with('success','Something went wrong');
+        }
+    }
+
+    public function saveSnapshot(Request $request){
+
+        $auth = auth()->user();
+        // dd($auth->id);
+
+        $saveSnapshot = '';
+        
+        $validator = Validator::make($request->all(), [
+            'snapshot' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg|max:2048']
+        ]);
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+            $snapshot = 'SS'.$auth->id.time().'.'.$request->snapshot->extension();  
+            $saveSnapshot = UserDetails::where('user_id', $request->hdnId)->update(['snapshot' => $snapshot]);
+        }
+
+        if($saveSnapshot){
+            $request->snapshot->move(public_path('img/snapshot'), $snapshot);
+            
+            return back()->with('success','Snapshot successfully saved');
         }else{
             return back()->with('success','Something went wrong');
         }

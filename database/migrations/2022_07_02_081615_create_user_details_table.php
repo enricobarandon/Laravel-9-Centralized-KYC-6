@@ -29,6 +29,7 @@ return new class extends Migration
             $table->char('valid_id_type',10)->nullable();
             $table->string('id_picture')->nullable();
             $table->string('selfie_with_id')->nullable();
+            $table->string('snapshot')->nullable();
             $table->timestamps();
         });
     }

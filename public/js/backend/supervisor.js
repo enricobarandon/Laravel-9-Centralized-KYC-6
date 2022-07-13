@@ -154,8 +154,15 @@ const approve = async () => {
     let uuid = $('#qrcode').val();
     let response = await axios.post('/api/v1/users/approve', { params: { userId, uuid }});
     if (response.data) {
+        swal({
+            title: "Approve Player",
+            text: "Success Approved Player",
+            icon: "success",
+            timer: 2000,
+            button: 'Close'
+        });
         $('#qrcode').val('');
-        alert('approved');
+        $('#playerInfo').hide();
     } else {
         alert('something went wrong');
     }
