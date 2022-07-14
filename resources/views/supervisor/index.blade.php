@@ -7,6 +7,7 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Supervisor Page</h3>
+                    <a href='{{ url("/supervisor") }}' class="btn btn-normal float-right">Refresh</a>
                 </div>
 
                 <div class="card-body">

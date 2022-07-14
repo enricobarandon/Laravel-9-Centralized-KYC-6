@@ -73,6 +73,15 @@ function onQRCodeScanned(scannedText)
     if(scannedTextMemo)
     {
         scannedTextMemo.value = scannedText;
+        
+        var count = $("#qrcode").val().length;
+
+        delay(function(){
+            
+            if(count >= 10){
+                getUserInfo()
+            }
+        }, 1000 );
     }
 }
 
