@@ -29,17 +29,16 @@
 
                     
                     <div class="callout callout-info">
-                        <h5><i class="fas fa-info-circle"></i> Groups Statistics for {{ $currentDate }}</h5>
                         
-                        <form class="form-horizontal" method="get">
+                        <form class="form-horizontal mb-3" method="get">
                             <div class="form-group row">
 
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" name="group" id="group" placeholder="Search Group" value="">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="group" id="group" placeholder="Group Code" value="{{ $groupCode }}">
                                 </div>
                                 
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" name="province" id="province" placeholder="Province" value="">
+                                    <input type="text" class="form-control" name="date" id="date" placeholder="Date" value="{{ $date != '' ? date('M d, Y',strtotime($date)) : '' }}">
                                 </div>
 
                                 <div class="col">
@@ -48,6 +47,9 @@
                                 </div>
                             </div>
                         </form>
+
+                        <h5><i class="fas fa-info-circle"></i> Groups Statistics for {{ $filterDate }}</h5>
+
                     </div>
 
                     <table class="table table-hover table-striped global-table">
@@ -77,6 +79,12 @@
                             @endforeach
                         </tbody>
                     </table>
+                    
+                    <div class="col">
+                        <div class="float-right">
+                            {{ $groupsStatistics->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
                                 
                 </div>
             </div>
@@ -84,4 +92,15 @@
         
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+$('document').ready(function() {
+    $("#date").datetimepicker({
+        timepicker: false,
+        format: 'M d, Y',
+        maxDate: 0
+    });
+});
+</script>
 @endsection

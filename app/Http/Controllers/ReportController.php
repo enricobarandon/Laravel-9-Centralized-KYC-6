@@ -8,17 +8,37 @@ use App\Models\GroupStatistics;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $verified = User::where('status','verified')->where('user_type_id', 5)->count();
         $pending =  User::where('status','pending')->where('user_type_id', 5)->count();
-        $groupsStatistics = GroupStatistics::with('group','group.province')->whereDate('created_at', date('Y-m-d', time()))->get();
-        $currentDate = date("M d, Y", time());
+        $groupsStatistics = GroupStatistics::with('group','group.province');
+
+        $groupCode = $request->group;
+        if($groupCode){
+            $groupsStatistics = $groupsStatistics->where('group_code', 'like', '%' . $groupCode . '%');
+        }
+
+        $filterDate = '';
+
+        $date = $request->date;
+        if($date){
+            $groupsStatistics = $groupsStatistics->whereDate('created_at', date('Y-m-d', strtotime($date)));
+            $filterDate = $date;
+        }else{
+            $groupsStatistics = $groupsStatistics->whereDate('created_at', date('Y-m-d', time()));
+            $filterDate = date("M d, Y", time());
+        }
+
+        $groupsStatistics = $groupsStatistics->paginate(100);
+        
         return view('reports.index', compact(
             'verified',
             'pending',
             'groupsStatistics',
-            'currentDate'
+            'filterDate',
+            'groupCode',
+            'date'
         ));
     }
 }
