@@ -137,6 +137,17 @@
             </a>
           </li>
           @endif
+
+          @if(in_array($users->user_type_id, [1,2,3]))
+          <li class="nav-item">
+            <a href="/groups" class="nav-link {{ (request()->is('groups*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-object-group"></i>
+              <p>
+                Groups
+              </p>
+            </a>
+          </li>
+          @endif
           
           @if($users->user_type_id == 1)
           <li class="nav-item">

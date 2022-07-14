@@ -8,6 +8,7 @@ use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 use App\Models\User;
 use App\Models\UserDetails;
+use App\Models\GroupStatistics;
 
 class HomeController extends Controller
 {
@@ -37,13 +38,15 @@ class HomeController extends Controller
 
             $verified = User::where('status','verified')->where('user_type_id', 5)->count();
             $pending =  User::where('status','pending')->where('user_type_id', 5)->count();
+            $loggedTotay = GroupStatistics::whereDate('created_at', date('Y-m-d', time()))->sum('total_player_logged_in');
 
             return view('home', [
                 'img' =>        $qrCode,
                 'verified' =>   $verified,
                 'pending' =>    $pending,
                 'userInfo' =>   $userInfo,
-                'userDetails' => $userDetails
+                'userDetails' => $userDetails,
+                'loggedTotay' => $loggedTotay
             ]);
         } else {
             return view('login');

@@ -7,7 +7,7 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Help Desk Page</h3>
-                    <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a>
+                    <!-- <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a> -->
                 </div>
 
                 <div class="card-body">

@@ -28,7 +28,7 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-blue">
             <div class="inner">
-                <h3>0</h3>
+                <h3>{{ $loggedTotay }}</h3>
                 <p>Total Logged in Today</p>
             </div>
             <div class="icon">
@@ -41,7 +41,7 @@
     <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{ number_format(($loggedTotay * 100)/ $verified, 1) }}<sup style="font-size: 20px">%</sup></h3>
                 <p>Logged in Today</p>
             </div>
             <div class="icon">

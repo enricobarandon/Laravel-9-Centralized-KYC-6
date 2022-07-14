@@ -12,6 +12,7 @@ class ReportController extends Controller
     {
         $verified = User::where('status','verified')->where('user_type_id', 5)->count();
         $pending =  User::where('status','pending')->where('user_type_id', 5)->count();
+        $loggedTotay = GroupStatistics::whereDate('created_at', date('Y-m-d', time()))->sum('total_player_logged_in');
         $groupsStatistics = GroupStatistics::with('group','group.province');
 
         $groupCode = $request->group;
@@ -38,7 +39,8 @@ class ReportController extends Controller
             'groupsStatistics',
             'filterDate',
             'groupCode',
-            'date'
+            'date',
+            'loggedTotay'
         ));
     }
 }
