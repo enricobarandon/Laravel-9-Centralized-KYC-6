@@ -130,3 +130,6 @@ strong.active {
     color: #ffffff !important;
     text-decoration: none !important;
 }
+.qrscanner video {
+    width: 100%;
+}

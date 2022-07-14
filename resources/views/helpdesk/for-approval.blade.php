@@ -25,6 +25,29 @@
                         </div>
                     @endif
 
+                    <div class="callout callout-info">
+                        <form class="form-horizontal" method="get">
+                            <div class="form-group row">
+
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Name / Username" value="{{ $keyword }}">
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <select class="form-control" name="player_status" id="player_status">
+                                        <option value="" selected disabled>Select Status</option>
+                                        <option value="1" {{ $status == '1' ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $status == '0' ? 'selected' : '' }}>Deactivated</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                    <a href="{{ url('/helpdesk/for-approval') }}" class="btn btn-danger"><i class="fas fa-eraser"></i> Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
                     <table class="table table-bordered table-striped global-table text-center">
                         <thead>
@@ -57,7 +80,8 @@
                                     </td>
                                     <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href='{{ url("/helpdesk/user/$player->id") }}'>Review Details</a>
+                                        <!-- <a class="btn btn-primary btn-sm" href='{{ url("/helpdesk/user/$player->id") }}'>Review Details</a> -->
+                                        <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details"><i class="fa fa-eye"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -69,4 +93,12 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $("document").ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
+</script>
 @endsection

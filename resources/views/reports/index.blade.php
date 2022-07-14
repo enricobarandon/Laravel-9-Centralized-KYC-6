@@ -28,74 +28,60 @@
                     @include('partials.cards')
 
                     
-                    <div class="col-xs-12">
-                        <div class="box">
-                            <div class="callout callout-info">
-                                <h5><i class="fas fa-info-circle"></i> Groups Statistics for {{ $currentDate }}</h5>
-                            </div>
+                    <div class="callout callout-info">
+                        <h5><i class="fas fa-info-circle"></i> Groups Statistics for {{ $currentDate }}</h5>
+                        
+                        <form class="form-horizontal" method="get">
+                            <div class="form-group row">
 
-                            <div class="box-body table-responsive table-striped global-table">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Group Name</th>
-                                            <th>Type</th>
-                                            <th>Province</th>
-                                            <th>Registered Player</th>
-                                            <th>Player Logged In Today</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $groupCount = 0;
-                                        @endphp
-                                        @foreach($groupsStatistics as $group)
-                                            <tr>
-                                                <td class="text-center">{{ ++$groupCount }}</td>
-                                                <td>{{ $group->group->name }}</td>
-                                                <td>{{ $group->group->group_type }}</td>
-                                                <td>{{ $group->group->province->name }}</td>
-                                                <td class="text-center"><span class="badge bg-green">{{ $group->total_player_registered }}</span></td>
-                                                <td class="text-center"><span class="badge bg-blue">{{ $group->total_player_logged_in }}</span></td>
-                                            </tr>
-                                        @endforeach
-                                        <!-- <tr>
-                                            <td>219</td>
-                                            <td>Alexander Pierce</td>
-                                            <td>11-7-2014</td>
-                                            <td><span class="label label-warning">Pending</span></td>
-                                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>657</td>
-                                            <td>Bob Doe</td>
-                                            <td>11-7-2014</td>
-                                            <td><span class="label label-primary">Approved</span></td>
-                                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>175</td>
-                                            <td>Mike Doe</td>
-                                            <td>11-7-2014</td>
-                                            <td><span class="label label-danger">Denied</span></td>
-                                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        </tr> -->
-                                    </tbody>
-                                </table>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="group" id="group" placeholder="Search Group" value="">
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="province" id="province" placeholder="Province" value="">
+                                </div>
+
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                    <a href="{{ url('/reports') }}" class="btn btn-danger"><i class="fas fa-eraser"></i> Reset</a>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
+                    <table class="table table-hover table-striped global-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Group Name</th>
+                                <th>Type</th>
+                                <th>Province</th>
+                                <th>Registered Player</th>
+                                <th>Player Logged In Today</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $groupCount = 0;
+                            @endphp
+                            @foreach($groupsStatistics as $group)
+                                <tr>
+                                    <td class="text-center">{{ ++$groupCount }}</td>
+                                    <td>{{ $group->group->name }}</td>
+                                    <td>{{ $group->group->group_type }}</td>
+                                    <td>{{ $group->group->province->name }}</td>
+                                    <td class="text-center"><span class="badge bg-green">{{ $group->total_player_registered }}</span></td>
+                                    <td class="text-center"><span class="badge bg-blue">{{ $group->total_player_logged_in }}</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                                
                 </div>
             </div>
         </div>
-
-
         
-
-
-
     </div>
 </div>
 @endsection

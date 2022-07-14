@@ -41,19 +41,7 @@ const getUserInfo = async () => {
         let playerDetails = player.user_details;
         let present_address = JSON.parse(playerDetails.present_address);
         let permanent_address = JSON.parse(playerDetails.permanent_address);
-        // console.log(permanent_address);
-        // $('#append').append("<p> Full Name: "+ player.first_name + " " + player.middle_name + " " + player.last_name +"</p>")
-        //             .append("<p> Username: "+ player.username +"</p>")
-        //             .append("<p> Contact: "+ player.contact +"</p>")
-        //             .append("<p> Is Active: "+ (player.is_active ? "Active" : "Deactivated") +"</p>")
-        //             .append("<p> Account Status: "+ (player.status ? player.status.toUpperCase() : "") +"</p>")
-        //             .append("<p> Country: "+ playerDetails.country +"</p>")
-        //             .append("<p> Nationality: "+ playerDetails.nationality +"</p>")
-        //             .append("<p> Date of Birth: "+ playerDetails.date_of_birth +"</p>")
-        //             .append("<p> Place of Birth: "+ playerDetails.place_of_birth +"</p>")
-        //             .append("<p> House Number: "+ present_address.house_number +"</p>")
-        //             .append("<p> Street: "+ present_address.street +"</p>")
-        //             ;
+        
         $('#playerInfo').show();
         $('#pFullName').text(player.first_name + " " + player.middle_name + " " + player.last_name);
         $('#pUsername').text("Username: " + player.username);
@@ -64,7 +52,9 @@ const getUserInfo = async () => {
         $('#pIncome').text(playerDetails.source_of_income);
         $('#pOccupation').text(playerDetails.occupation);
         $("#userId").val(player.id);
-        // $('#approval').append('<button class="btnApprove" data-id="'+ player.id +'" data.uuid="'+ player.uuid +'">Approve</button>');
+
+        $('#scanner').hide();
+
     } else {
         alert("null");
     }
@@ -163,6 +153,7 @@ const approve = async () => {
         });
         $('#qrcode').val('');
         $('#playerInfo').hide();
+        $('#scanner').show();
     } else {
         alert('something went wrong');
     }

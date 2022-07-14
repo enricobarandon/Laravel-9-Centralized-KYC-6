@@ -58,6 +58,7 @@
                             </div>
                         </form>
                     </div>
+                    
                     <table class="table table-bordered table-striped global-table">
                         <thead>
                             <tr>
@@ -90,18 +91,18 @@
                                         <form action='{{ url("/users/is_active/$user->id") }}' method="POST">
                                             @csrf
                                                 @if($user->is_active)
-                                                    <button type="button" class="btn btn-sm btn-danger users-status deactivate">
+                                                    <button type="button" class="btn btn-xs btn-danger users-status deactivate">
                                                         <i class="fas fa-times"></i> Deactivate
                                                     </button>
                                                 @else
-                                                    <button type="button" class="btn btn-sm btn-success users-status activate">
+                                                    <button type="button" class="btn btn-xs btn-success users-status activate">
                                                         <i class="fas fa-plus"></i> Activate
                                                     </button>
                                                 @endif
                                         </form>
                                         
-                                        <a href='{{ url("users/update/$user->id/info") }}' name="updateUser" class="btn btn-sm btn-primary"><i class="fas fa-cog"></i> Edit</a>
-                                        <a href='{{ url("users/update/$user->id/password") }}' name="updateUser" class="btn btn-sm btn-info"><i class="fas fa-cog"></i> Change Password</a>
+                                        <a href='{{ url("users/update/$user->id/info") }}' name="updateUser" class="btn btn-xs btn-primary"><i class="fas fa-cog"></i> Edit</a>
+                                        <a href='{{ url("users/update/$user->id/password") }}' name="updateUser" class="btn btn-xs btn-info"><i class="fas fa-cog"></i> Change Password</a>
                                     </td>
                                 </tr>
                             @endforeach

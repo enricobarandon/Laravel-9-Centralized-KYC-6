@@ -35,7 +35,7 @@
                         </div>                     
                         
                         <div class="row-element">
-                            <div class="qrscanner" id="scanner">
+                            <div class="qrscanner img-thumbnail mb-3 text-center" id="scanner">
                             </div>
                         </div>
                         <!-- <div id="playerInfo">
