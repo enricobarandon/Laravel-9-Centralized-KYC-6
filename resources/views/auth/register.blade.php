@@ -152,8 +152,13 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="country" >Country</label>
-                                            <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required autocomplete="country">
-
+                                            <!-- <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required autocomplete="country"> -->
+                                            <select id="country" name="country" class="form-control selectCSS @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required>
+                                                <option selected value="Philippines">Philippines</option>
+                                                @foreach ($countries as $key => $value)
+                                                <option value="{{$value}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
                                             @error('country')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -213,7 +218,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="zipcode" >Zipcode</label>
-                                            <input id="zipcode" type="text" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
+                                            <input id="zipcode" type="number" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
 
                                             @error('zipcode')
                                                 <span class="invalid-feedback" role="alert">
@@ -224,7 +229,13 @@
 
                                         <div class="col-md-4">
                                             <label for="province" >Province</label>
-                                            <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required autocomplete="province">
+                                            <!-- <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required autocomplete="province"> -->
+                                            <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
+                                                <option disabled selected value="">-- Select Province --</option>
+                                                @foreach ($provinces as $key => $value)
+                                                <option value="{{$value}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
 
                                             @error('province')
                                                 <span class="invalid-feedback" role="alert">
@@ -294,7 +305,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="p_zipcode" >Zipcode</label>
-                                            <input id="p_zipcode" type="text" class="form-control @error('p_zipcode') is-invalid @enderror" name="p_zipcode" value="{{ old('p_zipcode') }}" required autocomplete="p_zipcode">
+                                            <input id="p_zipcode" type="number" class="form-control @error('p_zipcode') is-invalid @enderror" name="p_zipcode" value="{{ old('p_zipcode') }}" required autocomplete="p_zipcode">
 
                                             @error('p_zipcode')
                                                 <span class="invalid-feedback" role="alert">
@@ -305,9 +316,15 @@
 
                                         <div class="col-md-4">
                                             <label for="p_province" >Province</label>
-                                            <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required autocomplete="p_province">
+                                            <!-- <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required autocomplete="p_province"> -->
+                                            <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
+                                                <option disabled selected value="">-- Select Province --</option>
+                                                @foreach ($provinces as $key => $value)
+                                                <option value="{{$value}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
 
-                                            @error('province')
+                                            @error('p_province')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -359,7 +376,7 @@
                                         </div>
                                         <div class="col-md-7">
                                             <label for="valid_id_type">Valid ID Type</label>
-                                            <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
+                                            <!-- <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
                                                 <option value="" selected="selected">Select ID Type</option>
                                                 <option value="1">Government Service Insurance System (GSIS) Card</option>
                                                 <option value="2">Unified Multi-Purpose Identification (UMID) Card</option>
@@ -371,6 +388,12 @@
                                                 <option value="8">Philippine Postal ID (issued November 2016 onwards)</option>
                                                 <option value="9">Latest Passport</option>
                                                 <option value="10">National ID/PhilSys ID</option>
+                                            </select> -->
+                                            <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
+                                                <option disabled selected value="">-- Select Valid ID --</option>
+                                                @foreach ($valid_ids as $key => $value)
+                                                <option value="{{$key}}">{{$value}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

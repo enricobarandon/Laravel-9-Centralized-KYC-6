@@ -205,16 +205,14 @@ $id_type = [
                                                                     <div class="form-group">
                                                                         <label for="interview_description" class="col-12 control-label">Interview Description</label>
                                                                         <div class="col-sm-12">
-                                                                            <!-- <input type="text" class="form-control" id="interview_description" name="interview_description" placeholder="Description" value="{{ $userDetails->interview_description }}"> -->
-                                                                            <textarea class="form-control" id="interview_description" name="interview_description" placeholder="Description">{{ $userDetails->interview_description }}</textarea>
+                                                                            <textarea class="form-control" id="interview_description" name="interview_description" placeholder="Description">{{ isset($userDetails->interview_description) ? $userDetails->interview_description : '' }}</textarea>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <label for="interview_link" class="col-12 control-label">Interview Link</label>
                                                                         <div class="col-sm-12">
-                                                                            <!-- <input type="text" class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link" value="{{ $userDetails->interview_link }}"> -->
-                                                                            <textarea class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link">{{ $userDetails->interview_link }}</textarea>
+                                                                            <textarea class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link">{{ isset($userDetails->interview_link) ? $userDetails->interview_link : '' }}</textarea>
                                                                         </div>
                                                                     </div>
 

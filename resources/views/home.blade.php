@@ -3,9 +3,13 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">{{ __('Dashboard') }}</div>
-
+        <div class="card card-info">
+            <div class="card-header">{{ __('Dashboard') }}
+            @if($userInfo->user_type_id == 5 and $userInfo->status == 'pending')
+                <a href='{{ url("/player/$userInfo->id") }}' class="btn btn-normal float-right"><i class="fas fa-cog"></i> Update Details</a>
+            @endif
+            </div>
+            
             <div class="card-body">
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">

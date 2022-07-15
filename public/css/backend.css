@@ -133,3 +133,13 @@ strong.active {
 .qrscanner video {
     width: 100%;
 }
+.view-password1,
+.view-password2 {
+    width: 35px;
+    position: absolute;
+    right: 5px;
+    top: 35px;
+}
+.form-mg {
+    padding: 10px 20px;
+}

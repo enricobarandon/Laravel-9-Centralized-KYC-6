@@ -172,6 +172,10 @@ class RegisterController extends Controller
         // if ($user->user_type_id != '1') {
         //     return redirect('/users')->withError('Permission denied.');
         // }
-        return view('auth.register');
+        $provinces = config('compliance.province');
+        $countries = config('compliance.countries');
+        $valid_ids = config('compliance.valid_ids');
+
+        return view('auth.register', compact('provinces','countries','valid_ids'));
     }
 }

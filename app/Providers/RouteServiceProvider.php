@@ -60,6 +60,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/backend/groups.php'));
+                
+            // Players Route file
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/backend/players.php'));
         });
     }
 
