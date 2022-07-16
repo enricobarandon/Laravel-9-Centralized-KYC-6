@@ -24,8 +24,17 @@ $id_type = [
                     @if($user->status == 'pending')
                         <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                         @csrf
+                            <input type="hidden" name="operation" value="approve" />
                             <button type="button" class="btn btn-info btn-normal float-right submit-approval">
-                                <i class="fas fa-check"></i> Click to Approve
+                                <i class="fas fa-check"></i> Approve Player
+                            </button>
+                        </form>
+                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                        @csrf
+                            <input type="hidden" name="operation" value="disapprove" />
+                            <input type="hidden" name="remarks" id="remarks" value="">
+                            <button type="button" class="btn btn-danger btn-normal float-right submit-disapprove mr-3">
+                                <i class="fas fa-times"></i> Disapprove Player
                             </button>
                         </form>
                     @endif
@@ -92,7 +101,9 @@ $id_type = [
                                                     <h6>Status</h6>
                                                     <p class="text-muted">
                                                         <strong class="{{ $user->status }}">{{ isset($user->status) ? strtoupper($user->status) : '--' }}</strong>
-                                                        <!-- <a class="update-status pull-right"><i class="fa fa-edit"></i></a> -->
+                                                        @if($user->status == 'disapproved')
+                                                            <h6>Remarks: <i class="text-muted">{{ isset($userDetails->remarks) ? $userDetails->remarks : '--' }}</i></h6>
+                                                        @endif
                                                     </p>
                                                 </div>
                                             </div>
@@ -291,6 +302,24 @@ $('document').ready(function() {
         }).then((willUpdate) => {
             if (willUpdate) {
                 $(this).closest('form').submit();
+            }
+        });
+    })
+    
+    $('.submit-disapprove').on('click', function(){
+        swal({
+            title: "Disapprove Player",
+            text: "Input Remarks",
+            icon: "info",
+            content: "input",
+            buttons: true,
+            dangerMode: true,
+        }).then((value) => {
+            $('#remarks').val(`${value}`);
+            if($('#remarks').val() != ''){
+                $(this).closest('form').submit();
+            }else{
+                swal({icon: "error", text : 'Please Enter Remarks to proceed'});
             }
         });
     })

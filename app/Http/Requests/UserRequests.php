@@ -24,11 +24,11 @@ class UserRequests extends FormRequest
     public function rules()
     {
         return [
-            'first_name' =>     ['required', 'string', 'max:255'],
-            'last_name' =>      ['required', 'string', 'max:255'],
-            'username' =>       ['required', 'string', 'max:255', 'unique:users'],
+            'first_name' =>     ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'last_name' =>      ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'username' =>       ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i', 'unique:users'],
             'password' =>       ['required', 'string', 'min:8', 'confirmed'],
-            'contact' =>        ['required', 'digits:11', 'unique:users'],
+            'contact' =>        ['required', 'digits:11', 'unique:users', 'numeric'],
             'user_type_id' =>   ['required'],
             'group_code' =>     ['required','string','max:8'] // required for Authenticated user store method
         ];

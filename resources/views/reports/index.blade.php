@@ -71,8 +71,8 @@
                                 <tr>
                                     <td class="text-center">{{ ++$groupCount }}</td>
                                     <td>{{ $group->group->name }}</td>
-                                    <td>{{ $group->group->group_type }}</td>
-                                    <td>{{ $group->group->province->name }}</td>
+                                    <td class="text-center">{{ $group->group->group_type }}</td>
+                                    <td class="text-center">{{ $group->group->province->name }}</td>
                                     <td class="text-center"><span class="badge bg-green">{{ $group->total_player_registered }}</span></td>
                                     <td class="text-center"><span class="badge bg-blue">{{ $group->total_player_logged_in }}</span></td>
                                 </tr>

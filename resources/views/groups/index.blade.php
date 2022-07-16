@@ -56,8 +56,8 @@
                                 <th>Code</th>
                                 <th>Type</th>
                                 <th>Province</th>
-                                <th>site</th>
-                                <th>Is Active</th>
+                                <th>Site</th>
+                                <th>Status</th>
                                 <!-- <th>Players</th> -->
                             </tr>
                         </thead>

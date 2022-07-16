@@ -81,10 +81,10 @@ input#qrcode {
     padding: 0px 5px 2px 5px;;
     border-radius: 5px;
 }
-.fully-verified {
-    background: rgb(15, 255, 171);
+.disapproved {
+    background: rgb(230, 17, 6);
     color: white;
-    padding: 0px 5px 2px 5px;;
+    padding: 0px 5px 2px 5px;
     border-radius: 5px;
 }
 .file-css {
@@ -145,4 +145,10 @@ strong.active {
 }
 .form-mg {
     padding: 10px 20px;
+}
+.btn-padding {
+    padding: 0 5px;
+}
+.check-padding {
+    padding: 0 2px;
 }

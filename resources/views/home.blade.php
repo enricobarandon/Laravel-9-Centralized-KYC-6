@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">{{ __('Dashboard') }}
-            @if($userInfo->user_type_id == 5 and $userInfo->status == 'pending')
+            @if($userInfo->user_type_id == 5 and in_array($userInfo->status, ['pending','disapproved']))
                 <a href='{{ url("/player/$userInfo->id") }}' class="btn btn-normal float-right"><i class="fas fa-cog"></i> Update Details</a>
             @endif
             </div>
@@ -49,6 +49,19 @@
                         </div>
                         @endif
 
+                    </div>
+                    @elseif(Auth::user()->status == 'disapproved')
+                    <div class="col-md-12 text-center qrcode-div">
+                        <div class="card card-outline card-danger mb-2">
+                            <div class="card-header">
+                                <h4><i class="fa fa-info-circle"></i> Your account has been rejected.</h4>
+                            </div>
+
+                            <div class="card-body">
+                            <p><strong>Remarks: {{ isset($userDetails->remarks) ? $userDetails->remarks : '' }}</strong></p>
+                            </div>
+
+                        </div>
                     </div>
                     @endif
 

@@ -58,21 +58,21 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' =>     ['required', 'string', 'max:255'],
-            'middle_name' =>    ['required','string', 'max:255'],
-            'last_name' =>      ['required', 'string', 'max:255'],
-            'username' =>       ['required', 'string', 'max:255', 'unique:users'],
+            'first_name' =>     ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'middle_name' =>    ['required','string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'last_name' =>      ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'username' =>       ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i', 'unique:users'],
             'password' =>       ['required', 'string', 'min:8', 'confirmed'],
             'contact' =>        ['required', 'digits:11', 'unique:users'],
 
             'date_of_birth' =>  ['required'],
-            'place_of_birth' => ['required'],
-            'nationality' =>    ['required'],
-            'country' =>        ['required'],
-            'occupation' =>         ['required'],
-            'source_of_income' =>   ['required'],
-            'facebook' =>           ['required'],
-            'valid_id_type' =>      ['required'],
+            'place_of_birth' => ['required', 'max:255'],
+            'nationality' =>    ['required', 'max:255'],
+            'country' =>        ['required', 'max:255'],
+            'occupation' =>         ['required', 'max:255'],
+            'source_of_income' =>   ['required', 'max:255'],
+            'facebook' =>           ['required', 'max:255'],
+            'valid_id_type' =>      ['required', 'numeric'],
             'id_picture' =>     ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
             'selfie_with_id' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
         ]);

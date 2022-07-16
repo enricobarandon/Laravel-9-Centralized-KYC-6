@@ -86,8 +86,19 @@
                                     </td>
                                     <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
                                     <td>
-                                        <!-- <a class="btn btn-primary btn-sm" href='{{ url("/helpdesk/user/$player->id") }}'>Review Details</a> -->
-                                        <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details"><i class="fa fa-eye"></i></a>
+                                        <form action='{{ url("/users/is_active/$player->id") }}' method="POST">
+                                            @csrf
+                                            @if($player->is_active)
+                                                <button type="button" class="btn btn-xs btn-danger users-status deactivate mr-2 btn-padding" data-toggle="tooltip" data-placement="top" title="Deactivate">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn btn-xs btn-success users-status activate mr-2 check-padding"  data-toggle="tooltip" data-placement="top" title="Activate">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            @endif
+                                            <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details"><i class="fa fa-eye"></i></a>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -110,6 +121,24 @@
 <script>
     $("document").ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
+        $('.users-status').on('click', function(){
+            if($(this).hasClass('activate') == true){
+                $text = 'activate';
+            }else{
+                $text = 'deactivate';
+            }
+            swal({
+                title: $text.toUpperCase() + " USER",
+                text: "Are you sure you want to " + $text + " this user?",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+            }).then((willUpdate) => {
+                if (willUpdate) {
+                    $(this).closest('form').submit();
+                }
+            });
+        })
     });
 </script>
 @endsection

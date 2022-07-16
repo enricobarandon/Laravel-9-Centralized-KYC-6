@@ -175,7 +175,7 @@ class UserController extends Controller
     }
 
     public function updateUser(Request $request){
-        $userTypes = UserType::get();
+        $userTypes = UserType::select('id','role')->where('role','!=','Player')->get();
         
         $groups = Group::select('code','name')->where('code','!=','')->whereNotNull('code')->get();
 
@@ -199,11 +199,11 @@ class UserController extends Controller
 
         if($request->operation == 'info'){
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'contact' => 'required|unique:users,contact,'.$request->id,
+                'first_name' => 'required|max:255|regex:/^[a-z\d\-_\s]+$/i',
+                'last_name' => 'required|max:255|regex:/^[a-z\d\-_\s]+$/i',
+                'contact' => 'required|numeric|unique:users,contact,'.$request->id,
                 'user_type_id' => 'required|numeric',
-                'group_code' => 'required'
+                'group_code' => 'required|string|max:8'
             ]);
             if ($validator->fails()) {
                 return redirect('/users/update/'.$request->id.'/info')

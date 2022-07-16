@@ -54,7 +54,7 @@ class HelpDeskController extends Controller
         $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
-                                ->where('status', 'pending');
+                                ->whereIn('status', ['pending','disapproved']);
             
         $keyword = $request->keyword;
 
@@ -68,9 +68,15 @@ class HelpDeskController extends Controller
             $players = $players->where('users.is_active', $status);
         }
 
+        $account_status = $request->account_status;
+
+        if($account_status){
+            $players = $players->where('users.status', $account_status);
+        }
+
         $players = $players->paginate(20);
 
-        return view('helpdesk.for-approval', compact('players','keyword','status'));
+        return view('helpdesk.for-approval', compact('players','keyword','status','account_status'));
     }
 
     public function showPlayerDetails(User $user)
@@ -80,24 +86,34 @@ class HelpDeskController extends Controller
         return view('helpdesk.user-details', compact('user','userDetails'));
     }
 
-    public function changeStatus(User $user)
+    public function changeStatus(User $user, Request $request)
     {
         $auth = auth()->user();
+
+        $operation = '';
         
-        $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified']);
+        if($request->operation == 'approve'){
+            $operation = 'approved';
+            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified']);
+        }else{
+            $operation = 'disapproved';
+            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'disapproved']);
+
+            $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->remarks]);
+        }
 
         if($changeStatus){
 
             ActivityLog::create([
-                'type' => 'approved-player',
+                'type' => $operation.'-player',
                 'user_id' => $auth->id,
                 'assets' => json_encode([
-                    'action' => 'Approved Player Account',
+                    'action' => $operation.' player account',
                     'username' => $user->username
                 ])
             ]);
 
-            return back()->with('success','Player account approved');
+            return back()->with('success','Player account '.$operation);
         }else{
             return back()->with('success','Something went wrong');
         }

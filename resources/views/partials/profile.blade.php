@@ -1,4 +1,4 @@
-<div class="{{ Auth::user()->status == 'pending' ? 'col-md-12' : 'col-md-8' }}">
+<div class="{{ in_array($userInfo->status, ['pending','disapproved']) ? 'col-md-12' : 'col-md-8' }}">
     <div class="card card-widget widget-user shadow-lg">
 
         <div class="widget-user-header text-white" style="background: url('/dist/img/bg2.jpg') center center;">

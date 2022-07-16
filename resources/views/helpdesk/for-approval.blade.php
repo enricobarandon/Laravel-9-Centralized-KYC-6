@@ -7,7 +7,7 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Help Desk Page</h3>
-                    <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a>
+                    <!-- <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a> -->
                 </div>
 
                 <div class="card-body">
@@ -33,11 +33,19 @@
                                     <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Name / Username" value="{{ $keyword }}">
                                 </div>
                                 
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <select class="form-control" name="player_status" id="player_status">
-                                        <option value="" selected disabled>Select Status</option>
+                                        <option value="" selected disabled>Select Player Status</option>
                                         <option value="1" {{ $status == '1' ? 'selected' : '' }}>Active</option>
                                         <option value="0" {{ $status == '0' ? 'selected' : '' }}>Deactivated</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <select class="form-control" name="account_status" id="player_status">
+                                        <option value="" selected disabled>Select Account Status</option>
+                                        <option value="pending" {{ $account_status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="disapproved" {{ $account_status == 'disapproved' ? 'selected' : '' }}>Disapproved</option>
                                     </select>
                                 </div>
 
@@ -80,8 +88,19 @@
                                     </td>
                                     <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
                                     <td>
-                                        <!-- <a class="btn btn-primary btn-sm" href='{{ url("/helpdesk/user/$player->id") }}'>Review Details</a> -->
-                                        <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details"><i class="fa fa-eye"></i></a>
+                                        <form action='{{ url("/users/is_active/$player->id") }}' method="POST">
+                                            @csrf
+                                            @if($player->is_active)
+                                                <button type="button" class="btn btn-xs btn-danger users-status deactivate mr-2 btn-padding" data-toggle="tooltip" data-placement="top" title="Deactivate">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn btn-xs btn-success users-status activate mr-2 check-padding"  data-toggle="tooltip" data-placement="top" title="Activate">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            @endif
+                                            <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details"><i class="fa fa-eye"></i></a>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -99,6 +118,24 @@
 <script>
     $("document").ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
+        $('.users-status').on('click', function(){
+            if($(this).hasClass('activate') == true){
+                $text = 'activate';
+            }else{
+                $text = 'deactivate';
+            }
+            swal({
+                title: $text.toUpperCase() + " USER",
+                text: "Are you sure you want to " + $text + " this user?",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+            }).then((willUpdate) => {
+                if (willUpdate) {
+                    $(this).closest('form').submit();
+                }
+            });
+        })
     });
 </script>
 @endsection

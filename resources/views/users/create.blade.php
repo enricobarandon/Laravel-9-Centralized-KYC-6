@@ -52,8 +52,8 @@
                             </div>
 
                             <div class="form-group ">
-                                <select class="form-control" name="user_type_id">
-                                    <option selected disable>Select User Role</option>
+                                <select class="form-control" name="user_type_id" required>
+                                    <option selected disable value="">Select User Role</option>
                                     @foreach($userTypes as $type)
                                         <option value="{{ $type->id }}">{{ $type->role }}</option>
                                     @endforeach
@@ -61,8 +61,8 @@
                             </div>
 
                             <div class="form-group ">
-                                <select class="form-control" name="group_code" data-live-search="true">
-                                    <option selected disable>Select Group Code</option>
+                                <select class="form-control" name="group_code" data-live-search="true" required>
+                                    <option selected disable value="">Select Group Code</option>
                                     @foreach($groups as $group)
                                         <option value="{{ $group->code }}">{{ $group->name }}</option>
                                     @endforeach
