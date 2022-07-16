@@ -66,8 +66,9 @@
                                 <th>Name</th>
                                 <th>Username</th>
                                 <th>User Role</th>
+                                <th>Group Code</th>
                                 <th>Created At</th>
-                                <th>Is Active</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -81,6 +82,7 @@
                                     <td>{{ $user->first_name . ' ' . $user->last_name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $userTypes[$user->user_type_id] }}</td>
+                                    <td>{{ $user->group_code }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($user->created_at)) }}</td>
                                     <td class="text-center">
                                         <strong class="{{ $user->is_active ? 'active' : 'deactivated' }}">

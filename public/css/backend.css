@@ -63,11 +63,11 @@ input#qrcode {
 }
 .id-img {
     width: 90%;
-    max-height: 300px;
+    max-height: 350px;
 }
 .snapshot-img {
     width: 100%;
-    max-height: 300px;
+    /* max-height: 300px; */
 }
 .pending {
     background: rgb(51, 64, 240);

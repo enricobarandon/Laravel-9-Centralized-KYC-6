@@ -28,13 +28,13 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $users = User::select('users.id','first_name','middle_name','last_name','email','users.created_at as created_at','is_active','status','username','user_type_id')
+        $users = User::select('users.id','first_name','middle_name','last_name','email','users.created_at as created_at','is_active','status','username','user_type_id','group_code')
                                 ->whereIn('user_type_id', [1,2,3,4]);
                                 
         $keyword = $request->keyword;
 
         if($request->keyword){
-            $users = $users->where(DB::raw('concat(first_name,last_name,username)'), 'like', '%' . $request->keyword . '%');
+            $users = $users->where(DB::raw('concat(first_name,last_name,username,group_code)'), 'like', '%' . $request->keyword . '%');
         }
         
         $userType = $request->userType;
@@ -164,8 +164,8 @@ class UserController extends Controller
                 'assets' => json_encode([
                     'action' => 'Change user status',
                     'username' => $user->username,
-                    'old status' => $user->is_active,
-                    'new status' => !$user->is_active
+                    'old status' => $user->is_active == '0' ? 'deactivated' : 'active',
+                    'new status' => !$user->is_active == '0' ? 'deactivated' : 'active'
                 ])
             ]);
             return back()->with('success','User status updated');
@@ -202,7 +202,8 @@ class UserController extends Controller
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'contact' => 'required|unique:users,contact,'.$request->id,
-                'user_type_id' => 'required|numeric'
+                'user_type_id' => 'required|numeric',
+                'group_code' => 'required'
             ]);
             if ($validator->fails()) {
                 return redirect('/users/update/'.$request->id.'/info')
@@ -214,7 +215,8 @@ class UserController extends Controller
                         'first_name' => $request->first_name,
                         'last_name' => $request->last_name,
                         'contact' => $request->contact,
-                        'user_type_id' => $request->user_type_id
+                        'user_type_id' => $request->user_type_id,
+                        'group_code' => $request->group_code
                     )
                 );
                 $logs = array(

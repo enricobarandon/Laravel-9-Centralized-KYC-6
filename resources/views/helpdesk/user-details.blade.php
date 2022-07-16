@@ -85,7 +85,7 @@ $id_type = [
 
                                             <div class="row pt-1">
                                                 <div class="col-6 mb-1">
-                                                    <h6>Contact Number</h6>
+                                                    <h6>Username</h6>
                                                     <p class="text-muted">{{ isset($user->username) ? $user->username : '--' }}</p>
                                                 </div>
                                                 <div class="col-6 mb-1">

@@ -61,10 +61,10 @@
                         </div>
                         
                         <div class="row mb-3">
-                            <label for="user_type_id" class="col-md-4 col-form-label text-md-end">{{ __('Group') }}</label>
+                            <label for="group_code" class="col-md-4 col-form-label text-md-end">{{ __('Group') }}</label>
 
                             <div class="col-md-6">
-                                <select id="user_type_id" class="form-control @error('user_type_id') is-invalid @enderror" name="user_type_id">
+                                <select id="group_code" class="form-control @error('group_code') is-invalid @enderror" name="group_code">
                                     <option selected disabled value="0">-- Select Group--</option>
                                     @foreach($groups as $group)
                                         <option value="{{ $group->code }}" {{ $group->code == $usersInfo->group_code ? 'selected' : '' }}>{{ $group->name }}</option>

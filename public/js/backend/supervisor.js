@@ -16,7 +16,18 @@ $('document').ready(function() {
     // $('#playerInfo').hide();
 
     $('#btnApprove').on('click', () => {
-        approve();
+        if($("#qrcode").val() == ''){
+            swal({
+                title: "Empty",
+                text: "Please scan qr code first!",
+                icon: "error",
+                timer: 2000,
+                button: 'Close'
+            });
+        }else{
+            approve();
+        }
+        
     })
 
 });
@@ -54,9 +65,17 @@ const getUserInfo = async () => {
         $("#userId").val(player.id);
 
         $('#scanner').hide();
+        
 
     } else {
-        alert("null");
+        swal({
+            title: "No Data Found",
+            text: "Account not Exist",
+            icon: "error",
+            timer: 2000,
+            button: 'Close'
+        });
+        $('#qrcode').val('').focus();
     }
 }
 

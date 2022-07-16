@@ -19,7 +19,7 @@
                 <p>Pending Players</p>
             </div>
             <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="ion ion-ios-timer"></i>
             </div>
             <a href="{{ route('helpdesk.for-approval') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -32,7 +32,7 @@
                 <p>Total Logged in Today</p>
             </div>
             <div class="icon">
-                <i class="ion ion-bag"></i>
+                <i class="ion ion-pie-graph"></i>
             </div>
             <a href="{{ route('reports.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>

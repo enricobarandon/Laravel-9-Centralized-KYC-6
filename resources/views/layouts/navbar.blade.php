@@ -1,6 +1,13 @@
 <!-- Navbar -->
 @php 
   $users = Auth::user();
+  $user_role = [
+    1 => 'Administrator',
+    2 => 'Tech',
+    3 => 'Help Desk',
+    4 => 'Supervisor',
+    5 => 'Player',
+    ];
 @endphp
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -19,7 +26,7 @@
 
     <li class="nav-item dropdown">
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-            {{ Auth::user()->username }}
+            {{ $users->username }}  ({{ $user_role[$users->user_type_id] }})
         </a>
 
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -56,7 +63,7 @@
           <img src="{{ asset('dist/img/default-150x150.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</a>
+          <a href="#" class="d-block">{{ $users->first_name . ' ' . $users->last_name }}</a>
         </div>
       </div>
 
@@ -116,7 +123,7 @@
           </li>
           @endif
 
-          @if(in_array($users->user_type_id, [1,2,4]))
+          @if(in_array($users->user_type_id, [1,4]))
           <li class="nav-item">
             <a href="/supervisor" class="nav-link {{ (request()->is('supervisor*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-address-card"></i>
