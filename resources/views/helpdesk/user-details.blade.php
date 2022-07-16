@@ -18,6 +18,7 @@ $id_type = [
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <a href="{{ $user->status == 'verified' ? '/helpdesk' : '/helpdesk/for-approval' }}" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Player Details</h3>

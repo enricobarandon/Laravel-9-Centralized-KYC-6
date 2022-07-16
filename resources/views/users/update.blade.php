@@ -2,11 +2,13 @@
 
 @section('content')
 <div class="container-fluid">
-    <a href='{{ url("users") }}' class="btn btn-primary"><< Back to Users page</a>
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Update Users Account') }}</div>
+        <div class="col-md-12">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Update Users Account</h3>
+                    <a href='{{ url("users") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                </div>
 
                 <div class="card-body">
                     @if($operation == 'info')
@@ -24,7 +26,7 @@
                             </div>
                         @endif
                         <div class="row mb-3">
-                            <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
+                            <label for="first_name" class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $usersInfo->first_name }}" required autocomplete="first_name" autofocus>
@@ -32,7 +34,7 @@
                         </div>
                         
                         <div class="row mb-3">
-                            <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
+                            <label for="last_name" class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $usersInfo->last_name }}" required autocomplete="last_name" autofocus>
@@ -40,7 +42,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="contact" class="col-md-4 col-form-label text-md-end">{{ __('Contact') }}</label>
+                            <label for="contact" class="col-md-2 col-form-label text-md-end">{{ __('Contact') }}</label>
 
                             <div class="col-md-6">
                                 <input id="contact" type="contact" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ $usersInfo->contact }}" required autocomplete="contact">
@@ -48,7 +50,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="user_type_id" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
+                            <label for="user_type_id" class="col-md-2 col-form-label text-md-end">{{ __('User Role') }}</label>
 
                             <div class="col-md-6">
                                 <select id="user_type_id" class="form-control @error('user_type_id') is-invalid @enderror" name="user_type_id" required>
@@ -61,7 +63,7 @@
                         </div>
                         
                         <div class="row mb-3">
-                            <label for="group_code" class="col-md-4 col-form-label text-md-end">{{ __('Group') }}</label>
+                            <label for="group_code" class="col-md-2 col-form-label text-md-end">{{ __('Group') }}</label>
 
                             <div class="col-md-6">
                                 <select id="group_code" class="form-control @error('group_code') is-invalid @enderror" name="group_code" required>
@@ -96,7 +98,7 @@
                             </div>
                         @endif
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end" minlength="8">New Password</label>
+                            <label for="name" class="col-md-2 col-form-label text-md-end" minlength="8">New Password</label>
 
                             <div class="col-md-6">
                                 <input id="cpassword" type="password" class="form-control" minlength="8" name="cpassword" required autofocus>
@@ -104,7 +106,7 @@
                         </div>
                         
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">Confirm Password</label>
+                            <label for="name" class="col-md-2 col-form-label text-md-end">Confirm Password</label>
 
                             <div class="col-md-6">
                                 <input id="ccpassword" type="password" class="form-control" name="ccpassword" required>
@@ -112,7 +114,7 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-6 offset-md-3">
                                 <button type="submit" class="btn btn-primary">
                                     Submit
                                 </button>

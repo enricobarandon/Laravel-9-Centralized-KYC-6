@@ -7,10 +7,11 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> create user</h3>
+                    <a href='{{ url("users") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
                 </div>
 
                 <div class="card-body text-center">
-                    <div class="col-md-4 m-auto">
+                    <div class="col-md-8 m-auto">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
@@ -38,7 +39,7 @@
 
                     <form method="post" action="{{ route('users.store') }}">
                         @csrf
-                        <div class="col-md-4 m-auto">
+                        <div class="col-md-8 m-auto">
                             <div class="form-group ">
                                 <input class="form-control" type="text" name="username" value="{{ old('username') }}" placeholder="Username">
                             </div>
