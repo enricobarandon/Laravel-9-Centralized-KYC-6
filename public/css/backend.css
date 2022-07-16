@@ -123,6 +123,9 @@ strong.active {
 .qrcode-div > div {
     margin: auto;
 }
+.qrcode-div img {
+    width: 100% !important;
+}
 .callout .form-group {
     margin-bottom: 0 !important;
 }
