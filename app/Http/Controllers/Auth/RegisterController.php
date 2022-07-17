@@ -65,7 +65,7 @@ class RegisterController extends Controller
             'password' =>       ['required', 'string', 'min:8', 'confirmed'],
             'contact' =>        ['required', 'digits:11', 'unique:users'],
 
-            'date_of_birth' =>  ['required'],
+            'date_of_birth' =>  ['required','date','before:21 years ago'],
             'place_of_birth' => ['required', 'max:255'],
             'nationality' =>    ['required', 'max:255'],
             'country' =>        ['required', 'max:255'],
@@ -151,12 +151,12 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($data)));
         // $this->guard()->login($user);
         ActivityLog::create([
-            'type' => 'create-user',
+            'type' => 'register-player',
             'user_id' => 0, // guest middlware
             'assets' => json_encode([
-                'action' => 'created a user account',
+                'action' => 'Register player account',
                 'name' => $request->first_name . ' ' . $request->last_name,
-                'email' => $request->email,
+                'username' => $request->username,
                 'role' => 'Player'
             ])
         ]);

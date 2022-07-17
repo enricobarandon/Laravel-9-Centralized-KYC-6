@@ -90,14 +90,17 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/api-data" class="nav-link {{ (request()->is('api-data*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-info"></i>
-              <p>
-                Api Data
-              </p>
-            </a>
-          </li>
+            @if($users->username == 'kikoadmin')
+            <li class="nav-item">
+              <a href="/api-data" class="nav-link {{ (request()->is('api-data*')) ? 'active' : '' }}">
+                <i class="nav-icon fa fa-info"></i>
+                <p>
+                  Api Data
+                </p>
+              </a>
+            </li>
+            @endif
+
           @endif
 
           @if(in_array($users->user_type_id, [1,2,3]))

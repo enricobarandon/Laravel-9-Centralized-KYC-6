@@ -139,8 +139,21 @@ class HelpDeskController extends Controller
         }
 
         if($saveSnapshot){
+
             $request->snapshot->move(public_path('img/snapshot'), $snapshot);
-            
+
+            $playerInfo = User::where('id',$request->hdnId)->first();
+
+            ActivityLog::create([
+                'type' => 'update-snapshot',
+                'user_id' => $auth->id, // guest middlware
+                'assets' => json_encode([
+                    'action' => 'Update Snapshot of Player',
+                    'name' => $playerInfo->first_name . ' ' . $playerInfo->last_name,
+                    'username' => $playerInfo->username
+                ])
+            ]);
+
             return back()->with('success','Snapshot successfully saved');
         }else{
             return back()->with('error','Something went wrong');
@@ -159,6 +172,18 @@ class HelpDeskController extends Controller
         
         $update = UserDetails::where('user_id', $user->id)->update($interviewDetails);
         if($update){
+
+            ActivityLog::create([
+                'type' => 'update-interview-details',
+                'user_id' => $auth->id, // guest middlware
+                'assets' => json_encode(array_merge([
+                    'action' => 'Update Interview Details',
+                    'name' => $user->first_name . ' ' . $user->last_name,
+                    'username' => $user->username
+                    
+                ],$interviewDetails))
+            ]);
+
             return back()->with('success','Interview details successfully updated');
         }else{
             return back()->with('error','Something went wrong');

@@ -68,12 +68,39 @@
                     @include('partials.profile')
 
                     @if(Auth::user()->status == 'verified')
-                    <div class="col-md-4 text-center qrcode-div">
-                        <h4>Profile QR Code</h4>
-                            <!-- {!! $img !!} -->
+                    <div class="col-md-4 text-center" style="height: 100%;">
+                        <div class="qrcode-div" id="qrcode-div" style="background: #ffffff; height: 100%; padding: 10px;">
+                            <h4>Profile QR Code</h4>
+                                <!-- {!! $img !!} -->
                             <img src="data:image/png;base64,{{ $img }}" alt="barcode" style="width: 100%" />
-                            <a class="btn btn-primary mt-3" href="data:image/png;base64,{{ $img }}" download><i class="fa fa-download"></i> Download</a>
+                        </div>
+                        <a class="btn btn-primary mt-3" id="downloadQR"><i class="fa fa-download"></i> Download</a>
                     </div>
+                    @section('script')
+                    <script src="{{ asset('js/html2canvas.js') }}"></script>
+                    <script>
+                    $(document).ready(function(){
+                        var element = $("#qrcode-div"); // global variable
+                        var getCanvas; // global variable
+                    
+                        html2canvas(element, {
+                        onrendered: function (canvas) {
+                            getCanvas = canvas;
+                            }
+                        });
+
+                        $("#downloadQR").on('click', function () {
+
+                            var imgageData = getCanvas.toDataURL("image/png");
+                            // Now browser starts downloading it instead of just showing it
+                            var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+                            $("#downloadQR").attr("download", "my_profile_qrcode.png").attr("href", newData);
+                        });
+
+                    });
+
+                    </script>
+                    @endsection
                     @endif
                 </div>
                 @elseif(Auth::user()->user_type_id == 4)

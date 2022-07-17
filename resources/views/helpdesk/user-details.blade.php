@@ -313,14 +313,18 @@ $('document').ready(function() {
             text: "Input Remarks",
             icon: "info",
             content: "input",
-            buttons: true,
-            dangerMode: true,
-        }).then((value) => {
-            $('#remarks').val(`${value}`);
-            if($('#remarks').val() != ''){
-                $(this).closest('form').submit();
-            }else{
-                swal({icon: "error", text : 'Please Enter Remarks to proceed'});
+            buttons: {
+                cancel: true,
+                confirm: true,
+            }
+        }).then((result) => {
+            $('#remarks').val(result);
+            if(result != null){
+                if($('#remarks').val().length > 0){
+                    $(this).closest('form').submit();
+                }else{
+                    swal({icon: "error", text : 'Please Enter Remarks to proceed'});
+                }
             }
         });
     })
