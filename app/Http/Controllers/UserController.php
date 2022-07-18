@@ -53,7 +53,7 @@ class UserController extends Controller
 
         $userTypes = UserType::select('id','role')->get()->pluck('role','id')->toArray();
 
-        $displayRole = UserType::get();
+        $displayRole = UserType::select('id','role')->where('role','!=','Player')->get();
 
         return view('users.index', compact('users','userTypes','userType','displayRole','userStatus','keyword'));
     }

@@ -8,6 +8,11 @@ use App\Models\GroupStatistics;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request)
     {
         $verified = User::where('status','verified')->where('user_type_id', 5)->count();
