@@ -266,3 +266,8 @@
 .m-auto{
     margin: auto;
 }
+
+.btn-normal {
+    background: transparent;
+    border-color: #ffffff;
+}

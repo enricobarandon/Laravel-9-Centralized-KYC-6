@@ -175,6 +175,8 @@ class UserController extends Controller
     }
 
     public function updateUser(Request $request){
+        $auth = auth()->user();
+        
         $userTypes = UserType::select('id','role')->where('role','!=','Player')->get();
         
         $groups = Group::select('code','name')->where('code','!=','')->whereNotNull('code')->get();
@@ -183,16 +185,23 @@ class UserController extends Controller
 
         $operation =  $request->segment(4);
 
-        $usersInfo = User::select('id','first_name','last_name','user_type_id','contact','group_code')
-                    ->where('users.id', $userId)
-                    ->first();
+        $usersInfo = User::where('users.id', $userId)->first();
+
+        if($auth->user_type_id == 3 and $usersInfo->user_type_id != 5){
+            return redirect('/')->with('error','Access Denied!');
+        }
+
         return view('users.update', compact('usersInfo','userTypes','operation','groups'));
     }
 
-    public function submitUser(User $user, Request $request){
+    public function submitUser(Request $request){
 
         $auth = auth()->user();
-        
+
+        $user = User::where('users.id', $request->id)->first();
+
+        $role = UserType::select('role')->where('id', $user->user_id)->first();
+
         $updateUsers = '';
 
         $logs = '';
@@ -224,7 +233,8 @@ class UserController extends Controller
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'contact' => $request->contact,
-                    'username' => $user->username
+                    'username' => $user->username,
+                    'role' => $role
                 );
             }
         }else{
@@ -248,7 +258,8 @@ class UserController extends Controller
                     );
                     $logs = array(
                         'action' => 'Update password',
-                        'username' => $user->username
+                        'username' => $user->username,
+                        'role' => $role
                     );
                 }else{
                     return redirect('/users/update/'.$request->id.'/password')
@@ -264,7 +275,15 @@ class UserController extends Controller
                 'user_id' => $auth->id,
                 'assets' => json_encode($logs)
             ]);
-            return redirect('/users')->with('success','User successfully updated.');
+            if($user->user_type_id == 5){
+                if($user->status == 'verified'){
+                    return redirect('/helpdesk')->with('success','Players password successfully updated.');
+                }else{
+                    return redirect('/helpdesk/for-approval')->with('success','Players password successfully updated.');
+                }
+            }else{
+                return redirect('/users')->with('success','User successfully updated.');
+            }
         }
     }
 }

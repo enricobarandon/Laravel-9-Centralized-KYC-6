@@ -422,6 +422,22 @@
                                             <img src="/img/holding_id.png" id="image-previewer-selfie" class="img-fluid img-responsive">
                                         </div>
                                     </div>
+
+                                    
+                                    <div class="form-group row">
+                                        <div class="form-group form-check">
+                                            <input class="form-check-input" type="checkbox" name="agree_terms_privacy" id="agree_terms_privacy" value="1" required="">
+                                            <label class="form-check-label" for="agree_terms_privacy">I Agree with the <a href="/terms" target="_blank">terms and conditions</a> , <a href="/policy" target="_blank">privacy policy</a> </label>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-group form-check">
+                                            <input class="form-check-input" type="checkbox" name="over_age" id="over_age" value="1" required="">
+                                            <label class="form-check-label" for="over_age">I am 21 years/above 21 years old</label>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
                                     
                                     <div class="form-group form-group--sm">
                                         <div>

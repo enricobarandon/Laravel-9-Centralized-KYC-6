@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('login.page');
 
+Route::get('/terms', [App\Http\Controllers\Auth\RegisterController::class, 'terms'])->name('players.terms-condition');
+Route::get('/policy', [App\Http\Controllers\Auth\RegisterController::class, 'policy'])->name('players.privacy-policy');
+
 Auth::routes();
 
 

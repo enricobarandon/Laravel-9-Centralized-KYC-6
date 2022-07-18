@@ -7,7 +7,15 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Update Users Account</h3>
+                    @if($usersInfo->user_type_id == 5)
+                        @if($usersInfo->status == 'verified')
+                        <a href='{{ url("helpdesk") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                        @else
+                        <a href='{{ url("helpdesk/for-approval") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                        @endif
+                    @else
                     <a href='{{ url("users") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                    @endif
                 </div>
 
                 <div class="card-body">
@@ -25,6 +33,14 @@
                                 </ul>
                             </div>
                         @endif
+                        <div class="row mb-3">
+                            <label class="col-md-2 col-form-label text-md-end">{{ __('Username') }}</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="{{ $usersInfo->username }}" readonly>
+                            </div>
+                        </div>
+                        
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
 
@@ -97,6 +113,29 @@
                                 </ul>
                             </div>
                         @endif
+                        <div class="row mb-3">
+                            <label class="col-md-2 col-form-label text-md-end">{{ __('Username') }}</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="{{ $usersInfo->username }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="{{ $usersInfo->first_name }}" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="{{ $usersInfo->last_name }}" readonly>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <label for="name" class="col-md-2 col-form-label text-md-end" minlength="8">New Password</label>
 

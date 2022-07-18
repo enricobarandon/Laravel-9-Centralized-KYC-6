@@ -179,4 +179,14 @@ class RegisterController extends Controller
 
         return view('auth.register', compact('provinces','countries','valid_ids'));
     }
+
+    public function terms()
+    {
+        return view('players.terms-condition');
+    }
+    
+    public function policy()
+    {
+        return view('players.privacy-policy');
+    }
 }

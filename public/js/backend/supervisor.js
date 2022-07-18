@@ -52,21 +52,31 @@ const getUserInfo = async () => {
         let playerDetails = player.user_details;
         let present_address = JSON.parse(playerDetails.present_address);
         let permanent_address = JSON.parse(playerDetails.permanent_address);
-        
-        $('#playerInfo').show();
-        $('#pFullName').text(player.first_name + " " + player.middle_name + " " + player.last_name);
-        $('#pUsername').text("Username: " + player.username);
-        $('#pContact').text("Contact: " + player.contact);
-        $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.barangay + ", " + present_address.city + ", " + present_address.province);
-        $('#pDateBirth').text(my_date_format(playerDetails.date_of_birth));
-        $('#pPlaceBirth').text(playerDetails.place_of_birth);
-        $('#pIncome').text(playerDetails.source_of_income);
-        $('#pOccupation').text(playerDetails.occupation);
-        $("#userId").val(player.id);
 
-        $('#scanner').hide();
+        if(player.is_active == 1){
+            $('#playerInfo').show();
+            $('#pFullName').text(player.first_name + " " + player.middle_name + " " + player.last_name);
+            $('#pUsername').text("Username: " + player.username);
+            $('#pContact').text("Contact: " + player.contact);
+            $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.barangay + ", " + present_address.city + ", " + present_address.province);
+            $('#pDateBirth').text(my_date_format(playerDetails.date_of_birth));
+            $('#pPlaceBirth').text(playerDetails.place_of_birth);
+            $('#pIncome').text(playerDetails.source_of_income);
+            $('#pOccupation').text(playerDetails.occupation);
+            $("#userId").val(player.id);
+    
+            $('#scanner').hide();
+        }else{
+            swal({
+                title: "Account Deactivated",
+                text: "Player Account is deactivated please contact administrator",
+                icon: "error",
+                timer: 2000,
+                button: 'Close'
+            });
+            $('#qrcode').val('').focus();
+        }
         
-
     } else {
         swal({
             title: "No Data Found",

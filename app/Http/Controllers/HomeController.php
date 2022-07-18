@@ -38,6 +38,8 @@ class HomeController extends Controller
 
             $verified = User::where('status','verified')->where('user_type_id', 5)->count();
             $pending =  User::where('status','pending')->where('user_type_id', 5)->count();
+            $disapproved =  User::where('status','disapproved')->where('user_type_id', 5)->count();
+            $totalregistered =  User::where('user_type_id', 5)->count();
             $loggedTotay = GroupStatistics::whereDate('created_at', date('Y-m-d', time()))->sum('total_player_logged_in');
 
             return view('home', [
@@ -46,7 +48,9 @@ class HomeController extends Controller
                 'pending' =>    $pending,
                 'userInfo' =>   $userInfo,
                 'userDetails' => $userDetails,
-                'loggedTotay' => $loggedTotay
+                'loggedTotay' => $loggedTotay,
+                'disapproved' => $disapproved,
+                'totalregistered' => $totalregistered
             ]);
         } else {
             return view('login');

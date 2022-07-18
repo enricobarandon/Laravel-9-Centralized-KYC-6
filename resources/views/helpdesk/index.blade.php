@@ -65,7 +65,9 @@
                                 <th>Approved At</th>
                                 <th>Is Active</th>
                                 <th>Account Status</th>
+                                @if(in_array(Auth::user()->user_type_id, [1,3]))
                                 <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -87,6 +89,7 @@
                                         </strong>
                                     </td>
                                     <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
+                                    @if(in_array(Auth::user()->user_type_id, [1,3]))
                                     <td>
                                         <form action='{{ url("/users/is_active/$player->id") }}' method="POST">
                                             @csrf
@@ -99,9 +102,11 @@
                                                     <i class="fas fa-check"></i>
                                                 </button>
                                             @endif
-                                            <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details"><i class="fa fa-eye"></i></a>
+                                            <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details" class="mr-2"><i class="fa fa-eye"></i></a>
+                                            <a href='{{ url("/users/update/$player->id/password") }}' data-toggle="tooltip" data-placement="top" title="Update Password"><i class="fa fa-cog"></i></a>
                                         </form>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
