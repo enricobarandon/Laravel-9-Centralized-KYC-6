@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('contact',11)->unique();
             $table->text('session_id')->nullable();
             $table->char('group_code',5)->nullable();
+            $table->dateTime('approved_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

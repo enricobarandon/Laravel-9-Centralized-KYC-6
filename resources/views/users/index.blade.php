@@ -74,7 +74,7 @@
                         </thead>
                         <tbody>
                             @php
-                                $usersCount = 0;
+                                $usersCount = ($users->currentpage()-1)* $users->perpage() + 1;
                             @endphp
                             @foreach($users as $user)
                                 <tr>

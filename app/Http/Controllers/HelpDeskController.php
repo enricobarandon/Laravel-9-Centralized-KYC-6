@@ -11,6 +11,7 @@ use App\Models\GroupStatistics;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\InterviewDetailsRequest;
 use DB;
+use Carbon\Carbon;
 
 class HelpDeskController extends Controller
 {
@@ -21,10 +22,11 @@ class HelpDeskController extends Controller
 
     public function index(Request $request)
     {
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','approved_at')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
-                                ->where('status', 'verified');
+                                ->where('status', 'verified')
+                                ->orderBy('approved_at','desc');
 
         $keyword = $request->keyword;
 
@@ -54,7 +56,8 @@ class HelpDeskController extends Controller
         $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
-                                ->whereIn('status', ['pending','disapproved']);
+                                ->whereIn('status', ['pending','disapproved'])
+                                ->orderBy('id','desc');
             
         $keyword = $request->keyword;
 
@@ -94,7 +97,7 @@ class HelpDeskController extends Controller
         
         if($request->operation == 'approve'){
             $operation = 'approved';
-            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified']);
+            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified','users.approved_at' => Carbon::now()]);
         }else{
             $operation = 'disapproved';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'disapproved']);
@@ -109,7 +112,8 @@ class HelpDeskController extends Controller
                 'user_id' => $auth->id,
                 'assets' => json_encode([
                     'action' => $operation.' player account',
-                    'username' => $user->username
+                    'username' => $user->username,
+                    'remarks' => $request->remarks
                 ])
             ]);
 
@@ -146,7 +150,7 @@ class HelpDeskController extends Controller
 
             ActivityLog::create([
                 'type' => 'update-snapshot',
-                'user_id' => $auth->id, // guest middlware
+                'user_id' => $auth->id, 
                 'assets' => json_encode([
                     'action' => 'Update Snapshot of Player',
                     'name' => $playerInfo->first_name . ' ' . $playerInfo->last_name,

@@ -62,6 +62,7 @@
                                 <th>User Role</th>
                                 <th>Group Code</th>
                                 <th>Created At</th>
+                                <th>Approved At</th>
                                 <th>Is Active</th>
                                 <th>Account Status</th>
                                 <th>Action</th>
@@ -69,7 +70,7 @@
                         </thead>
                         <tbody>
                             @php
-                                $playersCount = 0;
+                                $playersCount = ($players->currentpage()-1)* $players->perpage() + 1;
                             @endphp
                             @foreach($players as $player)
                                 <tr>
@@ -79,6 +80,7 @@
                                     <td>{{ $player->role }}</td>
                                     <td>{{ $player->group_code }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
+                                    <td>{{ $player->approved_at ? date("M d, Y h:i:s a",strtotime($player->approved_at)) : '' }}</td>
                                     <td>
                                         <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
                                             {{ $player->is_active ? 'Active' : 'Deactivated' }}

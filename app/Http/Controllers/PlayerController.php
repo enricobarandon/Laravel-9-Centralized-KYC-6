@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserDetails;
+use App\Models\Province;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
@@ -27,7 +28,7 @@ class PlayerController extends Controller
 
         $playerDetails = UserDetails::where('user_id', $id)->first();
 
-        $provinces = config('compliance.province');
+        $provinces = Province::select('name')->orderBy('name','ASC')->get();
         $countries = config('compliance.countries');
         $valid_ids = config('compliance.valid_ids');
 

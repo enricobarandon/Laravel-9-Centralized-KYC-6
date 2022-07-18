@@ -231,8 +231,8 @@
                             <!-- <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required autocomplete="province"> -->
                             <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
                                 <option disabled selected value="">-- Select Province --</option>
-                                @foreach ($provinces as $key => $value)
-                                <option value="{{$value}}" {{ $value == $province ? 'selected' : '' }}>{{$value}}</option>
+                                @foreach ($provinces as $value)
+                                <option value="{{$value->name}}" {{ $value->name == $province ? 'selected' : '' }}>{{$value->name}}</option>
                                 @endforeach
                             </select>
 
@@ -336,8 +336,8 @@
                             <!-- <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required autocomplete="p_province"> -->
                             <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
                                 <option disabled selected value="">-- Select Province --</option>
-                                @foreach ($provinces as $key => $value)
-                                <option value="{{$value}}" {{ $value == $p_province ? 'selected' : '' }}>{{$value}}</option>
+                                @foreach ($provinces as $value)
+                                <option value="{{$value->name}}" {{ $value->name == $p_province ? 'selected' : '' }}>{{$value->name}}</option>
                                 @endforeach
                             </select>
 

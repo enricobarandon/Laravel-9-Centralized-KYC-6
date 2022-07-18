@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Str;
 use App\Models\UserDetails;
+use App\Models\Province;
 use Carbon\Carbon;
 
 class RegisterController extends Controller
@@ -172,7 +173,7 @@ class RegisterController extends Controller
         // if ($user->user_type_id != '1') {
         //     return redirect('/users')->withError('Permission denied.');
         // }
-        $provinces = config('compliance.province');
+        $provinces = Province::select('name')->orderBy('name','ASC')->get();
         $countries = config('compliance.countries');
         $valid_ids = config('compliance.valid_ids');
 

@@ -72,7 +72,7 @@
                         </thead>
                         <tbody>
                             @php
-                                $playersCount = 0;
+                                $playersCount = ($players->currentpage()-1)* $players->perpage() + 1;
                             @endphp
                             @foreach($players as $player)
                                 <tr>
