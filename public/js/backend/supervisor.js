@@ -52,6 +52,7 @@ const getUserInfo = async () => {
         let playerDetails = player.user_details;
         let present_address = JSON.parse(playerDetails.present_address);
         let permanent_address = JSON.parse(playerDetails.permanent_address);
+        let income = JSON.parse(playerDetails.source_of_income);
 
         if(player.is_active == 1){
             $('#playerInfo').show();
@@ -61,7 +62,7 @@ const getUserInfo = async () => {
             $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.barangay + ", " + present_address.city + ", " + present_address.province);
             $('#pDateBirth').text(my_date_format(playerDetails.date_of_birth));
             $('#pPlaceBirth').text(playerDetails.place_of_birth);
-            $('#pIncome').text(playerDetails.source_of_income);
+            $('#pIncome').text(income.select_source_of_income + ": " + income.source_of_income);
             $('#pOccupation').text(playerDetails.occupation);
             $("#userId").val(player.id);
             $("#profilePic").attr("src", '/img/id_picture_selfie/'+ playerDetails.selfie_with_id);
