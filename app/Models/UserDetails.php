@@ -27,6 +27,7 @@ class UserDetails extends Model
         'id_picture',
         'selfie_with_id',
         'snapshot',
+        'video_app'
 
     ];
 }

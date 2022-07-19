@@ -616,6 +616,13 @@ return [
         'ye' => 'Yemeni',
         'zm' => 'Zambian',
         'zw' => 'Zimbabwean',
+    ],
+    
+    'video' =>  [
+        '1' => 'Zoom',
+        '2' => 'Google Meet',
+        '3' => 'Messenger',
+        '4' => 'Skype',
+        '5' => 'Microsoft Teams'
     ]
-
 ];

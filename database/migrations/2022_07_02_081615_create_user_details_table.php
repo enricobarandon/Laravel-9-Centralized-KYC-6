@@ -34,6 +34,7 @@ return new class extends Migration
             $table->dateTime('interview_date_time')->nullable();
             $table->string('interview_description')->nullable();
             $table->text('remarks')->nullable();
+            $table->string('video_app')->nullable();
             $table->timestamps();
         });
     }

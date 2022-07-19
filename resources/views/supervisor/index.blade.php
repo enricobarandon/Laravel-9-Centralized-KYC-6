@@ -49,8 +49,7 @@
                                 <div class="card mb-3" style="border-radius: .5rem;">
                                     <div class="row g-0">
                                         <div class="col-md-4 gradient-custom text-center text-white profile-div">
-                                            <img src="/img/icons/avatar.png" 
-                                                alt="Avatar" class="img-fluid my-4 img-avatar" />
+                                            <img src="/img/icons/avatar.png" alt="Avatar" class="img-fluid my-4 img-avatar-player" id="profilePic" />
                                             <h5 id="pFullName"></h5>
                                             <p id="pUsername"></p>
                                             <p id="pContact"></p>

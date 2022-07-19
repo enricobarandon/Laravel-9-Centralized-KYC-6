@@ -83,7 +83,7 @@
                             @endphp
                             @foreach($players as $player)
                                 <tr>
-                                    <td>{{ ++$playersCount }}</td>
+                                    <td>{{ $playersCount++ }}</td>
                                     <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                     <td>{{ $player->username }}</td>
                                     <td>{{ $player->role }}</td>

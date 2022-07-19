@@ -30,7 +30,9 @@ class User extends Authenticatable
         'is_active',
         'status',
         'contact',
-        'group_code'
+        'group_code',
+        'processed_by',
+        'processed_at'
     ];
 
     /**

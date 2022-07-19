@@ -108,6 +108,20 @@ $id_type = [
                                                     </p>
                                                 </div>
                                             </div>
+                                            @if($user->status == 'disapproved')
+                                            <hr class="mt-0 mb-0">
+
+                                            <div class="row pt-1">
+                                                <div class="col-6 mb-1">
+                                                    <h6>Processed By</h6>
+                                                    <p class="text-muted">{{ isset($processedBy->username) ? $processedBy->username : '--' }}</p>
+                                                </div>
+                                                <div class="col-6 mb-1">
+                                                    <h6>Processed at</h6>
+                                                    <p class="text-muted">{{ isset($user->processed_at) ? date("M. d, Y",strtotime($user->processed_at)) : '--' }}</p>
+                                                </div>
+                                            </div>    
+                                            @endif
 
                                             <hr class="mt-0 mb-0">
 
@@ -133,7 +147,7 @@ $id_type = [
                                                             if(isset($userDetails->present_address)){
                                                                 $address = json_decode($userDetails->present_address,true);
 
-                                                                $presentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['zipcode'] . " " . $address['province'];
+                                                                $presentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                                                             }else{
                                                                 $presentAddress = '--';  
                                                             }
@@ -149,7 +163,7 @@ $id_type = [
                                                             if(isset($userDetails->permanent_address)){
                                                                 $address = json_decode($userDetails->permanent_address,true);
 
-                                                                $permanentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['zipcode'] . " " . $address['province'];
+                                                                $permanentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                                                             }else{
                                                                 $permanentAddress = '--';  
                                                             }
@@ -177,7 +191,22 @@ $id_type = [
                                             <div class="row pt-1">
                                                 <div class="col-6 mb-1">
                                                     <h6>Source of Income</h6>
-                                                    <p class="text-muted">{{ isset($userDetails->source_of_income) ? $userDetails->source_of_income : '--' }}</p>
+                                                    <p class="text-muted">
+                                                        @php
+                                                        $source_income = '';
+                                                            if(isset($userDetails->source_of_income)){
+                                                                $income = json_decode($userDetails->source_of_income,true);
+                                                                if(json_last_error() === JSON_ERROR_NONE){
+                                                                    $source_income = $income['select_source_of_income'] . ": " . $income['source_of_income'];
+                                                                }else{
+                                                                    $source_income = $userDetails->source_of_income;
+                                                                }
+                                                            }else{
+                                                                $source_income = '--';  
+                                                            }
+                                                        @endphp
+                                                        {{ $source_income }}
+                                                    </p>
                                                 </div>
                                                 <div class="col-6 mb-1">
                                                     <h6>Occupation</h6>
@@ -213,6 +242,13 @@ $id_type = [
                                                             <form class="form-horizontal" action='{{ url("/helpdesk/updateInterviewDetails/$user->id") }}' method="POST">
                                                                 @csrf
                                                                 <div class="box-body">
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-12 control-label">Prefer Video App</label>
+                                                                        <div class="col-sm-12">
+                                                                            <input type="text" class="form-control" value="{{ isset($userDetails->video_app) ? $userDetails->video_app : '--' }}" readonly>
+                                                                        </div>
+                                                                    </div>
 
                                                                     <div class="form-group">
                                                                         <label for="interview_description" class="col-12 control-label">Interview Description</label>

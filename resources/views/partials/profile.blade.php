@@ -61,7 +61,7 @@
                             if(isset($userDetails->present_address)){
                                 $address = json_decode($userDetails->present_address,true);
 
-                                $presentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['zipcode'] . " " . $address['province'];
+                                $presentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                             }else{
                                 $presentAddress = '--';  
                             }
@@ -80,7 +80,7 @@
                             if(isset($userDetails->permanent_address)){
                                 $address = json_decode($userDetails->permanent_address,true);
 
-                                $permanentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['zipcode'] . " " . $address['province'];
+                                $permanentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                             }else{
                                 $permanentAddress = '--';  
                             }

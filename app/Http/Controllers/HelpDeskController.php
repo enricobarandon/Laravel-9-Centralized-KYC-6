@@ -22,11 +22,11 @@ class HelpDeskController extends Controller
 
     public function index(Request $request)
     {
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','approved_at')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
                                 ->where('status', 'verified')
-                                ->orderBy('approved_at','desc');
+                                ->orderBy('processed_at','desc');
 
         $keyword = $request->keyword;
 
@@ -48,12 +48,14 @@ class HelpDeskController extends Controller
 
         $players = $players->paginate(20);
 
-        return view('helpdesk.index', compact('players','keyword','status','code'));
+        $processedBy = User::select('id','username')->get()->pluck('username','id')->toArray();
+        // dd($processedBy);
+        return view('helpdesk.index', compact('players','keyword','status','code','processedBy'));
     }
 
     public function forApproval(Request $request)
     {
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
                                 ->whereIn('status', ['pending','disapproved'])
@@ -92,7 +94,9 @@ class HelpDeskController extends Controller
     {
         $userDetails = UserDetails::where('user_id', $user->id)->first();
 
-        return view('helpdesk.user-details', compact('user','userDetails'));
+        $processedBy = User::select('username')->where('id', $user->processed_by)->first();
+
+        return view('helpdesk.user-details', compact('user','userDetails','processedBy'));
     }
 
     public function changeStatus(User $user, Request $request)
@@ -103,10 +107,10 @@ class HelpDeskController extends Controller
         
         if($request->operation == 'approve'){
             $operation = 'approved';
-            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified','users.approved_at' => Carbon::now()]);
+            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
         }else{
             $operation = 'disapproved';
-            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'disapproved']);
+            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'disapproved', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
 
             $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->remarks]);
         }

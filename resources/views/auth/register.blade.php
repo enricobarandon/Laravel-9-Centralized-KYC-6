@@ -346,26 +346,31 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="select_source_of_income" >Source of Income</label>
-                                            <select id="select_source_of_income" type="text" class="form-control @error('select_source_of_income') is-invalid @enderror selectCSS" name="select_source_of_income" value="{{ old('select_source_of_income') }}" required autocomplete="select_source_of_income">
+                                            <select id="select_source_of_income" name="select_source_of_income" type="text" class="form-control @error('select_source_of_income') is-invalid @enderror selectCSS" name="select_source_of_income" value="{{ old('select_source_of_income') }}" required autocomplete="select_source_of_income">
                                                 <option selected disabled> Select source of income</option>
                                                 <option value="salary">Salary</option>
                                                 <option value="business">Business</option>
                                                 <option value="others">Others</option>
                                             </select>
-                                            @error('source_of_income')
+                                            @error('select_source_of_income')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 div-others-income css-hide">
-                                            <label for="source_of_income" >Specify Source of Income</label>
+                                            <label for="source_of_income" class="income-label">Specify Source of Income</label>
                                             <input id="source_of_income" type="text" class="form-control" name="source_of_income" value="{{ old('source_of_income') }}" required autocomplete="source_of_income">
                                         </div>
+                                        @error('source_of_income')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-4">
                                             <label for="facebook" >Facebook</label>
                                             <input id="facebook" type="text" class="form-control @error('facebook') is-invalid @enderror" name="facebook" value="{{ old('facebook') }}" required autocomplete="facebook">
 
@@ -375,7 +380,21 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-4">
+                                            <label for="video_app">Prefer Video Interview App</label>
+                                            <select class="form-control selectCSS" name="video_app" id="video_app" required>
+                                                <option disabled selected value="">-- Select Video App --</option>
+                                                @foreach ($video_apps as $key => $value)
+                                                <option value="{{$value}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('video_app')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
                                             <label for="valid_id_type">Valid ID Type</label>
                                             <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
                                                 <option disabled selected value="">-- Select Valid ID --</option>
@@ -383,6 +402,11 @@
                                                 <option value="{{$key}}">{{$value}}</option>
                                                 @endforeach
                                             </select>
+                                            @error('valid_id_type')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     
@@ -486,12 +510,14 @@ $("document").ready(function(){
         }
     });
     $('#select_source_of_income').on('change', function() {
-        if(this.value == 'others'){
             $('.div-others-income').show();
             $('#source_of_income').val("");
+        if(this.value == 'others'){
+            $('.income-label').text('Specify source of income');
+        }else if(this.value == 'salary'){
+            $('.income-label').text('Provide Company Name');
         }else{
-            $('.div-others-income').hide();
-            $('#source_of_income').val(this.value);
+            $('.income-label').text('Provide Business Name');
         }
     });
     

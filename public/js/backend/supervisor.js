@@ -64,6 +64,7 @@ const getUserInfo = async () => {
             $('#pIncome').text(playerDetails.source_of_income);
             $('#pOccupation').text(playerDetails.occupation);
             $("#userId").val(player.id);
+            $("#profilePic").attr("src", '/img/id_picture_selfie/'+ playerDetails.selfie_with_id);
     
             $('#scanner').hide();
         }else{

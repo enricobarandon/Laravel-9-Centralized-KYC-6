@@ -61,8 +61,9 @@
                                 <th>Username</th>
                                 <th>User Role</th>
                                 <th>Group Code</th>
+                                <th>Processed By</th>
+                                <th>Processed At</th>
                                 <th>Created At</th>
-                                <th>Approved At</th>
                                 <th>Is Active</th>
                                 <th>Account Status</th>
                                 @if(in_array(Auth::user()->user_type_id, [1,3]))
@@ -76,13 +77,14 @@
                             @endphp
                             @foreach($players as $player)
                                 <tr>
-                                    <td>{{ ++$playersCount }}</td>
+                                    <td>{{ $playersCount++ }}</td>
                                     <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                     <td>{{ $player->username }}</td>
                                     <td>{{ $player->role }}</td>
                                     <td>{{ $player->group_code }}</td>
+                                    <td>{{ isset($player->processed_by) ? $processedBy[$player->processed_by] : '' }}</td>
+                                    <td>{{ $player->processed_at ? date("M d, Y h:i:s a",strtotime($player->processed_at)) : '' }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
-                                    <td>{{ $player->approved_at ? date("M d, Y h:i:s a",strtotime($player->approved_at)) : '' }}</td>
                                     <td>
                                         <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
                                             {{ $player->is_active ? 'Active' : 'Deactivated' }}

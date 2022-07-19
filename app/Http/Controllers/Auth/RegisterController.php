@@ -72,11 +72,13 @@ class RegisterController extends Controller
             'nationality' =>    ['required', 'max:255'],
             'country' =>        ['required', 'max:255'],
             'occupation' =>         ['required', 'max:255'],
+            'select_source_of_income' =>   ['required', 'max:255'],
             'source_of_income' =>   ['required', 'max:255'],
             'facebook' =>           ['required', 'max:255'],
             'valid_id_type' =>      ['required', 'numeric'],
             'id_picture' =>     ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
             'selfie_with_id' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
+            'video_app' =>      ['required', 'max:255'],
         ]);
     }
 
@@ -137,11 +139,15 @@ class RegisterController extends Controller
                 'province' =>       $data['p_province'],
             ]),
             'occupation' =>         $data['occupation'],
-            'source_of_income' =>   $data['source_of_income'],
+            'source_of_income' =>   json_encode([
+                'select_source_of_income'=> $data['select_source_of_income'],
+                'source_of_income'=> $data['source_of_income'],
+            ]),
             'facebook' =>           $data['facebook'],
             'valid_id_type' =>      $data['valid_id_type'],
             'id_picture' =>         $id_picture,
             'selfie_with_id' =>     $selfie_with_id,
+            'video_app' =>          $data['video_app']
         ]);
         
 
@@ -178,8 +184,9 @@ class RegisterController extends Controller
         $provinces = Province::select('name')->orderBy('name','ASC')->get();
         $countries = config('compliance.countries');
         $valid_ids = config('compliance.valid_ids');
+        $video_apps = config('compliance.video');
 
-        return view('auth.register', compact('provinces','countries','valid_ids'));
+        return view('auth.register', compact('provinces','countries','valid_ids','video_apps'));
     }
 
     public function terms()
