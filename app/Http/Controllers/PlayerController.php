@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\Province;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
@@ -19,25 +20,36 @@ class PlayerController extends Controller
 
     public function index(Request $request)
     {
-        if(Auth::user()->status == 'verified'){
+        $auth = auth()->user();
+
+        $id = $request->segment(2);
+        
+        $playerInfo = User::where('id', $id)->first();
+
+        if($auth->status == 'verified' || $playerInfo->user_type_id != 5){
             return back()->with('error','Account is already verified');
         }
-        $id = $request->segment(2);
 
-        $playerInfo = User::where('id', $id)->first();
+        if($auth->user_type_id == 5){
+            if($auth->id != $id){
+                return redirect('/home')->with('error','Access Denied!');
+            }
+        }
 
         $playerDetails = UserDetails::where('user_id', $id)->first();
 
         $provinces = Province::select('name')->orderBy('name','ASC')->get();
         $countries = config('compliance.countries');
         $valid_ids = config('compliance.valid_ids');
+        $video_apps = config('compliance.video');
 
         return view('players.index', compact(
                     'provinces',
                     'countries',
                     'valid_ids',
                     'playerInfo',
-                    'playerDetails'
+                    'playerDetails',
+                    'video_apps'
                 ));
     }
 
@@ -54,22 +66,26 @@ class PlayerController extends Controller
             'nationality' =>    ['required', 'max:255'],
             'country' =>        ['required', 'max:255'],
             'occupation' =>         ['required', 'max:255'],
+            'select_source_of_income' =>   ['required', 'max:255'],
             'source_of_income' =>   ['required', 'max:255'],
             'facebook' =>           ['required', 'max:255'],
             'valid_id_type' =>      ['required'],
             'id_picture' =>     ['mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
             'selfie_with_id' => ['mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
+            'video_app' =>      ['required'],
         ]);
     }
 
     public function updatePlayer(Request $request)
     {
+        $auth = auth()->user();
+
         $this->validator($request->all())->validate();
 
         $data = $request->all();
         
-        $playerId = Auth::user()->id;
-
+        $playerId = $request->hdnId;
+        
         $updatePlayer = User::where('id',$playerId)->update([
             'first_name' =>     $data['first_name'],
             'middle_name' =>    $data['middle_name'],
@@ -102,9 +118,13 @@ class PlayerController extends Controller
                     'province' =>       $data['p_province'],
                 ]),
                 'occupation' =>         $data['occupation'],
-                'source_of_income' =>   $data['source_of_income'],
+                'source_of_income' =>   json_encode([
+                    'select_source_of_income'=> $data['select_source_of_income'],
+                    'source_of_income'=> $data['source_of_income'],
+                ]),
                 'facebook' =>           $data['facebook'],
                 'valid_id_type' =>      $data['valid_id_type'],
+                'video_app' =>          $data['video_app'],
             ]);
 
             //if id picture has change
@@ -125,6 +145,16 @@ class PlayerController extends Controller
                 
                 UserDetails::where('user_id',$playerId)->update(['selfie_with_id' => $selfie_with_id]);
             }
+
+            ActivityLog::create([
+                'type' => 'Update-player-information',
+                'user_id' => $auth->id, // guest middlware
+                'assets' => json_encode([
+                    'action' => 'Update player account information',
+                    'name' => $data['first_name'] . ' ' . $data['last_name'] ,
+                    'role' => 'Player'
+                ])
+            ]);
             
         }
 
