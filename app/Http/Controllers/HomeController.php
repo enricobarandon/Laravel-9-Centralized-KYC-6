@@ -36,6 +36,10 @@ class HomeController extends Controller
             $qrcode = new DNS2D();
             $qrCode = $qrcode->getBarcodePNG($uuid, 'QRCODE',15,15);
 
+            $svUrl = request()->getHost() . '/register?code=' . $userInfo->group_code;
+            $urlQrcode = new DNS2D();
+            $urlQrcode = $urlQrcode->getBarcodePNG($svUrl, 'QRCODE',15,15);
+
             $verified = User::where('status','verified')->where('user_type_id', 5)->count();
             $pending =  User::where('status','pending')->where('user_type_id', 5)->count();
             $disapproved =  User::where('status','disapproved')->where('user_type_id', 5)->count();
@@ -44,13 +48,15 @@ class HomeController extends Controller
 
             return view('home', [
                 'img' =>        $qrCode,
+                'url' =>       $urlQrcode,
                 'verified' =>   $verified,
                 'pending' =>    $pending,
                 'userInfo' =>   $userInfo,
                 'userDetails' => $userDetails,
                 'loggedTotay' => $loggedTotay,
                 'disapproved' => $disapproved,
-                'totalregistered' => $totalregistered
+                'totalregistered' => $totalregistered,
+                'svUrl' => $svUrl
             ]);
         } else {
             return view('login');

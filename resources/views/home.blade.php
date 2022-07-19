@@ -26,6 +26,7 @@
                 @endif
                 
                 @if(Auth::user()->user_type_id == 5)
+                <!-- for Player role -->
                 <div class="row">
                     @if(Auth::user()->status == 'pending')
                     <div class="col-md-12 text-center qrcode-div">
@@ -104,11 +105,46 @@
                     @endif
                 </div>
                 @elseif(Auth::user()->user_type_id == 4)
-                
+                <!-- for Supervisor role -->
                 You are logged in!
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-5 text-center" style="height: 100%;">
+                        <div class="input-group input-group-md">
+                            <input type="text" class="form-control" id="textUrl" value="{{ $svUrl }}" readonly>
+                            <span class="input-group-append">
+                                <button type="button" onclick="cupyUrl()" class="btn btn-info btn-flat">Copy</button>
+                            </span>
+                        </div>
+                        <div style="background: #ffffff; height: 100%; padding: 10px;">
+                            <h4>Registration QR Code</h4>
+                            <img src="data:image/png;base64,{{ $url }}" alt="barcode" style="width: 100%" />
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                @section('script')
+                <script>
+                function cupyUrl() {
+                    var copyText = document.getElementById("textUrl");
+
+                    copyText.select();
+                    copyText.setSelectionRange(0, 99999);
+
+                    navigator.clipboard.writeText(copyText.value);
+
+                    swal({
+                        title: "Copy Link",
+                        text: "Success copy registration link",
+                        icon: "success",
+                        timer: 1500,
+                    });
+                }
+                </script>
+                @endsection
 
                 @else
-
+                <!-- for Admin,tech and heldesk role -->
                     @include('partials.cards')
 
                 @endif

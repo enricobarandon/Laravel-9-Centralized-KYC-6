@@ -42,6 +42,7 @@
                                 @endif
                                 <form method="POST" action="{{ route('register') }}" id="formRegister" enctype="multipart/form-data">
                                     @csrf
+                                    <input type="hidden" name="group_code" value="{{ isset($_GET['code']) ? $_GET['code'] : '' }}">
                                     <div class="form-group row">
                                         <div class="col-md-4">
                                             <label for="username" >Username</label>
@@ -376,19 +377,6 @@
                                         </div>
                                         <div class="col-md-7">
                                             <label for="valid_id_type">Valid ID Type</label>
-                                            <!-- <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
-                                                <option value="" selected="selected">Select ID Type</option>
-                                                <option value="1">Government Service Insurance System (GSIS) Card</option>
-                                                <option value="2">Unified Multi-Purpose Identification (UMID) Card</option>
-                                                <option value="3">Land Transportation Office (LTO) Driver's License</option>
-                                                <option value="4">Professional Regulatory Commission (PRC) ID</option>
-                                                <option value="5">Philippine Identification (PhilID)</option>
-                                                <option value="6">Commission on Elections (COMELEC) Voter's ID</option>
-                                                <option value="7">Senior Citizen ID</option>
-                                                <option value="8">Philippine Postal ID (issued November 2016 onwards)</option>
-                                                <option value="9">Latest Passport</option>
-                                                <option value="10">National ID/PhilSys ID</option>
-                                            </select> -->
                                             <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
                                                 <option disabled selected value="">-- Select Valid ID --</option>
                                                 @foreach ($valid_ids as $key => $value)

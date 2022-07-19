@@ -53,7 +53,7 @@ class HelpDeskController extends Controller
 
     public function forApproval(Request $request)
     {
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
                                 ->whereIn('status', ['pending','disapproved'])
@@ -63,6 +63,12 @@ class HelpDeskController extends Controller
 
         if($keyword){
             $players = $players->where(DB::raw('concat(first_name,last_name,username)'), 'like', '%' . $keyword . '%');
+        }
+
+        $code = $request->group_code;
+
+        if($code){
+            $players = $players->where('users.group_code', $code);
         }
 
         $status = $request->player_status;
@@ -79,7 +85,7 @@ class HelpDeskController extends Controller
 
         $players = $players->paginate(20);
 
-        return view('helpdesk.for-approval', compact('players','keyword','status','account_status'));
+        return view('helpdesk.for-approval', compact('players','keyword','status','account_status','code'));
     }
 
     public function showPlayerDetails(User $user)

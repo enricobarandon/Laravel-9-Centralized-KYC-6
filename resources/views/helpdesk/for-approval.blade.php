@@ -32,18 +32,22 @@
                                 <div class="col-md-3">
                                     <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Name / Username" value="{{ $keyword }}">
                                 </div>
+
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" name="group_code" id="group_code" placeholder="Group Code" value="{{ $code }}">
+                                </div>
                                 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <select class="form-control" name="player_status" id="player_status">
-                                        <option value="" selected disabled>Select Player Status</option>
+                                        <option value="" selected disabled>Player Status</option>
                                         <option value="1" {{ $status == '1' ? 'selected' : '' }}>Active</option>
                                         <option value="0" {{ $status == '0' ? 'selected' : '' }}>Deactivated</option>
                                     </select>
                                 </div>
                                 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <select class="form-control" name="account_status" id="player_status">
-                                        <option value="" selected disabled>Select Account Status</option>
+                                        <option value="" selected disabled>Account Status</option>
                                         <option value="pending" {{ $account_status == 'pending' ? 'selected' : '' }}>Pending</option>
                                         <option value="disapproved" {{ $account_status == 'disapproved' ? 'selected' : '' }}>Disapproved</option>
                                     </select>
@@ -64,6 +68,7 @@
                                 <th>Player Name</th>
                                 <th>Username</th>
                                 <th>User Role</th>
+                                <th>Group Code</th>
                                 <th>Created At</th>
                                 <th>Is Active</th>
                                 <th>Account Status</th>
@@ -82,6 +87,7 @@
                                     <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                     <td>{{ $player->username }}</td>
                                     <td>{{ $player->role }}</td>
+                                    <td>{{ $player->group_code }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
                                     <td>
                                         <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
@@ -112,6 +118,11 @@
                         </tbody>
                     </table>     
 
+                    <div class="col">
+                        <div class="float-right">
+                            {{ $players->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
