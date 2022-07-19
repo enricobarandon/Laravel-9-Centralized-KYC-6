@@ -71,7 +71,7 @@
     <div class="col-md-3">
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>{{ number_format(($loggedTotay * 100)/ $verified, 1) }}<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{ isset($verified) ? number_format(($loggedTotay * 100)/ $verified, 1) : '0' }}<sup style="font-size: 20px">%</sup></h3>
                 <p>Logged in Today</p>
             </div>
             <div class="icon">
