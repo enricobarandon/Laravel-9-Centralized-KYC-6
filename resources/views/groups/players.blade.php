@@ -23,20 +23,20 @@
                             {{ session('error') }}
                         </div>
                     @endif
-
                     <div class="callout callout-info">
                         <form class="form-horizontal" method="get">
                             <div class="form-group row">
 
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Keyword" value="{{ $keyword }}">
+                                    <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Keyword" value="">
                                 </div>
                                 
                                 <div class="col-md-2">
                                     <select class="form-control" name="status" id="status">
                                         <option value="" selected disabled>Select Status</option>
-                                        <option value="1" {{ $status == '1' ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ $status == '0' ? 'selected' : '' }}>Deactivated</option>
+                                        <option value="verified" selected disabled>Verified</option>
+                                        <option value="pending" selected disabled>Pending</option>
+                                        <option value="disapproved" selected disabled>Disapproved</option>
                                     </select>
                                 </div>
 
@@ -52,57 +52,38 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Group Name</th>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Province</th>
-                                <th>Site</th>
+                                <th>Full Name</th>
+                                <th>Username</th>
+                                <th>Group Code</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Contact</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                $groupsCount = ($groups->currentpage()-1)* $groups->perpage() + 1;
+                                $playersCount = ($players->currentpage()-1)* $players->perpage() + 1;
                             @endphp
-                            @foreach($groups as $group)
-                                <tr>
-                                    <td class="text-center">{{ $groupsCount++ }}</td>
-                                    <td>{{ $group->name }}</td>
-                                    <td>{{ $group->code }}</td>
-                                    <td>{{ $group->group_type }}</td>
-                                    <td>{{ $group->province }}</td>
-                                    <td>{{ $group->site }}</td>
-                                    <td class="text-center">
-                                        <strong class="{{ $group->is_active ? 'active' : 'deactivated' }}">
-                                            {{ $group->is_active ? 'Active' : 'Deactivated' }}
-                                        </strong>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href='{{ url("/groups/report/$group->id") }}' data-toggle="tooltip" data-placement="top" title="Vew Players Logs"><i class="fa fa-eye"></i></a>
-                                    </td>
-                                </tr>
+                            @foreach($players as $player)
+                            <tr>
+                                <td>{{ $playersCount++ }}</td>
+                                <td>{{ $player->first_name . ' ' . $player->middle_name . ' ' . $player->last_name }}</td>
+                                <td>{{ $player->username }}</td>
+                                <td>{{ $player->group_code }}</td>
+                                <td>{{ $player->status }}</td>
+                                <td>{{ $player->contact }}</td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>     
 
                     <div class="col">
                         <div class="float-right">
-                            {{ $groups->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
+                            {{ $players->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endsection
-
-@section('script')
-<script>
-    $("document").ready(function(){
-        $('[data-toggle="tooltip"]').tooltip(); 
-    });
-</script>
 @endsection

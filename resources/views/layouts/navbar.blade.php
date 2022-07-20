@@ -126,7 +126,7 @@
           </li>
           @endif
 
-          @if(in_array($users->user_type_id, [1,4]))
+          @if($users->user_type_id == 4)
           <li class="nav-item">
             <a href="/supervisor" class="nav-link {{ (request()->is('supervisor*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-address-card"></i>
