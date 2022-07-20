@@ -38,6 +38,14 @@ $id_type = [
                                 <i class="fas fa-times"></i> Disapprove Player
                             </button>
                         </form>
+                    @elseif($user->status == 'verified')
+                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                        @csrf
+                            <input type="hidden" name="operation" value="pending" />
+                            <button type="button" class="btn btn-primary btn-normal float-right submit-pending mr-3">
+                                <i class="fa fa-undo"></i> Back to Pending
+                            </button>
+                        </form>
                     @endif
                 </div>
 
@@ -333,6 +341,21 @@ $('document').ready(function() {
         swal({
             title: "Approve Player",
             text: "Are you sure you want to approve this player?",
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        }).then((willUpdate) => {
+            if (willUpdate) {
+                $(this).closest('form').submit();
+            }
+        });
+    })
+
+    
+    $('.submit-pending').on('click', function(){
+        swal({
+            title: "Return to Pending",
+            text: "Are you sure you want to return this player to pending?",
             icon: "info",
             buttons: true,
             dangerMode: true,

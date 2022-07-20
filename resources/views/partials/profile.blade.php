@@ -126,7 +126,21 @@
 
                 <div class="col-sm-6 border-right">
                     <div class="description-block">
-                        <h5 class="description-header">{{ isset($userDetails->source_of_income) ? $userDetails->source_of_income : '--' }}</h5>
+                        <h5 class="description-header">
+                            @php
+                            $source_income = '';
+                                if(isset($userDetails->source_of_income)){
+                                    $income = json_decode($userDetails->source_of_income,true);
+                                    if(json_last_error() === JSON_ERROR_NONE){
+                                        $source_income = $income['select_source_of_income'] . ": " . $income['source_of_income'];
+                                    }else{
+                                        $source_income = $userDetails->source_of_income;
+                                    }
+                                }else{
+                                    $source_income = '--';  
+                                }
+                            @endphp
+                            {{ $source_income }}</h5>
                         <span class="description-text text-muted">Source of Income</span>
                     </div>
                 </div>

@@ -108,11 +108,14 @@ class HelpDeskController extends Controller
         if($request->operation == 'approve'){
             $operation = 'approved';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
-        }else{
+        }elseif($request->operation == 'disapproved'){
             $operation = 'disapproved';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'disapproved', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
 
             $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->remarks]);
+        }else{
+            $operation = 'pending';
+            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'pending', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
         }
 
         if($changeStatus){
@@ -129,7 +132,7 @@ class HelpDeskController extends Controller
 
             return back()->with('success','Player account '.$operation);
         }else{
-            return back()->with('success','Something went wrong');
+            return back()->with('error','Something went wrong');
         }
     }
 

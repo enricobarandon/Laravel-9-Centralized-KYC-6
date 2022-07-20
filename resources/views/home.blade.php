@@ -116,9 +116,9 @@
                                 <button type="button" onclick="cupyUrl()" class="btn btn-info btn-flat">Copy</button>
                             </span>
                         </div>
-                        <div style="background: #ffffff; height: 100%; padding: 10px;">
+                        <div class="site-qr"style="background: #ffffff; height: 100%; padding: 10px;">
                             <h4>Registration QR Code</h4>
-                            <img src="data:image/png;base64,{{ $url }}" alt="barcode" style="width: 100%" />
+                            <img src="data:image/png;base64,{{ $url }}" alt="barcode" />
                         </div>
                     </div>
                     <div class="col-md-3"></div>

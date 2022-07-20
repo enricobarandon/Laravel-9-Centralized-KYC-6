@@ -85,16 +85,18 @@ class PlayerController extends Controller
         $data = $request->all();
         
         $playerId = $request->hdnId;
-        
+
         $updatePlayer = User::where('id',$playerId)->update([
             'first_name' =>     $data['first_name'],
             'middle_name' =>    $data['middle_name'],
-            'last_name' =>      $data['last_name'],
-            'status' =>         'pending',
+            'last_name' =>      $data['last_name']
         ]);
 
         
         if($updatePlayer) {
+            if($auth->user_type_id == 5){
+                User::where('id',$playerId)->update(['status' => 'pending']);
+            }
 
             UserDetails::where('user_id',$playerId)->update([
                 'date_of_birth' =>      date("Y-m-d",strtotime($data['date_of_birth'])),

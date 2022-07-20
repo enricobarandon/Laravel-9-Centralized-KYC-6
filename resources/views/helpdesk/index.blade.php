@@ -106,6 +106,9 @@
                                             @endif
                                             <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Review Details" class="mr-2"><i class="fa fa-eye"></i></a>
                                             <a href='{{ url("/users/update/$player->id/password") }}' data-toggle="tooltip" data-placement="top" title="Update Password"><i class="fa fa-cog"></i></a>
+                                            @if(Auth::user()->user_type_id == 1)
+                                            <a href='{{ url("/player/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Update Information" class="ml-2"><i class="fa fa-folder-open"></i></a>
+                                            @endif
                                         </form>
                                     </td>
                                     @endif

@@ -163,3 +163,6 @@ strong.active {
 .check-padding {
     padding: 0 2px;
 }
+.site-qr img {
+    width: 100%;
+}
