@@ -8,6 +8,10 @@
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Help Desk Page</h3>
                     <!-- <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a> -->
+                    <form class="form-horizontal" method="get">
+                        <input type="hidden" name="id" value="random">
+                    <button type="submit" class="btn btn-info btn-normal float-right"><i class="fas fa-search"></i> Random Review</button>
+                    </form>
                 </div>
 
                 <div class="card-body">

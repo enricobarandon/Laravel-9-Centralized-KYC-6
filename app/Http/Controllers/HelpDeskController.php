@@ -60,7 +60,18 @@ class HelpDeskController extends Controller
                                 ->where('user_type_id', 5)
                                 ->whereIn('status', ['pending','disapproved'])
                                 ->orderBy('id','desc');
+        
+        if($request->id){
+            $randomUser = User::select('id')
+            ->where('status', 'pending')
+            ->where('user_type_id', 5)
+            ->get()->pluck('id')->toArray();
             
+            $random_keys = array_rand($randomUser,2);
+            
+            $players = $players->where('users.id',$randomUser[$random_keys[0]]);
+        }
+
         $keyword = $request->keyword;
 
         if($keyword){
