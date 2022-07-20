@@ -29,10 +29,15 @@
             {{ $users->username }}  ({{ $user_role[$users->user_type_id] }})
         </a>
 
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="right: 0 !important;">
+          @if($users->user_type_id == 5)
+            <a class="dropdown-item" href='/update-password'><i class="fa fa-cog"></i>
+                Change Password
+            </a>
+          @endif
             <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
+                                document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>
                 {{ __('Logout') }}
             </a>
 

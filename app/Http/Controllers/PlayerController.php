@@ -9,6 +9,7 @@ use App\Models\Province;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class PlayerController extends Controller
 {
@@ -161,5 +162,53 @@ class PlayerController extends Controller
         }
 
         return back()->with('success','Successfully update player information');
+    }
+    
+    public function updatePassword(Request $request)
+    {
+        $usersInfo = auth()->user();
+
+        return view('players.update-password', compact('usersInfo'));
+    }
+    
+    public function submitPassword(Request $request)
+    {
+        $auth = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'cpassword' => 'required|min:8',
+            'ccpassword' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }else{
+            if($request->cpassword == $request->ccpassword){
+
+                $newPassword = Hash::make($request->cpassword);
+
+                $updatePassword = User::where('users.id', $auth->id)->update(
+                    array(
+                        'password' => $newPassword
+                    )
+                );
+                $logs = array(
+                    'action' => 'Update password',
+                    'username' => $auth->username,
+                    'name' => $auth->first_name. ' ' . $auth->last_name
+                );
+            }else{
+                return back()->withErrors('Password and Confirm password not match!');
+            }
+        }
+
+        if($updatePassword){
+            ActivityLog::create([
+                'type' => 'update-password',
+                'user_id' => $auth->id,
+                'assets' => json_encode($logs)
+            ]);
+            
+            return redirect('/home')->with('success','Password successfully updated.');
+        }
     }
 }
