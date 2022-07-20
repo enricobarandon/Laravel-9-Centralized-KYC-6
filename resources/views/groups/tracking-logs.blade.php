@@ -7,7 +7,11 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Players Attendance</h3>
+                    @if(Auth::user()->user_type_id == 4)
+                    <a href='{{ url("/supervisor") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                    @else
                     <a href='{{ url("/groups") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                    @endif
                 </div>
 
                 <div class="card-body">
