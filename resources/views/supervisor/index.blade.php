@@ -33,7 +33,7 @@
                         </div>   
                         
                         <div id="approval" class="text-center">
-                            <button id="btnApprove" class="btn btn-success" data-id="" data-uuid=""><i class="fa fa-check"></i> Approve</button>
+                            <button id="btnApprove" class="btn btn-success css-hide" data-id="" data-uuid=""><i class="fa fa-check"></i> Approve</button>
                         </div>                     
                         
                         <div class="row-element">

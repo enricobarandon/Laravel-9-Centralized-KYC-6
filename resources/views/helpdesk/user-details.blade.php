@@ -18,35 +18,71 @@ $id_type = [
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <a href="{{ $user->status == 'verified' ? '/helpdesk' : '/helpdesk/for-approval' }}" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
+            @if(Auth::user()->user_type_id == 4)
+            <a href="/helpdesk/for-review" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
+            @else
+                @if(isset($user->review_by))
+                <a href="{{ $user->status == 'verified' ? '/helpdesk' : '/helpdesk/for-approval' }}" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
+                @else
+                <a href="/helpdesk/for-review" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
+                @endif
+            @endif
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Player Details</h3>
-                    @if($user->status == 'pending')
-                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
-                        @csrf
-                            <input type="hidden" name="operation" value="approve" />
-                            <button type="button" class="btn btn-info btn-normal float-right submit-approval">
-                                <i class="fas fa-check"></i> Approve Player
-                            </button>
-                        </form>
-                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
-                        @csrf
-                            <input type="hidden" name="operation" value="disapprove" />
-                            <input type="hidden" name="remarks" id="remarks" value="">
-                            <button type="button" class="btn btn-danger btn-normal float-right submit-disapprove mr-3">
-                                <i class="fas fa-times"></i> Disapprove Player
-                            </button>
-                        </form>
-                    @elseif($user->status == 'verified')
-                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
-                        @csrf
-                            <input type="hidden" name="operation" value="pending" />
-                            <button type="button" class="btn btn-primary btn-normal float-right submit-pending mr-3">
-                                <i class="fa fa-undo"></i> Back to Pending
-                            </button>
-                        </form>
+                    @if(in_array(Auth::user()->user_type_id, [1,3]))
+                        @if($user->status == 'pending')
+                            @if(isset($user->review_by))
+                            <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                            @csrf
+                                <input type="hidden" name="operation" value="approve" />
+                                <button type="button" class="btn btn-info btn-normal btn-sm float-right submit-approval">
+                                    <i class="fas fa-check"></i> Approve Player
+                                </button>
+                            </form>
+                            <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                            @csrf
+                                <input type="hidden" name="operation" value="disapprove" />
+                                <input type="hidden" name="remarks" id="remarks" value="">
+                                <button type="button" class="btn btn-danger btn-normal btn-sm float-right submit-disapprove mr-3">
+                                    <i class="fas fa-times"></i> Disapprove Player
+                                </button>
+                            </form>
+                            <button type="button" class="btn btn-success btn-normal btn-sm float-right mr-3" data-toggle="modal" data-target="#myModal"><i class="fa fa-qrcode"></i> View QR Code</button>
+                            @else
+                            <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                            @csrf
+                                <input type="hidden" name="operation" value="review" />
+                                <button type="button" class="btn btn-primary btn-normal float-right submit-review mr-3">
+                                    <i class="fa fa-check"></i> Initial Approve
+                                </button>
+                            </form>
+                            @endif
+                        @elseif($user->status == 'verified')
+                            <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                            @csrf
+                                <input type="hidden" name="operation" value="pending" />
+                                <button type="button" class="btn btn-primary btn-normal btn-sm float-right submit-pending mr-3">
+                                    <i class="fa fa-undo"></i> Back to Pending
+                                </button>
+                            </form>
+                        @endif
                     @endif
+
+                    @if(Auth::user()->user_type_id == 4)
+                        @if(isset($user->review_by))
+                        <button type="button" class="btn btn-success btn-normal btn-sm float-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-qrcode"></i> View QR Code</button>
+                        @else
+                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                        @csrf
+                            <input type="hidden" name="operation" value="review" />
+                            <button type="button" class="btn btn-primary btn-normal float-right submit-review mr-3">
+                                <i class="fa fa-check"></i> Initial Approve
+                            </button>
+                        </form>
+                        @endif
+                    @endif
+
                 </div>
 
                 <div class="card-body">
@@ -236,12 +272,13 @@ $id_type = [
                                             </div>
 
                                             <hr class="mt-0 mb-0">
-
+                                            
+                                            @if(in_array(Auth::user()->user_type_id, [1,3]))
                                             <div class="pt-1">
 
                                                 <div class="row">
 
-                                                    <div class="col-6">
+                                                    <div class="col-md-6">
                                                         <div class="box box-info">
                                                             <div class="box-header with-border">
                                                                 <h6 class="box-title text-center">Interview Details</h6>
@@ -289,7 +326,7 @@ $id_type = [
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-6">
+                                                    <div class="col-md-6">
                                                         <form action='{{ url("/helpdesk/snapshot/$user->id") }}' method="POST" enctype="multipart/form-data">
                                                             @csrf    
                                                             <input type="hidden" name="hdnId" value="{{ $user->id }}">
@@ -318,7 +355,7 @@ $id_type = [
                                                 </div>
 
                                             </div>
-
+                                            @endif
                                         </div>
                                     </div>
 
@@ -331,6 +368,7 @@ $id_type = [
         </div>
     </div>
 </div>
+@include('partials.qrcode-modal')
 @endsection
 
 @section('script')
@@ -388,6 +426,20 @@ $('document').ready(function() {
         });
     })
 
+    $('.submit-review').on('click', function(){
+        swal({
+            title: "Submit Player",
+            text: "Are you sure you want to submit this player?",
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        }).then((willUpdate) => {
+            if (willUpdate) {
+                $(this).closest('form').submit();
+            }
+        });
+    })
+
     $('#file-input').imoViewer({
       'preview' : '#image-previewer',
     })
@@ -397,5 +449,45 @@ $('document').ready(function() {
         step: 10, 
     });
 });
+function MyPrintFunction(id)
+{
+	var windowContent = '<!DOCTYPE html>';
+	//Starting HTML Tags
+	windowContent += '<html>'
+	
+	//Setting Print Page Title
+	windowContent += '<head><title>Print Content</title></head>';
+	
+	//Starting Body Tag
+	windowContent += '<body>'
+	
+	//Getting Div HTML
+	windowContent +=  document.getElementById(id).innerHTML;
+	
+	//Closing Body Tag and HTML Tag
+	windowContent += '</body>';
+	windowContent += '</html>';
+	
+	//Calling Print Window
+	var printWin = window.open('','','fullscreen=yes');
+	
+	//Opening Print Window
+	printWin.document.open();
+	
+	//Adding Content in Print Window
+	printWin.document.write(windowContent);
+	
+	//Closing Print Window
+	printWin.document.close();
+	
+	//Focusing User to Print Window
+	printWin.focus();
+	
+	//Calling Default Browser Printer
+	printWin.print();
+	
+	//Closing Print Window
+	printWin.close();
+}
 </script>
 @endsection

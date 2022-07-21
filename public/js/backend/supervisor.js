@@ -55,19 +55,31 @@ const getUserInfo = async () => {
         let income = JSON.parse(playerDetails.source_of_income);
 
         if(player.is_active == 1){
-            $('#playerInfo').show();
-            $('#pFullName').text(player.first_name + " " + player.middle_name + " " + player.last_name);
-            $('#pUsername').text("Username: " + player.username);
-            $('#pContact').text("Contact: " + player.contact);
-            $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.barangay + ", " + present_address.city + ", " + present_address.province);
-            $('#pDateBirth').text(my_date_format(playerDetails.date_of_birth));
-            $('#pPlaceBirth').text(playerDetails.place_of_birth);
-            $('#pIncome').text(income.select_source_of_income + ": " + income.source_of_income);
-            $('#pOccupation').text(playerDetails.occupation);
-            $("#userId").val(player.id);
-            $("#profilePic").attr("src", '/img/id_picture_selfie/'+ playerDetails.selfie_with_id);
-    
-            $('#scanner').hide();
+            if(player.status == 'verified' || player.status == 'pending'){
+                $('#btnApprove').show();
+                $('#playerInfo').show();
+                $('#pFullName').text(player.first_name + " " + player.middle_name + " " + player.last_name);
+                $('#pUsername').text("Username: " + player.username);
+                $('#pContact').text("Contact: " + player.contact);
+                $('#pAddress').text("Address: " + present_address.house_number + " " + present_address.street + " " + present_address.barangay + ", " + present_address.city + ", " + present_address.province);
+                $('#pDateBirth').text(my_date_format(playerDetails.date_of_birth));
+                $('#pPlaceBirth').text(playerDetails.place_of_birth);
+                $('#pIncome').text(income.select_source_of_income + ": " + income.source_of_income);
+                $('#pOccupation').text(playerDetails.occupation);
+                $("#userId").val(player.id);
+                $("#profilePic").attr("src", '/img/id_picture_selfie/'+ playerDetails.selfie_with_id);
+        
+                $('#scanner').hide();
+            }else{
+                swal({
+                    title: "Account Rejected",
+                    text: "Player account has been rejected, please open your account and comply all the requirements.",
+                    icon: "error",
+                    timer: 3000,
+                    button: 'Close'
+                });
+                $('#qrcode').val('').focus();
+            }
         }else{
             swal({
                 title: "Account Deactivated",

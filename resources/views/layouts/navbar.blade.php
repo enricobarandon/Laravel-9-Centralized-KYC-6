@@ -127,6 +127,12 @@
                 <p>For Approval</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/helpdesk/for-review" class="nav-link {{ (request()->is('helpdesk/for-review*')) ? 'custom-active' : '' }}">
+                <i class="far fa-user-circle  nav-icon"></i>
+                <p>For Review</p>
+                </a>
+              </li>
             </ul>
           </li>
           @endif
@@ -139,6 +145,20 @@
                 Supervisor
               </p>
             </a>
+          </li>
+          <li class="nav-item {{ (request()->is('helpdesk*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
+            <a href="#" class="nav-link {{ (request()->is('helpdesk*')) ? 'active' : '' }}">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>Players Management<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/helpdesk/for-review" class="nav-link {{ (request()->is('helpdesk/for-review*')) ? 'custom-active' : '' }}">
+                <i class="far fa-user-circle  nav-icon"></i>
+                <p>For Review</p>
+                </a>
+              </li>
+            </ul>
           </li>
           @endif
 

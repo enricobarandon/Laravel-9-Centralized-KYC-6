@@ -11,7 +11,11 @@
                         @if($usersInfo->status == 'verified')
                         <a href='{{ url("helpdesk") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
                         @else
-                        <a href='{{ url("helpdesk/for-approval") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                            @if(isset($usersInfo->review_by))
+                            <a href='{{ url("helpdesk/for-approval") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                            @else
+                            <a href='{{ url("helpdesk/for-review") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
+                            @endif
                         @endif
                     @else
                     <a href='{{ url("users") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>

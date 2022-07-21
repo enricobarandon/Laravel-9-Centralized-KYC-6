@@ -21,7 +21,7 @@
 }
 .global-table {
     width: 100% !important;
-    margin: 30px auto;
+    margin: 0 auto;
     border-collapse: separate;
     border-spacing: 0;
     box-shadow: 0px 0px 9px 4px rgb(0 0 0 / 30%);
@@ -165,4 +165,10 @@ strong.active {
 }
 .site-qr img {
     width: 100%;
+}
+.w-100 {
+    width: 100%;
+}
+.table-responsive {
+    box-shadow: 0px 0px 9px 4px rgb(0 0 0 / 30%);
 }

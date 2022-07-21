@@ -31,6 +31,7 @@ return new class extends Migration
             $table->char('group_code',5)->nullable();
             $table->dateTime('processed_at')->nullable();
             $table->integer('processed_by')->nullable();
+            $table->integer('review_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

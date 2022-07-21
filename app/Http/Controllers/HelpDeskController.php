@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\InterviewDetailsRequest;
 use DB;
 use Carbon\Carbon;
+use \Milon\Barcode\DNS1D;
+use \Milon\Barcode\DNS2D;
 
 class HelpDeskController extends Controller
 {
@@ -55,9 +57,12 @@ class HelpDeskController extends Controller
 
     public function forApproval(Request $request)
     {
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by')
+        $auth = auth()->user();
+
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
+                                ->where('review_by','!=','')
                                 ->whereIn('status', ['pending','disapproved'])
                                 ->orderBy('id','desc');
         
@@ -98,16 +103,62 @@ class HelpDeskController extends Controller
 
         $players = $players->paginate(20);
 
-        return view('helpdesk.for-approval', compact('players','keyword','status','account_status','code'));
+        $reviewBy = User::select('id','username')->get()->pluck('username','id')->toArray();
+
+        return view('helpdesk.for-approval', compact('players','keyword','status','account_status','code','reviewBy'));
+    }
+
+    public function forReview(Request $request)
+    {
+        $auth = auth()->user();
+
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by')
+                                ->join('user_types', 'user_types.id','users.user_type_id')
+                                ->where('user_type_id', 5)
+                                ->orderBy('id','desc');
+        
+        if($auth->user_type_id == 4){
+            $players = $players->where('group_code', $auth->group_code);
+        }else{
+            $players = $players->where('review_by', null)->where('status', 'pending');
+        }
+
+        $keyword = $request->keyword;
+
+        if($keyword){
+            $players = $players->where(DB::raw('concat(first_name,last_name,username)'), 'like', '%' . $keyword . '%');
+        }
+
+        $code = $request->group_code;
+
+        if($code){
+            $players = $players->where('users.group_code', $code);
+        }
+
+        $players = $players->paginate(20);
+
+        return view('helpdesk.for-review', compact('players','keyword','code'));
     }
 
     public function showPlayerDetails(User $user)
     {
+        $auth = auth()->user();
+
         $userDetails = UserDetails::where('user_id', $user->id)->first();
+
+        if($auth->user_type_id == 4){
+            if($user->group_code != $auth->group_code){
+                return redirect('/home')->with('error','Access Denied');
+            }
+        }
+
+        $uuid = $user->uuid;
+        $qrcode = new DNS2D();
+        $qrCode = $qrcode->getBarcodePNG($uuid, 'QRCODE',15,15);
 
         $processedBy = User::select('username')->where('id', $user->processed_by)->first();
 
-        return view('helpdesk.user-details', compact('user','userDetails','processedBy'));
+        return view('helpdesk.user-details', compact('user','userDetails','processedBy','qrCode'));
     }
 
     public function changeStatus(User $user, Request $request)
@@ -117,16 +168,31 @@ class HelpDeskController extends Controller
         $operation = '';
         
         if($request->operation == 'approve'){
+
             $operation = 'approved';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
-        }elseif($request->operation == 'disapproved'){
+        
+        }elseif($request->operation == 'disapprove'){
+            
             $operation = 'disapproved';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'disapproved', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
 
             $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->remarks]);
-        }else{
+        
+        }elseif($request->operation == 'pending'){
+            
             $operation = 'pending';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'pending', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
+        
+        }elseif($request->operation == 'review'){
+
+            $operation = 'reviewed';
+            $changeStatus = User::where('id', $user->id)->update(['users.review_by' => $auth->id]);
+
+        }else{
+
+            return back()->with('error','Something went wrong');
+
         }
 
         if($changeStatus){
