@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use App\Models\BlackList;
 
 class UserController extends Controller
 {
@@ -284,6 +285,43 @@ class UserController extends Controller
             }else{
                 return redirect('/users')->with('success','User successfully updated.');
             }
+        }
+    }
+
+    public function toggleIsBlackListed(User $user, Request $request)
+    {
+        $auth = auth()->user();
+        $userId = $user->id;
+        $update = User::where('id', $userId)->update(['is_black_listed' => DB::raw('!is_black_listed')]);
+
+        if ($update) {
+
+
+            if (!$user->is_black_listed == 0) {
+                \Session::getHandler()->destroy($user->session_id);
+                $removeFromBlackList = BlackList::where('user_id', $userId)->delete();
+            } else {
+                BlackList::create([
+                    'user_id' =>            $userId,
+                    'bad_full_name' =>      $user->first_name . ' ' . $user->middle_name . ' ' . $user->last_name,
+                    'bad_date_of_birth' =>  $user->date_of_birth,
+                    'remarks' =>            $request->input('black-list-remarks')
+                ]);
+            }
+
+            ActivityLog::create([
+                'type' => 'change-user-blacklist-status',
+                'user_id' => $auth->id,
+                'assets' => json_encode([
+                    'action' =>                 'Change user blacklist status',
+                    'username' =>               $user->username,
+                    'old blacklist status' =>   $user->is_black_listed == '0' ? 'not listed' : 'blacklisted',
+                    'new blacklist status' =>   !$user->is_black_listed == '0' ? 'not listed' : 'blacklisted'
+                ])
+            ]);
+            return back()->with('success','User blacklist status updated');
+        }else {
+            return back()->with('error','Something went wrong');
         }
     }
 }

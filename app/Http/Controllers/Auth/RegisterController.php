@@ -17,6 +17,8 @@ use Illuminate\Support\Str;
 use App\Models\UserDetails;
 use App\Models\Province;
 use Carbon\Carbon;
+use App\Models\BlackList;
+use App\Events\BlackListDetected;
 
 class RegisterController extends Controller
 {
@@ -59,26 +61,26 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' =>     ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
-            'middle_name' =>    ['required','string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
-            'last_name' =>      ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
-            'username' =>       ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i', 'unique:users'],
-            'password' =>       ['required', 'string', 'min:8', 'confirmed'],
-            'contact' =>        ['required', 'digits:11', 'unique:users'],
-            'group_code' =>     ['nullable', 'max:10'],
+            'first_name' =>                 ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'middle_name' =>                ['required','string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'last_name' =>                  ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'username' =>                   ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i', 'unique:users'],
+            'password' =>                   ['required', 'string', 'min:8', 'confirmed'],
+            'contact' =>                    ['required', 'digits:11', 'unique:users'],
+            'group_code' =>                 ['nullable', 'max:10'],
 
-            'date_of_birth' =>  ['required','date','before:21 years ago'],
-            'place_of_birth' => ['required', 'max:255'],
-            'nationality' =>    ['required', 'max:255'],
-            'country' =>        ['required', 'max:255'],
-            'occupation' =>         ['required', 'max:255'],
-            'select_source_of_income' =>   ['required', 'max:255'],
-            'source_of_income' =>   ['required', 'max:255'],
-            'facebook' =>           ['required', 'max:255'],
-            'valid_id_type' =>      ['required', 'numeric'],
-            'id_picture' =>     ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
-            'selfie_with_id' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
-            'video_app' =>      ['required', 'max:255'],
+            'date_of_birth' =>              ['required','date','before:21 years ago'],
+            'place_of_birth' =>             ['required', 'max:255'],
+            'nationality' =>                ['required', 'max:255'],
+            'country' =>                    ['required', 'max:255'],
+            'occupation' =>                 ['required', 'max:255'],
+            'select_source_of_income' =>    ['required', 'max:255'],
+            'source_of_income' =>           ['required', 'max:255'],
+            'facebook' =>                   ['required', 'max:255'],
+            'valid_id_type' =>              ['required', 'numeric'],
+            'id_picture' =>                 ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
+            'selfie_with_id' =>             ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048'],
+            'video_app' =>                  ['required', 'max:255'],
         ]);
     }
 
@@ -155,6 +157,10 @@ class RegisterController extends Controller
 
     public function register(Request $request){
         $this->validator($request->all())->validate();
+        $checkName = $this->checkBlackList($request->all());
+        if ($checkName) {
+            return back()->with('error','Registration Failed. Name is included in the black list.');
+        }
         $data = $request->all();
         $data['uuid'] = (string) Str::orderedUuid();
         event(new Registered($user = $this->create($data)));
@@ -197,5 +203,18 @@ class RegisterController extends Controller
     public function policy()
     {
         return view('players.privacy-policy');
+    }
+
+    public function checkBlackList($data)
+    {
+        $full_name = $data['first_name'] . ' ' . $data['middle_name'] . ' ' . $data['last_name'];
+        $date_of_birth = $data['date_of_birth'];
+
+        $blacklisted = false;
+        // dd($full_name);
+        $blackListDetected = BlackList::where('bad_full_name', 'like' ,"%$full_name%")->first();
+        // dd($checkName);
+        event(new BlackListDetected($blackListDetected->user_id));
+        return $blacklisted;
     }
 }

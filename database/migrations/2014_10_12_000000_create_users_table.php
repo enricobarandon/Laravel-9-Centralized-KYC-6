@@ -32,6 +32,7 @@ return new class extends Migration
             $table->dateTime('processed_at')->nullable();
             $table->integer('processed_by')->nullable();
             $table->integer('review_by')->nullable();
+            $table->integer('is_black_listed')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
