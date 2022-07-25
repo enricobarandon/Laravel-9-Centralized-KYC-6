@@ -213,8 +213,10 @@ class RegisterController extends Controller
         $blacklisted = false;
         // dd($full_name);
         $blackListDetected = BlackList::where('bad_full_name', 'like' ,"%$full_name%")->first();
-        // dd($checkName);
-        event(new BlackListDetected($blackListDetected->user_id));
+        if ($blackListDetected) {
+            event(new BlackListDetected($blackListDetected->user_id));
+            $blacklisted = true;
+        }
         return $blacklisted;
     }
 }
