@@ -299,13 +299,19 @@ class UserController extends Controller
 
             if (!$user->is_black_listed == 0) {
                 \Session::getHandler()->destroy($user->session_id);
-                $removeFromBlackList = BlackList::where('user_id', $userId)->delete();
+                $removeFromBlackList = BlackList::where('user_id', $userId)->update(['type' => 'whitelisted']);
             } else {
-                BlackList::create([
-                    'user_id' =>            $userId,
-                    'bad_full_name' =>      $user->first_name . ' ' . $user->middle_name . ' ' . $user->last_name,
-                    'bad_date_of_birth' =>  $user->date_of_birth,
-                    'remarks' =>            $request->input('black-list-remarks')
+                BlackList::updateOrCreate([
+                        'user_id' => $userId
+                    ],
+                    [
+                        'type' =>               'blacklisted',
+                        'user_id' =>            $userId,
+                        'bad_first_name' =>     $user->first_name,
+                        'bad_middle_name' =>    $user->middle_name,
+                        'bad_last_name' =>      $user->last_name,
+                        'bad_date_of_birth' =>  $user->user_details->date_of_birth,
+                        'remarks' =>            $request->input('black-list-remarks')
                 ]);
             }
 
@@ -315,8 +321,8 @@ class UserController extends Controller
                 'assets' => json_encode([
                     'action' =>                 'Change user blacklist status',
                     'username' =>               $user->username,
-                    'old blacklist status' =>   $user->is_black_listed == '0' ? 'not listed' : 'blacklisted',
-                    'new blacklist status' =>   !$user->is_black_listed == '0' ? 'not listed' : 'blacklisted'
+                    'old blacklist status' =>   $user->is_black_listed == '0' ? 'whitelisted' : 'blacklisted',
+                    'new blacklist status' =>   !$user->is_black_listed == '0' ? 'whitelisted' : 'blacklisted'
                 ])
             ]);
             return back()->with('success','User blacklist status updated');

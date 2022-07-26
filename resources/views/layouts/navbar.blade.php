@@ -7,7 +7,7 @@
     3 => 'Help Desk',
     4 => 'Supervisor',
     5 => 'Player',
-    ];
+  ];
 @endphp
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -123,13 +123,13 @@
               </li>
               <li class="nav-item">
                 <a href="/helpdesk/for-approval" class="nav-link {{ (request()->is('helpdesk/for-approval*')) ? 'custom-active' : '' }}">
-                <i class="far fa-user-circle  nav-icon"></i>
+                <i class="far fa-user nav-icon"></i>
                 <p>For Approval</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/helpdesk/for-review" class="nav-link {{ (request()->is('helpdesk/for-review*')) ? 'custom-active' : '' }}">
-                <i class="far fa-user-circle  nav-icon"></i>
+                <i class="far fa-address-card  nav-icon"></i>
                 <p>For Review</p>
                 </a>
               </li>
@@ -187,9 +187,20 @@
           @if($users->user_type_id == 1)
           <li class="nav-item">
             <a href="/activity-logs" class="nav-link {{ (request()->is('activity-logs*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-list"></i>
+              <i class="nav-icon fa fa-list-ol"></i>
               <p>
                 Activity Logs
+              </p>
+            </a>
+          </li>
+          @endif
+
+          @if(in_array($users->user_type_id, [1,2,3]))
+          <li class="nav-item">
+            <a href="/blacklist" class="nav-link {{ (request()->is('blacklist*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-list-alt"></i>
+              <p>
+                Black/White List
               </p>
             </a>
           </li>

@@ -65,6 +65,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/backend/players.php'));
+
+            // Blacklist Route file
+            Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/backend/blacklist.php'));
         });
     }
 

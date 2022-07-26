@@ -19,6 +19,7 @@ use App\Models\Province;
 use Carbon\Carbon;
 use App\Models\BlackList;
 use App\Events\BlackListDetected;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -212,7 +213,7 @@ class RegisterController extends Controller
 
         $blacklisted = false;
         // dd($full_name);
-        $blackListDetected = BlackList::where('bad_full_name', 'like' ,"%$full_name%")->first();
+        $blackListDetected = BlackList::where(DB::raw("CONCAT(bad_first_name,' ',bad_middle_name,' ',bad_last_name)"), 'like' ,"%$full_name%")->first();
         if ($blackListDetected) {
             event(new BlackListDetected($blackListDetected->user_id));
             $blacklisted = true;

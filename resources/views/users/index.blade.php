@@ -103,7 +103,7 @@
                                                 @endif
                                         </form>
                                         
-                                        <a href='{{ url("users/update/$user->id/info") }}' name="updateUser" class="btn btn-xs btn-primary"><i class="fas fa-cog"></i> Edit</a>
+                                        <a href='{{ url("users/update/$user->id/info") }}' name="updateUser" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i> Edit</a>
                                         <a href='{{ url("users/update/$user->id/password") }}' name="updateUser" class="btn btn-xs btn-info"><i class="fas fa-cog"></i> Change Password</a>
                                     </td>
                                 </tr>

@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('black_list', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('bad_full_name');
+            $table->string('type');
+            $table->integer('user_id')->nullable();
+            $table->string('bad_first_name');
+            $table->string('bad_middle_name');
+            $table->string('bad_last_name');
             $table->dateTime('bad_date_of_birth')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
