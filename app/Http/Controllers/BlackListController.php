@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BlackList;
 use App\Http\Requests\BlackListRequest;
+use App\Models\ActivityLog;
 
 class BlackListController extends Controller
 {
@@ -25,6 +26,7 @@ class BlackListController extends Controller
 
     public function update(BlackListRequest $request, BlackList $player)
     {
+        $auth = auth()->user();
         $arr = $request->validated();
         foreach($arr as $i => $v) {
             if ($i != 'type') {
@@ -32,7 +34,16 @@ class BlackListController extends Controller
                 unset($arr[$i]);
             }
         }
-        $player->update($arr);
+        $update = $player->update($arr);
+        if ($update) {
+            ActivityLog::create([
+                'type' => 'update-blacklist-info',
+                'user_id' => $auth->id,
+                'assets' => json_encode(array_merge([
+                    'action' =>  'Change black/white lister info'
+                ],$arr))
+            ]);
+        }
         return back()->with('success','Information updated.');
     }
 }
