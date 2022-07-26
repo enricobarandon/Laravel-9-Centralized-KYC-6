@@ -234,7 +234,7 @@
                                             <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
                                                 @foreach ($provinces as $province)
-                                                <option value="{{$province->name}}">{{$province->name}}</option>
+                                                <option value="{{$province->name}}" {{ old('province') == $province->name ? 'selected' : '' }}>{{$province->name}}</option>
                                                 @endforeach
                                             </select>
 
@@ -252,7 +252,7 @@
                                         </div>
 
                                         <div class="col-sm-12">
-                                            <input class="form-check-input" type="checkbox" value="" id="sameAddress">
+                                            <input class="form-check-input" type="checkbox" value="check" name="sameAddress" id="sameAddress" {{ old('sameAddress') == 'check' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="sameAddress">
                                                     SAME AS PRESENT ADDRESS
                                             </label>
@@ -321,7 +321,7 @@
                                             <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
                                                 @foreach ($provinces as $province)
-                                                <option value="{{$province->name}}">{{$province->name}}</option>
+                                                <option value="{{$province->name}}" {{ old('p_province') == $province->name ? 'selected' : '' }}>{{$province->name}}</option>
                                                 @endforeach
                                             </select>
 
@@ -348,9 +348,9 @@
                                             <label for="select_source_of_income" >Source of Income</label>
                                             <select id="select_source_of_income" name="select_source_of_income" type="text" class="form-control @error('select_source_of_income') is-invalid @enderror selectCSS" name="select_source_of_income" value="{{ old('select_source_of_income') }}" required autocomplete="select_source_of_income">
                                                 <option selected disabled> Select source of income</option>
-                                                <option value="salary">Salary</option>
-                                                <option value="business">Business</option>
-                                                <option value="others">Others</option>
+                                                <option value="salary" {{ old('select_source_of_income') == 'salary' ? 'selected' : '' }}>Salary</option>
+                                                <option value="business" {{ old('select_source_of_income') == 'business' ? 'selected' : '' }}>Business</option>
+                                                <option value="others" {{ old('select_source_of_income') == 'others' ? 'selected' : '' }}>Others</option>
                                             </select>
                                             @error('select_source_of_income')
                                                 <span class="invalid-feedback" role="alert">
@@ -358,7 +358,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4 div-others-income css-hide">
+                                        <div class="col-md-4 div-others-income">
                                             <label for="source_of_income" class="income-label">Specify Source of Income</label>
                                             <input id="source_of_income" type="text" class="form-control" name="source_of_income" value="{{ old('source_of_income') }}" required autocomplete="source_of_income">
                                         </div>
@@ -385,7 +385,7 @@
                                             <select class="form-control selectCSS" name="video_app" id="video_app" required>
                                                 <option disabled selected value="">-- Select Video App --</option>
                                                 @foreach ($video_apps as $key => $value)
-                                                <option value="{{$value}}">{{$value}}</option>
+                                                <option value="{{$value}}" {{ old('video_app') == $value ? 'selected' : '' }}>{{$value}}</option>
                                                 @endforeach
                                             </select>
                                             @error('video_app')
@@ -399,7 +399,7 @@
                                             <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
                                                 <option disabled selected value="">-- Select Valid ID --</option>
                                                 @foreach ($valid_ids as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option value="{{$key}}" {{ old('valid_id_type') == $key ? 'selected' : '' }}>{{$value}}</option>
                                                 @endforeach
                                             </select>
                                             @error('valid_id_type')
@@ -494,21 +494,36 @@ $("document").ready(function(){
     });
     $('#sameAddress').change(function() {
         if(this.checked) {
-            $('#p_house_number').val($('#house_number').val());
-            $('#p_street').val($('#street').val());
-            $('#p_barangay').val($('#barangay').val());
-            $('#p_city').val($('#city').val());
-            $('#p_zipcode').val($('#zipcode').val());
-            $('#p_province').val($('#province').val());
+            $('#p_house_number').val($('#house_number').val()).attr('readonly', true);
+            $('#p_street').val($('#street').val()).attr('readonly', true);
+            $('#p_barangay').val($('#barangay').val()).attr('readonly', true);
+            $('#p_city').val($('#city').val()).attr('readonly', true);
+            $('#p_zipcode').val($('#zipcode').val()).attr('readonly', true);
+            $('#p_province').val($('#province').val()).attr("disabled", true);
         }else{
-            $('#p_house_number').val("");
-            $('#p_street').val("");
-            $('#p_barangay').val("");
-            $('#pCp_cityity').val("");
-            $('#p_zipcode').val("");
-            $('#p_province').val("");
+            $('#p_house_number').val("").attr('readonly', false);
+            $('#p_street').val("").attr('readonly', false);
+            $('#p_barangay').val("").attr('readonly', false);
+            $('#p_city').val("").attr('readonly', false);
+            $('#p_zipcode').val("").attr('readonly', false);
+            $('#p_province').val("").attr("disabled", false);
         }
     });
+    if($('#sameAddress').is(":checked")){
+        $('#p_house_number').attr('readonly', true);
+        $('#p_street').attr('readonly', true);
+        $('#p_barangay').attr('readonly', true);
+        $('#p_city').attr('readonly', true);
+        $('#p_zipcode').attr('readonly', true);
+        $('#p_province').val($('#province').val()).attr("disabled", true);
+    }else{
+        $('#p_house_number').attr('readonly', false);
+        $('#p_street').attr('readonly', false);
+        $('#p_barangay').attr('readonly', false);
+        $('#p_city').attr('readonly', false);
+        $('#p_zipcode').attr('readonly', false);
+        $('#p_province').attr("disabled", false);
+    }
     $('#select_source_of_income').on('change', function() {
             $('.div-others-income').show();
             $('#source_of_income').val("");
@@ -521,6 +536,16 @@ $("document").ready(function(){
         }
     });
     
+    if($('#select_source_of_income').val()){
+        if($('#select_source_of_income').val() == 'others'){
+            $('.income-label').text('Provide Business Name');
+        }else if($('#select_source_of_income').val() == 'salary'){
+            $('.income-label').text('Provide Company Name');
+        }else{
+            $('.income-label').text('Specify source of income');
+        }
+    }
+
     $("#date_of_birth").datetimepicker({
         timepicker: false,
         format: 'M d, Y',
