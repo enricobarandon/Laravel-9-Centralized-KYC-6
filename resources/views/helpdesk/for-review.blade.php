@@ -56,7 +56,7 @@
                                     <th>User Role</th>
                                     <th>Group Code</th>
                                     <th>Created At</th>
-                                    <th>Initial Approved</th>
+                                    <th>Submit Review</th>
                                     <th>Account Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
                                     <th>Action</th>

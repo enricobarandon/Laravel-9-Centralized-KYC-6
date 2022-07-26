@@ -48,13 +48,12 @@ $id_type = [
                                     <i class="fas fa-times"></i> Disapprove Player
                                 </button>
                             </form>
-                            <button type="button" class="btn btn-success btn-normal btn-sm float-right mr-3" data-toggle="modal" data-target="#myModal"><i class="fa fa-qrcode"></i> View QR Code</button>
                             @else
                             <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                             @csrf
                                 <input type="hidden" name="operation" value="review" />
                                 <button type="button" class="btn btn-primary btn-normal float-right submit-review mr-3">
-                                    <i class="fa fa-check"></i> Initial Approve
+                                    <i class="fa fa-check"></i> Submit Review
                                 </button>
                             </form>
                             @endif
@@ -71,13 +70,15 @@ $id_type = [
 
                     @if(Auth::user()->user_type_id == 4)
                         @if(isset($user->review_by))
-                        <button type="button" class="btn btn-success btn-normal btn-sm float-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-qrcode"></i> View QR Code</button>
+                            @if($user->status == 'verified')
+                            <button type="button" class="btn btn-success btn-normal btn-sm float-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-qrcode"></i> View QR Code</button>
+                            @endif
                         @else
                         <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                         @csrf
                             <input type="hidden" name="operation" value="review" />
                             <button type="button" class="btn btn-primary btn-normal float-right submit-review mr-3">
-                                <i class="fa fa-check"></i> Initial Approve
+                                <i class="fa fa-check"></i> Submit Review
                             </button>
                         </form>
                         @endif
