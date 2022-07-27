@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Jobs\ProcessBlackListDetected;
+use App\Events\BlackListDetected;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,12 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/api-data/groups', [App\Http\Controllers\ApiDataController::class, 'getGroups'])->name('api.getGroups');
         
         Route::get('/activity-logs', [App\Http\Controllers\ActivityLogsController::class, 'index'])->name('activitylogs.index');
+    });
+
+    Route::get('test', function(){
+        // event(new BlackListDetected(1));
+        ProcessBlackListDetected::dispatch(6);
+        // event(new BlackListDetected(1));
     });
     
 });

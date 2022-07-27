@@ -196,6 +196,7 @@
           @endif
 
           @if(in_array($users->user_type_id, [1,2,3]))
+
           <li class="nav-item">
             <a href="/blacklist" class="nav-link {{ (request()->is('blacklist*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list-alt"></i>
@@ -204,6 +205,23 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="/notifications" class="nav-link {{ (request()->is('notifications*')) ? 'active' : '' }}">
+              
+              <i class="nav-icon fa fa-bell">
+                <label class="pending-requests" id="pending-requests" style="display:none">
+                  <span id="pendingRequests">0</span>
+                </label>
+              </i>
+
+              <p>
+                Notifications
+              </p>
+
+            </a>
+          </li>
+
           @endif
 
         @endif

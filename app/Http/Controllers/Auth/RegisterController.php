@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use App\Models\BlackList;
 use App\Events\BlackListDetected;
 use DB;
+use App\Jobs\ProcessBlackListDetected;
 
 class RegisterController extends Controller
 {
@@ -215,7 +216,8 @@ class RegisterController extends Controller
         // dd($full_name);
         $blackListDetected = BlackList::where(DB::raw("CONCAT(bad_first_name,' ',bad_middle_name,' ',bad_last_name)"), 'like' ,"%$full_name%")->first();
         if ($blackListDetected) {
-            event(new BlackListDetected($blackListDetected->user_id));
+            // event(new BlackListDetected($blackListDetected->id));
+            ProcessBlackListDetected::dispatch($blackListDetected->id);
             $blacklisted = true;
         }
         return $blacklisted;

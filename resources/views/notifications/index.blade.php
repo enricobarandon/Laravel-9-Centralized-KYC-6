@@ -1,0 +1,65 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Notifications</h3>
+                    <!-- <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a> -->
+                </div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @elseif (session('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @elseif(session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+ 
+
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped global-table text-center w-100">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Type</th>
+                                    <th>Player Info</th>
+                                    <th>Description</th>
+                                    <th>Date and Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $notificationsCount = 0;
+                                @endphp
+                                @foreach($notifications as $notification)
+                                    <tr>
+                                        <td>{{ ++$notificationsCount }}</td>
+                                        <td>{{ $notification->type }}</td>
+                                        <td>{{ $notification->black_list->bad_first_name }} {{ $notification->black_list->bad_middle_name }} {{ $notification->black_list->bad_last_name }}</td>
+                                        <td>{{ $notification->description }}</td>
+                                        <td>{{ date("M d, Y h:i:s a",strtotime($notification->created_at)) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>   
+                    </div>  
+                    
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

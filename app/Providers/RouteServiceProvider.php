@@ -70,6 +70,12 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/backend/blacklist.php'));
+
+            
+            // Notifications Route file
+            Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/backend/notifications.php'));
         });
     }
 

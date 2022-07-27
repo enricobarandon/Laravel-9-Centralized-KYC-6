@@ -47,9 +47,25 @@
     </div>
 </body>
 
+
+<script>
+    window.echohost = '{{ env('ECHO_HOST') }}';
+    window.echoport = '{{ env('ECHO_PORT') }}';
+    
+</script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/min/backend.min.js') }}"></script>
 <script src="{{ asset('js/jquery.datetimepicker.full.min.js') }}"></script>
+<!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> -->
 @yield('script')
+
+<script>
+    console.log(window.Echo);
+    window.Echo.channel('notification')
+        .listen('BlackListDetected', (message) => {
+            alert('test');
+        });
+</script>
+
 </html>
 

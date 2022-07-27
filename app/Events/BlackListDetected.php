@@ -11,6 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\BlackList;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use App\Models\Notification;
 
 class BlackListDetected implements ShouldBroadcastNow
 {
@@ -21,11 +22,18 @@ class BlackListDetected implements ShouldBroadcastNow
      *
      * @return void
      */
-    public $userId;
+    // public $listerId;
     
-    public function __construct($userId)
+    public function __construct($blackListId)
     {
-        $this->userId = $userId;
+        // $this->listerId = $listerId;
+        $listerInfo = BlackList::find($blackListId);
+        $insertToNotif = Notification::create([
+            'type' =>           'blacklisted-registration',
+            'black_list_id' =>   $blackListId,
+            'description' =>    'There was an attempt from a blacklisted player to create a new account.'
+        ]);
+        return $insertToNotif;
     }
 
     /**
@@ -35,6 +43,6 @@ class BlackListDetected implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return ['blacklister-detected'];
+        return ['notification'];
     }
 }
