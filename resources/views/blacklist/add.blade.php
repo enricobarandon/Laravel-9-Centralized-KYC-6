@@ -6,10 +6,9 @@
         <div class="col-md-12">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Update Information</h3>
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Add Information</h3>
                     <a href='{{ url("blacklist") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back</a>
                 </div>
-
                 <div class="card-body">
 
                     @if (session('status'))
@@ -36,23 +35,16 @@
                         </div>
                     @endif
 
-                    <form method="POST" action='{{ url("blacklist/update/$player->id") }}'>
+                    <form method="POST" action='{{ url("blacklist/store") }}'>
                         @csrf
-                        @method('PUT')
                         <div class="row mb-3">
                             <label class="col-md-2 col-form-label text-md-end">{{ __('Type') }}</label>
 
                             <div class="col-md-6">
-                                <!-- <input type="text" class="form-control" value="{{ $player->type }}" readonly> -->
-                                <select class="form-control" name="type">
-                                    <option selected disabled>-- Select Type --</option>
-                                    @foreach($types as $type)
-                                        <option value="{{ $type }}"
-                                            {{ $player->type == $type ? 'selected' : '' }}
-                                        >
-                                            {{ strtoupper($type) }}
-                                        </option>
-                                    @endforeach
+                                <select class="form-control" name="type" required>
+                                    <option disabled>-- Select Type --</option>
+                                    <option selected value="blacklisted">BLACKLISTED</option>
+                                    <option value="whitelisted">WHITELISTED</option>
                                 </select>
                             </div>
                         </div>
@@ -61,7 +53,7 @@
                             <label for="first_name" class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $player->bad_first_name }}" required autocomplete="first_name" autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="" required autocomplete="first_name" autofocus>
                             </div>
                         </div>
                         
@@ -69,7 +61,7 @@
                             <label for="middle_name" class="col-md-2 col-form-label text-md-end">{{ __('Middle Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ $player->bad_middle_name }}" required autocomplete="last_name" autofocus>
+                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="" required autocomplete="last_name" autofocus>
                             </div>
                         </div>
 
@@ -77,7 +69,7 @@
                             <label for="last_name" class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $player->bad_last_name }}" required autocomplete="contact">
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="" required autocomplete="contact">
                             </div>
                         </div>
 
@@ -85,7 +77,7 @@
                             <label for="date_of_birth" class="col-md-2 col-form-label text-md-end">{{ __('Date of Birth') }}</label>
 
                             <div class="col-md-6">
-                                <input id="date_of_birth" type="text" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ date('Y-m-d', strtotime($player->bad_date_of_birth)) }}" required>
+                                <input id="date_of_birth" type="text" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="" required>
                             </div>
                         </div>
 
