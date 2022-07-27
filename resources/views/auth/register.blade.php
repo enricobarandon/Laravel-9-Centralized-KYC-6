@@ -230,7 +230,6 @@
 
                                         <div class="col-md-4">
                                             <label for="province" >Province</label>
-                                            <!-- <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required autocomplete="province"> -->
                                             <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
                                                 @foreach ($provinces as $province)
@@ -317,7 +316,6 @@
 
                                         <div class="col-md-4">
                                             <label for="p_province" >Province</label>
-                                            <!-- <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required autocomplete="p_province"> -->
                                             <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
                                                 @foreach ($provinces as $province)
@@ -499,7 +497,7 @@ $("document").ready(function(){
             $('#p_barangay').val($('#barangay').val()).attr('readonly', true);
             $('#p_city').val($('#city').val()).attr('readonly', true);
             $('#p_zipcode').val($('#zipcode').val()).attr('readonly', true);
-            $('#p_province').val($('#province').val()).attr("disabled", true);
+            $('#p_province').val($('#province').val());
         }else{
             $('#p_house_number').val("").attr('readonly', false);
             $('#p_street').val("").attr('readonly', false);
@@ -515,7 +513,7 @@ $("document").ready(function(){
         $('#p_barangay').attr('readonly', true);
         $('#p_city').attr('readonly', true);
         $('#p_zipcode').attr('readonly', true);
-        $('#p_province').val($('#province').val()).attr("disabled", true);
+        $('#p_province').val($('#province').val());
     }else{
         $('#p_house_number').attr('readonly', false);
         $('#p_street').attr('readonly', false);
