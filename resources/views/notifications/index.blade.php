@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+
+<style>
+#tblNotifications tbody tr{
+    background-color: #fff3cd;
+}
+#tblNotifications tbody tr.isRead{
+    background-color: #fff;
+}
+
+#tblNotifications tbody tr:hover{
+    cursor: pointer;
+}
+</style>
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -24,11 +38,15 @@
                             {{ session('error') }}
                         </div>
                     @endif
+
+                    <div class="alert alert-warning" role="alert" style="display:none">
+                        New notification detected. Click this <a href="/notifications" class="alert-link">link</a> to load the new notification.
+                    </div>
  
 
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped global-table text-center w-100">
+                        <table class="table table-bordered table-striped global-table text-center w-100" id="tblNotifications">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -43,7 +61,11 @@
                                     $notificationsCount = 0;
                                 @endphp
                                 @foreach($notifications as $notification)
-                                    <tr>
+                                    <tr
+                                    @if($notification->is_read == 1)
+                                        class="isRead"
+                                    @endif
+                                    >
                                         <td>{{ ++$notificationsCount }}</td>
                                         <td>{{ $notification->type }}</td>
                                         <td>{{ $notification->black_list->bad_first_name }} {{ $notification->black_list->bad_middle_name }} {{ $notification->black_list->bad_last_name }}</td>

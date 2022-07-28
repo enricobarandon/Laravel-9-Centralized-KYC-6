@@ -60,11 +60,20 @@
 @yield('script')
 
 <script>
-    console.log(window.Echo);
     window.Echo.channel('notification')
         .listen('BlackListDetected', (message) => {
-            alert('test');
+            $('#notifications, .alert-warning').css('display','block');
+            $('#notificationsCount').html(message.newNotificationsCount);
         });
+
+    const getData = async () => {
+        let response = await axios.get('/api/v1/notifications');
+        $('#notifications').css('display','block');
+        $('#notificationsCount').html(response.data.notificationsCount);
+    }
+
+    getData();
+
 </script>
 
 </html>

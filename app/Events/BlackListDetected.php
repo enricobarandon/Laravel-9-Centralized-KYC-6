@@ -23,6 +23,8 @@ class BlackListDetected implements ShouldBroadcastNow
      * @return void
      */
     // public $listerId;
+    public $newNotifications;
+    public $newNotificationsCount;
     
     public function __construct($blackListId)
     {
@@ -33,7 +35,9 @@ class BlackListDetected implements ShouldBroadcastNow
             'black_list_id' =>   $blackListId,
             'description' =>    'There was an attempt from a blacklisted player to create a new account.'
         ]);
-        return $insertToNotif;
+
+        $this->newNotifications = Notification::select('id','type')->where('is_read',0)->get();
+        $this->newNotificationsCount = $this->newNotifications->count();
     }
 
     /**

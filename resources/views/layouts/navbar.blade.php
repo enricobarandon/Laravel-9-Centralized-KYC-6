@@ -210,8 +210,8 @@
             <a href="/notifications" class="nav-link {{ (request()->is('notifications*')) ? 'active' : '' }}">
               
               <i class="nav-icon fa fa-bell">
-                <label class="pending-requests" id="pending-requests" style="display:none">
-                  <span id="pendingRequests">0</span>
+                <label class="notifications" id="notifications" style="display:none">
+                  <span id="notificationsCount">0</span>
                 </label>
               </i>
 
