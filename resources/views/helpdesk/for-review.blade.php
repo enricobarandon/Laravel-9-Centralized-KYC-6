@@ -80,7 +80,7 @@
                                                 {{ $player->review_by == null ? 'NO' : 'YES' }}
                                             </strong>
                                         </td>
-                                        <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
+                                        <td><strong class="{{ $player->status }}">{{ $player->status == 'review' ? 'FOR '.strtoupper($player->status) : strtoupper($player->status) }}</td>
                                         @if(in_array(Auth::user()->user_type_id, [1,3]))
                                         <td>
                                             <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" class="mr-2" title="Review Details"><i class="fa fa-eye"></i></a>

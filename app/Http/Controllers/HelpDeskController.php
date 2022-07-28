@@ -120,7 +120,7 @@ class HelpDeskController extends Controller
         if($auth->user_type_id == 4){
             $players = $players->where('group_code', $auth->group_code);
         }else{
-            $players = $players->where('review_by', null)->where('status', 'pending');
+            $players = $players->where('status', 'review');
         }
 
         $keyword = $request->keyword;
@@ -187,7 +187,7 @@ class HelpDeskController extends Controller
         }elseif($request->operation == 'review'){
 
             $operation = 'reviewed';
-            $changeStatus = User::where('id', $user->id)->update(['users.review_by' => $auth->id]);
+            $changeStatus = User::where('id', $user->id)->update(['users.review_by' => $auth->id, 'users.status' => 'pending']);
 
         }else{
 

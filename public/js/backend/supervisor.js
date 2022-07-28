@@ -70,6 +70,15 @@ const getUserInfo = async () => {
                 $("#profilePic").attr("src", '/img/id_picture_selfie/'+ playerDetails.selfie_with_id);
         
                 $('#scanner').hide();
+            }else if(player.status == 'review'){
+                swal({
+                    title: "Account for Review",
+                    text: "Player account status is for review please ask site supervisor for assistance.",
+                    icon: "error",
+                    timer: 3000,
+                    button: 'Close'
+                });
+                $('#qrcode').val('').focus();
             }else{
                 swal({
                     title: "Account Rejected",

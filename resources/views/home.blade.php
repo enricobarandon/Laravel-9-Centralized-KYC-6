@@ -64,6 +64,18 @@
 
                         </div>
                     </div>
+                    @elseif(Auth::user()->status == 'review')
+                    <div class="col-md-12 text-center">
+                        <div class="card card-outline card-info mb-2">
+                            <div class="card-header">
+                                <h4><i class="fa fa-info-circle"></i> Your account status is for review.</h4>
+                            </div>
+
+                            <div class="card-body">
+                                <p><strong>Please ask OCBS/Arena Supervisor for assistance!</strong></p>
+                            </div>
+                        </div>
+                    </div>
                     @endif
 
                     @include('partials.profile')

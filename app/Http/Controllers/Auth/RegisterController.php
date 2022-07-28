@@ -103,7 +103,7 @@ class RegisterController extends Controller
             'password' =>       Hash::make($data['password']),
             'user_type_id' =>   5, // player
             'is_active' =>      1,
-            'status' =>         'pending',
+            'status' =>         'review',
             'contact' =>        $data['contact'],
             'group_code' =>     $data['group_code'],
             'created_at' =>     Carbon::now(),
