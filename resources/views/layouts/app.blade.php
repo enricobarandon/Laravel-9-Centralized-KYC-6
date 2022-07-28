@@ -64,6 +64,10 @@
         .listen('BlackListDetected', (message) => {
             $('#notifications, .alert-warning').css('display','block');
             $('#notificationsCount').html(message.newNotificationsCount);
+        })
+        .listen('ViewedNotification', (message) => {
+            $('#notifications').css('display','block');
+            $('#notificationsCount').html(message.newNotificationsCount);
         });
 
     const getData = async () => {

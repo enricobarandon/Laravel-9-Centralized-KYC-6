@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notification;
+use App\Jobs\ProcessViewedNotif;
 
 class NotificationController extends Controller
 {
@@ -19,5 +20,14 @@ class NotificationController extends Controller
         return json_encode([
             'notificationsCount' => $notifications->count()
         ]);
+    }
+
+    public function read(Notification $notif)
+    {
+        $notif->is_read = 1;
+        $notif->save();
+        ProcessViewedNotif::dispatch();
+
+        return;
     }
 }

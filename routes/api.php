@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('users/approve', [UserController::class, 'approve']);
     
     Route::get('notifications', [NotificationController::class, 'getData']);
+    Route::put('notifications/read/{notif}', [NotificationController::class, 'read']);
 });
 
 

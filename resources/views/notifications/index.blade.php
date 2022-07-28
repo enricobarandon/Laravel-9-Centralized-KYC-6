@@ -64,6 +64,8 @@
                                     <tr
                                     @if($notification->is_read == 1)
                                         class="isRead"
+                                    @else
+                                        class="new" data-id="{{ $notification->id }}"
                                     @endif
                                     >
                                         <td>{{ ++$notificationsCount }}</td>
@@ -84,4 +86,21 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $("document").ready(function(){
+        // $('.new').on('click', () => {
+        $(document).on('click', '.new', function(){
+            let id = $(this).data('id');
+            readNotification(id);
+            $(this).removeClass('new').addClass('isRead');
+        })
+    });
+
+    const readNotification = async (id) => {
+        let response = await axios.put('/api/v1/notifications/read/' + id);
+    }
+</script>
 @endsection
