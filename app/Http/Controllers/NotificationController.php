@@ -10,7 +10,7 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $notifications = Notification::with('black_list')->orderBy('id','desc')->get();
+        $notifications = Notification::with(['black_list','same_user'])->orderBy('id','desc')->get();
         return view('notifications.index', compact('notifications'));
     }
 

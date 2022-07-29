@@ -70,7 +70,11 @@
                                     >
                                         <td>{{ ++$notificationsCount }}</td>
                                         <td>{{ $notification->type }}</td>
-                                        <td>{{ $notification->black_list->bad_first_name }} {{ $notification->black_list->bad_middle_name }} {{ $notification->black_list->bad_last_name }}</td>
+                                        @if($notification->type == 'blacklisted-registration')
+                                            <td>{{ $notification->black_list->bad_first_name }} {{ $notification->black_list->bad_middle_name }} {{ $notification->black_list->bad_last_name }}</td>
+                                        @else
+                                            <td>{{ $notification->same_user->first_name }} {{ $notification->same_user->middle_name }} {{ $notification->same_user->last_name }}</td>
+                                        @endif
                                         <td>{{ $notification->description }}</td>
                                         <td>{{ date("M d, Y h:i:s a",strtotime($notification->created_at)) }}</td>
                                     </tr>
