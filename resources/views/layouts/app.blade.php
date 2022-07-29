@@ -68,6 +68,10 @@
         .listen('ViewedNotification', (message) => {
             $('#notifications').css('display','block');
             $('#notificationsCount').html(message.newNotificationsCount);
+        })
+        .listen('DuplicateDetected', (message) => {
+            $('#notifications').css('display','block');
+            $('#notificationsCount').html(message.newNotificationsCount);
         });
 
     const getData = async () => {

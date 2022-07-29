@@ -21,6 +21,7 @@ use App\Models\BlackList;
 use App\Events\BlackListDetected;
 use DB;
 use App\Jobs\ProcessBlackListDetected;
+use App\Events\DuplicateDetected;
 
 class RegisterController extends Controller
 {
@@ -163,6 +164,11 @@ class RegisterController extends Controller
         if ($checkName) {
             return back()->with('error','Registration Failed. Name is included in the black list.');
         }
+        $duplicate = $this->checkDuplicate($request->all());
+        if ($duplicate) {
+            return back()->with('error','Registration Failed. Name have a existing account with the same name.');
+        }
+
         $data = $request->all();
         $data['uuid'] = (string) Str::orderedUuid();
         event(new Registered($user = $this->create($data)));
@@ -220,6 +226,22 @@ class RegisterController extends Controller
             ProcessBlackListDetected::dispatch($blackListDetected->id);
             $blacklisted = true;
         }
+
         return $blacklisted;
+    }
+
+    public function checkDuplicate($data)
+    {
+        $full_name = $data['first_name'] . ' ' . $data['middle_name'] . ' ' . $data['last_name'];
+        $duplicate = false;
+        $findDuplicate = User::where(DB::raw("CONCAT(first_name,' ',middle_name,' ',last_name)"), 'like' ,"%$full_name%")
+                            ->where('user_type_id', 5)    
+                            ->first();
+        if ($findDuplicate) {
+            ProcessBlackListDetected::dispatch($findDuplicate->id);
+            $duplicate = true;
+        }
+
+        return $duplicate;
     }
 }

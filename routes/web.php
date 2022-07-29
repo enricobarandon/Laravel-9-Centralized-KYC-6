@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Jobs\ProcessBlackListDetected;
 use App\Events\BlackListDetected;
+use App\Events\DuplicateDetected;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +41,8 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::get('test', function(){
-        // event(new BlackListDetected(1));
-        ProcessBlackListDetected::dispatch(6);
-        // event(new BlackListDetected(1));
+        // ProcessBlackListDetected::dispatch(6);
+        event(new DuplicateDetected(30));
     });
     
 });
