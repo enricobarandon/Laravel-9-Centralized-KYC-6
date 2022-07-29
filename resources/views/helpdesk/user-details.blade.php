@@ -32,7 +32,6 @@ $id_type = [
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Player Details</h3>
                     @if(in_array(Auth::user()->user_type_id, [1,3]))
                         @if($user->status == 'pending')
-                            @if(isset($user->review_by))
                             <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                             @csrf
                                 <input type="hidden" name="operation" value="approve" />
@@ -48,7 +47,7 @@ $id_type = [
                                     <i class="fas fa-times"></i> Disapprove Player
                                 </button>
                             </form>
-                            @else
+                        @elseif($user->status == 'review')
                             <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                             @csrf
                                 <input type="hidden" name="operation" value="review" />
@@ -56,7 +55,6 @@ $id_type = [
                                     <i class="fa fa-check"></i> Submit Review
                                 </button>
                             </form>
-                            @endif
                         @elseif($user->status == 'verified')
                             <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                             @csrf

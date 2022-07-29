@@ -1,9 +1,9 @@
-<div class="{{ in_array($userInfo->status, ['pending','disapproved']) ? 'col-md-12' : 'col-md-8' }}">
+<div class="{{ in_array($userInfo->status, ['pending','disapproved','review']) ? 'col-md-12' : 'col-md-8' }}">
     <div class="card card-widget widget-user shadow-lg">
 
         <div class="widget-user-header text-white" style="background: url('/dist/img/bg2.jpg') center center;">
             <h3 class="widget-user-username text-right">{{ strtoupper($userInfo->first_name .' '. $userInfo->last_name) }}</h3>
-            <h5 class="widget-user-desc text-right">{{ strtoupper($userInfo->status) }} ACCOUNT</h5>
+            <h5 class="widget-user-desc text-right">{{ $userInfo->status == 'review' ? 'FOR '.strtoupper($userInfo->status) : strtoupper($userInfo->status) }} ACCOUNT</h5>
         </div>
         <div class="widget-user-image">
             
