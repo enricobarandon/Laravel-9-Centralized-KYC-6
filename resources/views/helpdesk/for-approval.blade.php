@@ -92,7 +92,7 @@
                                         <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                         <td>{{ $player->username }}</td>
                                         <td>{{ $player->group_code }}</td>
-                                        <td>{{ $reviewBy[$player->review_by] }}</td>
+                                        <td>{{ isset($player->review_by) ? $reviewBy[$player->review_by] : '(Direct Player)' }}</td>
                                         <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
                                         <td>
                                             <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
@@ -100,8 +100,8 @@
                                             </strong>
                                         </td>
                                         <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
-                                        @if(in_array(Auth::user()->user_type_id, [1,3]))
                                         <td>
+                                        @if(in_array(Auth::user()->user_type_id, [1,3]))
                                             <form action='{{ url("/users/is_active/$player->id") }}' method="POST">
                                                 @csrf
                                                 @if($player->is_active)
@@ -119,8 +119,23 @@
                                                 <a href='{{ url("/player/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Update Information" class="ml-2"><i class="fa fa-edit"></i></a>
                                                 @endif
                                             </form>
-                                        </td>
                                         @endif
+                                        @if(in_array(Auth::user()->user_type_id, [1,2]))
+                                            <form action='{{ url("/users/is_black_listed/$player->id") }}' method="POST">
+                                                @csrf
+                                                <input type="hidden" name="black-list-remarks" class="black-list-remarks" value="">
+                                                @if($player->is_black_listed)
+                                                    <button type="button" class="btn btn-xs btn-light users-black-list black-listed mr-2 btn-padding" data-toggle="tooltip" data-placement="top" title="Remove from Black List">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-xs btn-dark users-black-list not-black-listed mr-2 check-padding"  data-toggle="tooltip" data-placement="top" title="Add to Black List">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                @endif
+                                            </form>
+                                        @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -160,6 +175,47 @@
                     $(this).closest('form').submit();
                 }
             });
+        })
+        $('.users-black-list').on('click', function(){
+            if($(this).hasClass('not-black-listed') == true){
+                $text = 'add this user to black list?';
+                swal({
+                    title: "ADD TO BLACK LIST",
+                    text: "Input Remarks",
+                    icon: "info",
+                    content: "input",
+                    buttons: {
+                        cancel: true,
+                        confirm: true,
+                    }
+                }).then((result) => {
+                    $('.black-list-remarks').val(result);
+                    if(result != null){
+                        if($('.black-list-remarks').val().length > 0){
+                            $(this).closest('form').submit();
+                        }else{
+                            swal({icon: "error", text : 'Please Enter Remarks to proceed'});
+                        }
+                    }
+                });
+
+            }else{
+                $text = 'remove this user from black list?';
+                swal({
+                    title: "BLACK LIST",
+                    text: "Are you sure you want to " + $text,
+                    input: 'text',
+                    inputLabel: 'Your IP address',
+                    icon: "info",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willUpdate) => {
+                    if (willUpdate) {
+                        $(this).closest('form').submit();
+                    }
+                });
+            }
+
         })
     });
 </script>

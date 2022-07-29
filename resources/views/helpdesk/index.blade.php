@@ -91,8 +91,8 @@
                                         </strong>
                                     </td>
                                     <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
-                                    @if(in_array(Auth::user()->user_type_id, [1,3]))
                                     <td>
+                                    @if(in_array(Auth::user()->user_type_id, [1,3]))
                                         <form action='{{ url("/users/is_active/$player->id") }}' method="POST">
                                             @csrf
                                             @if($player->is_active)
@@ -110,6 +110,8 @@
                                                 <a href='{{ url("/player/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Update Information" class="ml-2"><i class="fa fa-edit"></i></a>
                                             @endif
                                         </form>
+                                    @endif
+                                    @if(in_array(Auth::user()->user_type_id, [1,2]))
                                         <form action='{{ url("/users/is_black_listed/$player->id") }}' method="POST">
                                             @csrf
                                             <input type="hidden" name="black-list-remarks" class="black-list-remarks" value="">
@@ -123,8 +125,8 @@
                                                 </button>
                                             @endif
                                         </form>
-                                    </td>
                                     @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

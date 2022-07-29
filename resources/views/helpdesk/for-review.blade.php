@@ -81,15 +81,30 @@
                                             </strong>
                                         </td>
                                         <td><strong class="{{ $player->status }}">{{ $player->status == 'review' ? 'FOR '.strtoupper($player->status) : strtoupper($player->status) }}</td>
-                                        @if(in_array(Auth::user()->user_type_id, [1,3]))
                                         <td>
+                                        @if(in_array(Auth::user()->user_type_id, [1,3]))
                                             <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" class="mr-2" title="Review Details"><i class="fa fa-eye"></i></a>
                                             <a href='{{ url("/users/update/$player->id/password") }}' data-toggle="tooltip" data-placement="top" title="Update Password"><i class="fa fa-cog"></i></a>
                                             @if(Auth::user()->user_type_id == 1)
                                             <a href='{{ url("/player/$player->id") }}' data-toggle="tooltip" data-placement="top" title="Update Information" class="ml-2"><i class="fa fa-edit"></i></a>
                                             @endif
-                                        </td>
                                         @endif
+                                        @if(in_array(Auth::user()->user_type_id, [1,2]))
+                                            <form action='{{ url("/users/is_black_listed/$player->id") }}' method="POST">
+                                                @csrf
+                                                <input type="hidden" name="black-list-remarks" class="black-list-remarks" value="">
+                                                @if($player->is_black_listed)
+                                                    <button type="button" class="btn btn-xs btn-light users-black-list black-listed mr-2 btn-padding" data-toggle="tooltip" data-placement="top" title="Remove from Black List">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-xs btn-dark users-black-list not-black-listed mr-2 check-padding"  data-toggle="tooltip" data-placement="top" title="Add to Black List">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                @endif
+                                            </form>
+                                        @endif
+                                        </td>
                                         @if(Auth::user()->user_type_id == 4)
                                         <td class="text-center">
                                             <a href='{{ url("/helpdesk/user/$player->id") }}' class='btn btn-xs btn-primary'><i class="fa fa-eye"></i> Review Details</a>
@@ -134,6 +149,47 @@
                     $(this).closest('form').submit();
                 }
             });
+        })
+        $('.users-black-list').on('click', function(){
+            if($(this).hasClass('not-black-listed') == true){
+                $text = 'add this user to black list?';
+                swal({
+                    title: "ADD TO BLACK LIST",
+                    text: "Input Remarks",
+                    icon: "info",
+                    content: "input",
+                    buttons: {
+                        cancel: true,
+                        confirm: true,
+                    }
+                }).then((result) => {
+                    $('.black-list-remarks').val(result);
+                    if(result != null){
+                        if($('.black-list-remarks').val().length > 0){
+                            $(this).closest('form').submit();
+                        }else{
+                            swal({icon: "error", text : 'Please Enter Remarks to proceed'});
+                        }
+                    }
+                });
+
+            }else{
+                $text = 'remove this user from black list?';
+                swal({
+                    title: "BLACK LIST",
+                    text: "Are you sure you want to " + $text,
+                    input: 'text',
+                    inputLabel: 'Your IP address',
+                    icon: "info",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willUpdate) => {
+                    if (willUpdate) {
+                        $(this).closest('form').submit();
+                    }
+                });
+            }
+
         })
     });
 </script>

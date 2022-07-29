@@ -272,7 +272,7 @@ $id_type = [
 
                                             <hr class="mt-0 mb-0">
                                             
-                                            @if(in_array(Auth::user()->user_type_id, [1,3]))
+                                            @if(in_array(Auth::user()->user_type_id, [1,3]) && $user->status != 'review')
                                             <div class="pt-1">
 
                                                 <div class="row">

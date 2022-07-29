@@ -208,17 +208,14 @@
 
           <li class="nav-item">
             <a href="/notifications" class="nav-link {{ (request()->is('notifications*')) ? 'active' : '' }}">
-              
-              <i class="nav-icon fa fa-bell">
-                <label class="notifications" id="notifications" style="display:none">
-                  <span id="notificationsCount">0</span>
-                </label>
-              </i>
-
+              <i class="nav-icon fa fa-bell"></i>
               <p>
                 Notifications
-              </p>
 
+                <label class="notifications notif-css" id="notifications" style="display:none">
+                  <span class="badge bg-red" id="notificationsCount">0</span>
+                </label>
+              </p>
             </a>
           </li>
 

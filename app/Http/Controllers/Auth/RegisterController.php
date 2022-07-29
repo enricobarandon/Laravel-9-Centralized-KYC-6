@@ -95,6 +95,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $status = '';
+        if($data['group_code']){
+            $status = 'review';
+        }else{
+            $status = 'pending';
+        }
         $userId = User::insertGetId([
             'uuid' =>           $data['uuid'],
             'first_name' =>     $data['first_name'],
@@ -104,7 +110,7 @@ class RegisterController extends Controller
             'password' =>       Hash::make($data['password']),
             'user_type_id' =>   5, // player
             'is_active' =>      1,
-            'status' =>         'review',
+            'status' =>         $status,
             'contact' =>        $data['contact'],
             'group_code' =>     $data['group_code'],
             'created_at' =>     Carbon::now(),
