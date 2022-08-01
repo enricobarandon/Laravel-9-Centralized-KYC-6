@@ -122,6 +122,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/helpdesk/disapproved" class="nav-link {{ (request()->is('helpdesk/disapproved*')) ? 'custom-active' : '' }}">
+                <i class="fa fa-user-times nav-icon"></i>
+                <p>Disapproved Players</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/helpdesk/for-approval" class="nav-link {{ (request()->is('helpdesk/for-approval*')) ? 'custom-active' : '' }}">
                 <i class="far fa-user nav-icon"></i>
                 <p>For Approval</p>
@@ -153,8 +159,26 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="/helpdesk" class="nav-link {{ (request()->is('helpdesk')) ? 'custom-active' : '' }}">
+                  <i class="far fa-user-circle nav-icon"></i>
+                  <p>Verified Players</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/helpdesk/disapproved" class="nav-link {{ (request()->is('helpdesk/disapproved*')) ? 'custom-active' : '' }}">
+                <i class="fa fa-user-times nav-icon"></i>
+                <p>Disapproved Players</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/helpdesk/for-approval" class="nav-link {{ (request()->is('helpdesk/for-approval*')) ? 'custom-active' : '' }}">
+                <i class="far fa-user nav-icon"></i>
+                <p>For Approval</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/helpdesk/for-review" class="nav-link {{ (request()->is('helpdesk/for-review*')) ? 'custom-active' : '' }}">
-                <i class="far fa-user-circle  nav-icon"></i>
+                <i class="far fa-address-card  nav-icon"></i>
                 <p>For Review</p>
                 </a>
               </li>

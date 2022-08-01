@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Supervisor Page</h3>
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Disapproved Player Page</h3>
                 </div>
 
                 <div class="card-body">
@@ -40,7 +40,7 @@
                                 @endif
                                 <div class="col">
                                     <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
-                                    <a href="{{ url('/helpdesk/for-review') }}" class="btn btn-danger"><i class="fas fa-eraser"></i> Reset</a>
+                                    <a href="{{ url('/helpdesk/disapproved') }}" class="btn btn-danger"><i class="fas fa-eraser"></i> Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -53,10 +53,10 @@
                                     <th>#</th>
                                     <th>Player Name</th>
                                     <th>Username</th>
-                                    <th>User Role</th>
                                     <th>Group Code</th>
+                                    <th>Processed By</th>
+                                    <th>Processed At</th>
                                     <th>Created At</th>
-                                    <th>Submit Review</th>
                                     <th>Account Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
                                     <th>Action</th>
@@ -72,14 +72,10 @@
                                         <td>{{ $playersCount++ }}</td>
                                         <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                         <td>{{ $player->username }}</td>
-                                        <td>{{ $player->role }}</td>
                                         <td>{{ $player->group_code }}</td>
+                                        <td>{{ isset($player->processed_by) ? $processedBy[$player->processed_by] : '' }}</td>
+                                        <td>{{ date("M d, Y h:i:s a",strtotime($player->updated_at)) }}</td>
                                         <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
-                                        <td>
-                                            <strong class="{{ $player->review_by == null ? 'deactivated' : 'active' }}">
-                                                {{ $player->review_by == null ? 'NO' : 'YES' }}
-                                            </strong>
-                                        </td>
                                         <td><strong class="{{ $player->status }}">{{ $player->status == 'review' ? 'FOR '.strtoupper($player->status) : strtoupper($player->status) }}</td>
                                         <td>
                                             <div class="form-inline" style="justify-content: center">

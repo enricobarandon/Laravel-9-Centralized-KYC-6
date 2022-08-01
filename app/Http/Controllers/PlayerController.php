@@ -27,8 +27,8 @@ class PlayerController extends Controller
         
         $playerInfo = User::where('id', $id)->first();
 
-        if($auth->status == 'verified' || $playerInfo->user_type_id != 5){
-            return back()->with('error','Account is already verified');
+        if($auth->status != 'disapproved' || $playerInfo->user_type_id != 5){
+            return back()->with('error','Access Denied!');
         }
 
         if($auth->user_type_id == 5){

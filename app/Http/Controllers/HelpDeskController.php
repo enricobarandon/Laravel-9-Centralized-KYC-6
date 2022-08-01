@@ -24,11 +24,17 @@ class HelpDeskController extends Controller
 
     public function index(Request $request)
     {
+        $auth = auth()->user();
+
         $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','is_black_listed')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
                                 ->where('status', 'verified')
                                 ->orderBy('processed_at','desc');
+
+        if($auth->user_type_id == 4){
+            $players = $players->where('group_code', $auth->group_code);
+        }
 
         $keyword = $request->keyword;
 
@@ -62,9 +68,13 @@ class HelpDeskController extends Controller
         $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
-                                ->whereIn('status', ['pending','disapproved'])
+                                ->where('status', 'pending')
                                 ->orderBy('id','desc');
-        
+                                
+        if($auth->user_type_id == 4){
+            $players = $players->where('group_code', $auth->group_code);
+        }
+
         if($request->id){
             $randomUser = User::select('id')
             ->where('status', 'pending')
@@ -117,7 +127,7 @@ class HelpDeskController extends Controller
                                 ->orderBy('id','desc');
         
         if($auth->user_type_id == 4){
-            $players = $players->where('group_code', $auth->group_code);
+            $players = $players->where('group_code', $auth->group_code)->where('status', 'review');
         }else{
             $players = $players->where('status', 'review');
         }
@@ -281,5 +291,38 @@ class HelpDeskController extends Controller
         }else{
             return back()->with('error','Something went wrong');
         }
+    }
+    public function disapproved(Request $request)
+    {
+        $auth = auth()->user();
+
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_by','users.updated_at as updated_at')
+                                ->join('user_types', 'user_types.id','users.user_type_id')
+                                ->where('user_type_id', 5)
+                                ->orderBy('id','desc');
+        
+        if($auth->user_type_id == 4){
+            $players = $players->where('group_code', $auth->group_code)->where('status', 'disapproved');
+        }else{
+            $players = $players->where('status', 'disapproved');
+        }
+
+        $keyword = $request->keyword;
+
+        if($keyword){
+            $players = $players->where(DB::raw('concat(first_name,last_name,username)'), 'like', '%' . $keyword . '%');
+        }
+
+        $code = $request->group_code;
+
+        if($code){
+            $players = $players->where('users.group_code', $code);
+        }
+
+        $players = $players->paginate(20);
+
+        $processedBy = User::select('id','username')->get()->pluck('username','id')->toArray();
+
+        return view('helpdesk.disapproved', compact('players','keyword','code','processedBy'));
     }
 }

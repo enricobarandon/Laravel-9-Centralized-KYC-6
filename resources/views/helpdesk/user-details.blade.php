@@ -18,14 +18,14 @@ $id_type = [
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @if(Auth::user()->user_type_id == 4)
+            @if($user->status == 'review')
             <a href="/helpdesk/for-review" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
+            @elseif($user->status == 'verified')
+            <a href="/helpdesk" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
+            @elseif($user->status == 'disapproved')
+            <a href="/helpdesk/disapproved" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
             @else
-                @if(isset($user->review_by))
-                <a href="{{ $user->status == 'verified' ? '/helpdesk' : '/helpdesk/for-approval' }}" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
-                @else
-                <a href="/helpdesk/for-review" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
-                @endif
+            <a href="/helpdesk/for-approval" class="btn btn-normal-primary btn-primary mb-3"><i class="fas fa-backward"></i> Back</a>
             @endif
             <div class="card card-info">
                 <div class="card-header">
@@ -51,7 +51,7 @@ $id_type = [
                             <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                             @csrf
                                 <input type="hidden" name="operation" value="review" />
-                                <button type="button" class="btn btn-primary btn-normal float-right submit-review mr-3">
+                                <button type="button" class="btn btn-sm btn-primary btn-normal float-right submit-review mr-3">
                                     <i class="fa fa-check"></i> Submit Review
                                 </button>
                             </form>
@@ -67,16 +67,22 @@ $id_type = [
                     @endif
 
                     @if(Auth::user()->user_type_id == 4)
-                        @if(isset($user->review_by))
-                            @if($user->status == 'verified')
-                            <button type="button" class="btn btn-success btn-normal btn-sm float-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-qrcode"></i> View QR Code</button>
-                            @endif
-                        @else
+                        @if($user->status == 'verified')
+                        <button type="button" class="btn btn-success btn-normal btn-sm float-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-qrcode"></i> View QR Code</button>
+                        @elseif($user->status == 'review')
                         <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                         @csrf
                             <input type="hidden" name="operation" value="review" />
-                            <button type="button" class="btn btn-primary btn-normal float-right submit-review mr-3">
+                            <button type="button" class="btn btn-sm btn-primary btn-normal float-right submit-review mr-3">
                                 <i class="fa fa-check"></i> Submit Review
+                            </button>
+                        </form>
+                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                        @csrf
+                            <input type="hidden" name="operation" value="disapprove" />
+                            <input type="hidden" name="remarks" id="remarks" value="">
+                            <button type="button" class="btn btn-danger btn-normal btn-sm float-right submit-disapprove mr-3">
+                                <i class="fas fa-times"></i> Disapprove Player
                             </button>
                         </form>
                         @endif

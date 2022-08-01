@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">{{ __('Dashboard') }}
-            @if($userInfo->user_type_id == 5 and in_array($userInfo->status, ['pending','disapproved']))
+            @if($userInfo->user_type_id == 5 and $userInfo->status == 'disapproved')
                 <a href='{{ url("/player/$userInfo->id") }}' class="btn btn-normal float-right"><i class="fas fa-cog"></i> Update Details</a>
             @endif
             </div>
