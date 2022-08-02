@@ -244,7 +244,8 @@ class RegisterController extends Controller
                             ->where('user_type_id', 5)    
                             ->first();
         if ($findDuplicate) {
-            ProcessBlackListDetected::dispatch($findDuplicate->id);
+            // ProcessBlackListDetected::dispatch($findDuplicate->id);
+            event(new DuplicateDetected($findDuplicate->id));
             $duplicate = true;
         }
 
