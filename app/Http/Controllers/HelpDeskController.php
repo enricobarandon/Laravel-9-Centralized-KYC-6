@@ -14,6 +14,7 @@ use DB;
 use Carbon\Carbon;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
+use App\Repositories\Backend\SendSms;
 
 class HelpDeskController extends Controller
 {
@@ -180,6 +181,11 @@ class HelpDeskController extends Controller
 
             $operation = 'approved';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
+
+            SendSms::send([
+                'number' =>     $user->contact,
+                'message' =>    "Good day ". $user->first_name ."! This is Lucky 8. Congratulations! Your application has been approved."
+            ]);
         
         }elseif($request->operation == 'disapprove'){
             
@@ -275,6 +281,11 @@ class HelpDeskController extends Controller
         
         $update = UserDetails::where('user_id', $user->id)->update($interviewDetails);
         if($update){
+            
+            SendSms::send([
+                'number' =>     $user->contact,
+                'message' =>    "Good day players! This is Lucky 8. Your interview appointment via " . $user->user_details->video_app . " is set on " . date('M d, Y h:i A', strtotime($user->user_details->interview_date_time)) . ". Please login to your account to view the interview link."
+            ]);
 
             ActivityLog::create([
                 'type' => 'update-interview-details',

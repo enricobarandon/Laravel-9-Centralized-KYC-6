@@ -26,7 +26,7 @@ class PlayerController extends Controller
         $id = $request->segment(2);
         
         $playerInfo = User::where('id', $id)->first();
-
+        
         if($auth->status != 'disapproved' || $playerInfo->user_type_id != 5){
             return back()->with('error','Access Denied!');
         }
