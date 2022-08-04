@@ -36,7 +36,7 @@ $id_type = [
                             @csrf
                                 <input type="hidden" name="operation" value="approve" />
                                 <button type="button" class="btn btn-info btn-normal btn-sm float-right submit-approval">
-                                    <i class="fas fa-check"></i> Approve Player
+                                    <i class="fas fa-check"></i> Approve Application
                                 </button>
                             </form>
                             <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
@@ -44,7 +44,7 @@ $id_type = [
                                 <input type="hidden" name="operation" value="disapprove" />
                                 <input type="hidden" name="remarks" id="remarks" value="">
                                 <button type="button" class="btn btn-danger btn-normal btn-sm float-right submit-disapprove mr-3">
-                                    <i class="fas fa-times"></i> Disapprove Player
+                                    <i class="fas fa-times"></i> Decline Application
                                 </button>
                             </form>
                         @elseif($user->status == 'review')

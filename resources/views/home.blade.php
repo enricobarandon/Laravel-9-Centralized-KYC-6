@@ -68,7 +68,7 @@
                     <div class="col-md-12 text-center">
                         <div class="card card-outline card-info mb-2">
                             <div class="card-header">
-                                <h4><i class="fa fa-info-circle"></i> Your account status is for review.</h4>
+                                <h4><i class="fa fa-info-circle"></i> Your account registration is still under review.</h4>
                             </div>
 
                             <div class="card-body">

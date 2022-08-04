@@ -191,7 +191,7 @@ class RegisterController extends Controller
         ]);
 
         return $this->registered($request, $user)
-                            ?: back()->with('success','User successfully created. Waiting for account approval.');
+                            ?: back()->with('success','Registration successfully submitted. Wait for account approval.');
 
     }
 

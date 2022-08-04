@@ -53,13 +53,13 @@
                                     </select>
                                 </div>
                                 
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                     <select class="form-control" name="account_status" id="player_status">
                                         <option value="" selected disabled>Account Status</option>
                                         <option value="pending" {{ $account_status == 'pending' ? 'selected' : '' }}>Pending</option>
                                         <option value="disapproved" {{ $account_status == 'disapproved' ? 'selected' : '' }}>Disapproved</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 @endif
                                 <div class="col">
                                     <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
@@ -78,9 +78,9 @@
                                     <th>Username</th>
                                     <th>Group Code</th>
                                     <th>Reviewed By</th>
-                                    <th>Created At</th>
-                                    <th>Is Active</th>
+                                    <th>Registration Date & Time</th>
                                     <th>Account Status</th>
+                                    <th>Profile Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
                                     <th>Action</th>
                                     @endif

@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Supervisor Page</h3>
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Site Supervisor Page</h3>
                     <a href='{{ url("/supervisor") }}' class="btn btn-normal float-right">Refresh</a>
                     <a href='{{ url("/groups/report/$group->id") }}' class="btn btn-normal float-right mr-3"><i class="fa fa-eye"></i> View Reports</a>
                 </div>

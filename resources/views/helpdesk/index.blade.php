@@ -64,10 +64,10 @@
                                 <th>User Role</th>
                                 <th>Group Code</th>
                                 <th>Processed By</th>
-                                <th>Processed At</th>
-                                <th>Created At</th>
-                                <th>Is Active</th>
+                                <th>Process Date & Time</th>
+                                <th>Registration Date & Time</th>
                                 <th>Account Status</th>
+                                <th>Profile Status</th>
                                 @if(in_array(Auth::user()->user_type_id, [1,3,4]))
                                 <th>Action</th>
                                 @endif
@@ -92,7 +92,7 @@
                                             {{ $player->is_active ? 'Active' : 'Deactivated' }}
                                         </strong>
                                     </td>
-                                    <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
+                                    <td><strong class="{{ $player->status }}">APPROVED</td>
                                     <td>
                                         <div class="form-inline" style="justify-content: center">
                                         @if(in_array(Auth::user()->user_type_id, [1,2]))

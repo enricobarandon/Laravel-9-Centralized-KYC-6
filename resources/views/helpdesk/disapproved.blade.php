@@ -55,9 +55,9 @@
                                     <th>Username</th>
                                     <th>Group Code</th>
                                     <th>Processed By</th>
-                                    <th>Processed At</th>
-                                    <th>Created At</th>
-                                    <th>Account Status</th>
+                                    <th>Process Date & Time</th>
+                                    <th>Registration Date & Time</th>
+                                    <th>Profile Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
                                     <th>Action</th>
                                     @endif
