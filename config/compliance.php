@@ -624,5 +624,21 @@ return [
         '3' => 'Messenger',
         '4' => 'Skype',
         '5' => 'Microsoft Teams'
+    ],
+    
+    'reject-remarks' =>  [
+        'reject_reason1' => 'Reason 1',
+        'reject_reason2' => 'Reason 2',
+        'reject_reason3' => 'Reason 3',
+        'reject_reason4' => 'Reason 4',
+        'reject_reason5' => 'Reason 5'
+    ],
+    
+    'return-remarks' =>  [
+        'return_reason1' => 'Reason 1',
+        'return_reason2' => 'Reason 2',
+        'return_reason3' => 'Reason 3',
+        'return_reason4' => 'Reason 4',
+        'return_reason5' => 'Reason 5'
     ]
 ];
