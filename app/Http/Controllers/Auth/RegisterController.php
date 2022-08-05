@@ -98,8 +98,10 @@ class RegisterController extends Controller
         $status = '';
         if($data['group_code']){
             $status = 'review';
+            $site_status = 'pending';
         }else{
             $status = 'pending';
+            $site_status = 'direct';
         }
         $userId = User::insertGetId([
             'uuid' =>           $data['uuid'],
@@ -111,6 +113,7 @@ class RegisterController extends Controller
             'user_type_id' =>   5, // player
             'is_active' =>      1,
             'status' =>         $status,
+            'site_status' =>    $site_status,
             'contact' =>        $data['contact'],
             'group_code' =>     $data['group_code'],
             'created_at' =>     Carbon::now(),

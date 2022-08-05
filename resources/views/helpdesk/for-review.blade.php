@@ -56,7 +56,7 @@
                                     <th>User Role</th>
                                     <th>Group Code</th>
                                     <th>Created At</th>
-                                    <th>Submit Review</th>
+                                    <th>Site Review</th>
                                     <th>Account Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
                                     <th>Action</th>
@@ -74,10 +74,10 @@
                                         <td>{{ $player->username }}</td>
                                         <td>{{ $player->role }}</td>
                                         <td>{{ $player->group_code }}</td>
-                                        <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
+                                        <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
                                         <td>
-                                            <strong class="{{ $player->review_by == null ? 'deactivated' : 'active' }}">
-                                                {{ $player->review_by == null ? 'NO' : 'YES' }}
+                                            <strong class="{{ $player->site_status }}">
+                                                {{ strtoupper($player->site_status ) }}
                                             </strong>
                                         </td>
                                         <td><strong class="{{ $player->status }}">{{ $player->status == 'review' ? 'FOR '.strtoupper($player->status) : strtoupper($player->status) }}</td>

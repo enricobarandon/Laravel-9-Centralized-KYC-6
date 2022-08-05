@@ -43,7 +43,7 @@ $id_type = [
                             @csrf
                                 <input type="hidden" name="operation" value="disapprove" />
                                 <input type="hidden" name="remarks" id="remarks" value="">
-                                <button type="button" class="btn btn-danger btn-normal btn-sm float-right submit-disapprove mr-3">
+                                <button type="button" class="btn btn-danger btn-normal btn-sm float-right btn-reject mr-3" data-toggle="modal" data-target="#modal-reject">
                                     <i class="fas fa-times"></i> Decline Application
                                 </button>
                             </form>
@@ -52,7 +52,7 @@ $id_type = [
                             @csrf
                                 <input type="hidden" name="operation" value="review" />
                                 <button type="button" class="btn btn-sm btn-primary btn-normal float-right submit-review mr-3">
-                                    <i class="fa fa-check"></i> Submit Review
+                                    <i class="fa fa-check"></i> Submit Application
                                 </button>
                             </form>
                         @elseif($user->status == 'verified')
@@ -74,17 +74,31 @@ $id_type = [
                         @csrf
                             <input type="hidden" name="operation" value="review" />
                             <button type="button" class="btn btn-sm btn-primary btn-normal float-right submit-review mr-3">
-                                <i class="fa fa-check"></i> Submit Review
+                                <i class="fa fa-check"></i> Submit Application
                             </button>
                         </form>
-                        <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                        <!-- <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
+                        @csrf
+                            <input type="hidden" name="operation" value="return" />
+                            <input type="hidden" name="remarks" id="remarks" value="">
+                            <button type="button" class="btn btn-warning btn-normal btn-sm float-right submit-disapprove mr-3" data-toggle="modal" data-target="#modal-returned">
+                                <i class="fas fa-times"></i> Return
+                            </button>
+                        </form> -->
+                        <button type="button" class="btn btn-warning btn-sm float-right mr-3 btn-return" data-toggle="modal" data-target="#modal-return">
+                                <i class="fas fa-undo"></i> Return
+                            </button>
+                        <!-- <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                         @csrf
                             <input type="hidden" name="operation" value="disapprove" />
                             <input type="hidden" name="remarks" id="remarks" value="">
-                            <button type="button" class="btn btn-danger btn-normal btn-sm float-right submit-disapprove mr-3">
-                                <i class="fas fa-times"></i> Disapprove Player
+                            <button type="button" class="btn btn-danger btn-normal btn-sm float-right submit-disapprove mr-3" data-toggle="modal" data-target="#modal-reject">
+                                <i class="fas fa-times"></i> Reject
                             </button>
-                        </form>
+                        </form> -->
+                        <button type="button" class="btn btn-danger btn-sm float-right mr-3 btn-reject" data-toggle="modal" data-target="#modal-reject">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
                         @endif
                     @endif
 
@@ -150,14 +164,19 @@ $id_type = [
                                                 <div class="col-6 mb-1">
                                                     <h6>Status</h6>
                                                     <p class="text-muted">
-                                                        <strong class="{{ $user->status }}">{{ isset($user->status) ? strtoupper($user->status) : '--' }}</strong>
-                                                        @if($user->status == 'disapproved')
+                                                        <strong class="{{ $user->status }}">
+                                                            {{ isset($user->status) ? strtoupper($user->status) : '--' }}
+                                                            @if($user->status == 'review')
+                                                            ({{ isset($user->site_status) ? strtoupper($user->site_status) : '' }})
+                                                            @endif
+                                                        </strong>
+                                                        @if($user->status == 'disapproved' || $user->site_status == 'returned')
                                                             <h6>Remarks: <i class="text-muted">{{ isset($userDetails->remarks) ? $userDetails->remarks : '--' }}</i></h6>
                                                         @endif
                                                     </p>
                                                 </div>
                                             </div>
-                                            @if($user->status == 'disapproved')
+                                            @if($user->status == 'disapproved' || $user->site_status == 'returned')
                                             <hr class="mt-0 mb-0">
 
                                             <div class="row pt-1">
@@ -374,6 +393,7 @@ $id_type = [
     </div>
 </div>
 @include('partials.qrcode-modal')
+@include('helpdesk.includes.modals')
 @endsection
 
 @section('script')
@@ -383,7 +403,7 @@ $('document').ready(function() {
     $('.submit-approval').on('click', function(){
         swal({
             title: "Approve Player",
-            text: "Are you sure you want to approve this player?",
+            text: "Are you sure you want to approve this player application?",
             icon: "info",
             buttons: true,
             dangerMode: true,
@@ -398,7 +418,7 @@ $('document').ready(function() {
     $('.submit-pending').on('click', function(){
         swal({
             title: "Return to Pending",
-            text: "Are you sure you want to return this player to pending?",
+            text: "Are you sure you want to return this application to pending?",
             icon: "info",
             buttons: true,
             dangerMode: true,
@@ -409,23 +429,137 @@ $('document').ready(function() {
         });
     })
     
+    // $('.submit-disapprove').on('click', function(){
+    //     swal({
+    //         title: "Disapprove Player",
+    //         text: "Input Remarks",
+    //         icon: "info",
+    //         content: "input",
+    //         buttons: {
+    //             cancel: true,
+    //             confirm: true,
+    //         }
+    //     }).then((result) => {
+    //         $('#remarks').val(result);
+    //         if(result != null){
+    //             if($('#remarks').val().length > 0){
+    //                 $(this).closest('form').submit();
+    //             }else{
+    //                 swal({icon: "error", text : 'Please Enter Remarks to proceed'});
+    //             }
+    //         }
+    //     });
+    // })
+
+    $('.btn-reject').on('click', function(){
+        $('#form_reject').trigger("reset");
+        $('#others1').hide();
+        $('#others2').hide();
+    })
+
+    $('.reject-reason').on('change', function(){
+        if($('.reject-reason:checked').prop('id') == 'reject-others1'){
+            $('#others1').show();
+            $('#others2').val('').hide();
+        }else if($('.reject-reason:checked').prop('id') == 'reject-others2'){
+            $('#others1').val('').hide();
+            $('#others2').show();
+        }else{
+            $('#others1').val('').hide();
+            $('#others2').val('').hide();
+        }
+    })
+
     $('.submit-disapprove').on('click', function(){
         swal({
-            title: "Disapprove Player",
-            text: "Input Remarks",
+            title: "Reject Application",
+            text: "Are you sure you want to reject this application?",
             icon: "info",
-            content: "input",
-            buttons: {
-                cancel: true,
-                confirm: true,
-            }
-        }).then((result) => {
-            $('#remarks').val(result);
-            if(result != null){
-                if($('#remarks').val().length > 0){
-                    $(this).closest('form').submit();
+            buttons: true,
+            dangerMode: true,
+        }).then((willUpdate) => {
+            if (willUpdate) {
+                if (typeof $('.reject-reason:checked').val() === "undefined") {
+                    swal({
+                        title: "Please select a reason!",
+                        icon: "error",
+                    })
                 }else{
-                    swal({icon: "error", text : 'Please Enter Remarks to proceed'});
+                    var textareaValue = '';
+                    var remarks = '';
+                    if($('.reject-reason:checked').prop('id') == 'reject-others1'){
+                        textareaValue = $('#others1').val();
+                        remarks = 'Remarks: ' + $('#others1').val();
+                    }else if($('.reject-reason:checked').prop('id') == 'reject-others2'){
+                        textareaValue = $('#others2').val();
+                        remarks = 'Rejected-Remarks: ' + $('#others2').val();
+                    }else{
+                        textareaValue = $('.reject-reason:checked').val();
+                        remarks = $('.reject-reason:checked').val();
+                    }
+                    if(textareaValue != ''){
+                        $('#disapprove_remarks').val(remarks);
+                        $('#form_reject').modal('hide');
+                        $('#form_reject').submit();
+                    }else{
+                        swal({
+                            title: "Please Enter Remarks!",
+                            icon: "error",
+                        })
+                    }
+                }
+            }
+        });
+    })
+
+    
+    $('.btn-return').on('click', function(){
+        $('#form_return').trigger("reset");
+        $('#returnOthers').hide();
+    })
+
+    $('.return-reason').on('change', function(){
+        if($('.return-reason:checked').prop('id') == 'return-others'){
+            $('#returnOthers').val('').show();
+        }else{
+            $('#returnOthers').val('').hide();
+        }
+    })
+
+    $('.submit-return').on('click', function(){
+        swal({
+            title: "Return Application",
+            text: "Are you sure you want to return this application?",
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        }).then((willUpdate) => {
+            if (willUpdate) {
+                if (typeof $('.return-reason:checked').val() === "undefined") {
+                    swal({
+                        title: "Please select a reason!",
+                        icon: "error",
+                    })
+                }else{
+                    var textareaValue = '';
+                    var remarks = '';
+                    if($('.return-reason:checked').prop('id') == 'return-others'){
+                        textareaValue = $('#returnOthers').val();
+                        remarks = 'Remarks: ' + $('#returnOthers').val();
+                    }else{
+                        textareaValue = $('.return-reason:checked').val();
+                        remarks = $('.return-reason:checked').val();
+                    }
+                    if(textareaValue != ''){
+                        $('#return_remarks').val(remarks);
+                        $('#form_return').modal('hide');
+                        $('#form_return').submit();
+                    }else{
+                        swal({
+                            title: "Please Enter Remarks!",
+                            icon: "error",
+                        })
+                    }
                 }
             }
         });
@@ -433,8 +567,8 @@ $('document').ready(function() {
 
     $('.submit-review').on('click', function(){
         swal({
-            title: "Submit Player",
-            text: "Are you sure you want to submit this player?",
+            title: "Submit Application",
+            text: "Are you sure you want to submit this player application?",
             icon: "info",
             buttons: true,
             dangerMode: true,

@@ -75,7 +75,7 @@ input#qrcode {
     width: 100%;
     /* max-height: 300px; */
 }
-.pending {
+.pending, strong.pending {
     background: rgb(51, 64, 240);
     color: white;
     padding: 0px 5px 2px 5px;;
@@ -99,6 +99,12 @@ input#qrcode {
 strong.deactivated {
     background: rgb(230, 17, 6);
     color: white;
+    padding: 0px 5px 2px 5px;;
+    border-radius: 5px;
+}
+strong.returned {
+    background: rgb(251, 243, 6);
+    color: #000000;
     padding: 0px 5px 2px 5px;;
     border-radius: 5px;
 }

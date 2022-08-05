@@ -79,6 +79,7 @@
                                     <th>Group Code</th>
                                     <th>Reviewed By</th>
                                     <th>Registration Date & Time</th>
+                                    <th>Site Review</th>
                                     <th>Account Status</th>
                                     <th>Profile Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
@@ -97,13 +98,18 @@
                                         <td>{{ $player->username }}</td>
                                         <td>{{ $player->group_code }}</td>
                                         <td>{{ isset($player->review_by) ? $reviewBy[$player->review_by] : '(Direct Player)' }}</td>
-                                        <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
+                                        <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
+                                        <td>
+                                            <strong class="{{ $player->site_status == 'submitted' ? 'active' : '' }}">
+                                                {{ isset($player->site_status) ? strtoupper($player->site_status) : '--' }}
+                                            </strong>
+                                        </td>
                                         <td>
                                             <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
                                                 {{ $player->is_active ? 'Active' : 'Deactivated' }}
                                             </strong>
                                         </td>
-                                        <td><strong class="{{ $player->status }}">{{ strtoupper($player->status) }}</td>
+                                        <td><strong class="{{ $player->status }}">SCHEDULED</td>
                                         <td>
                                             <div class="form-inline" style="justify-content: center">
                                             @if(in_array(Auth::user()->user_type_id, [1,2]))

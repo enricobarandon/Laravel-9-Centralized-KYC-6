@@ -27,7 +27,7 @@ class HelpDeskController extends Controller
     {
         $auth = auth()->user();
 
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','is_black_listed')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','is_black_listed','site_status')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
                                 ->where('status', 'verified')
@@ -66,7 +66,7 @@ class HelpDeskController extends Controller
     {
         $auth = auth()->user();
 
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by','is_black_listed','site_status')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
                                 ->where('status', 'pending')
@@ -122,15 +122,14 @@ class HelpDeskController extends Controller
     {
         $auth = auth()->user();
 
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by','is_black_listed','site_status')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
+                                ->where('status', 'review')
                                 ->orderBy('id','desc');
         
         if($auth->user_type_id == 4){
-            $players = $players->where('group_code', $auth->group_code)->where('status', 'review');
-        }else{
-            $players = $players->where('status', 'review');
+            $players = $players->where('group_code', $auth->group_code);
         }
 
         $keyword = $request->keyword;
@@ -167,8 +166,11 @@ class HelpDeskController extends Controller
         $qrCode = $qrcode->getBarcodePNG($uuid, 'QRCODE',15,15);
 
         $processedBy = User::select('username')->where('id', $user->processed_by)->first();
+        
+        $rejectRemarks = config('compliance.reject-remarks');
+        $returnRemarks = config('compliance.return-remarks');
 
-        return view('helpdesk.user-details', compact('user','userDetails','processedBy','qrCode'));
+        return view('helpdesk.user-details', compact('user','userDetails','processedBy','qrCode','rejectRemarks','returnRemarks'));
     }
 
     public function changeStatus(User $user, Request $request)
@@ -177,6 +179,8 @@ class HelpDeskController extends Controller
 
         $operation = '';
         
+        $remarks_logs = '';
+
         if($request->operation == 'approve'){
 
             $operation = 'approved';
@@ -190,19 +194,59 @@ class HelpDeskController extends Controller
         }elseif($request->operation == 'disapprove'){
             
             $operation = 'disapproved';
-            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'disapproved', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
+            $reasonType = explode(' ', trim($request->disapprove_remarks))[0];
 
-            $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->remarks]);
+            if($reasonType == 'Remarks:'){
+
+                $changeStatus = User::where('id', $user->id)->update([
+                                            'users.status' => 'disapproved', 
+                                            'users.site_status' => 'rejected', 
+                                            'users.processed_by' => $auth->id, 
+                                            'users.processed_at' => Carbon::now()
+                                        ]);
+
+            }else{
+
+                $changeStatus = User::where('id', $user->id)->update([
+                                            'users.is_active' => 0,
+                                            'users.status' => 'disapproved', 
+                                            'users.site_status' => 'rejected', 
+                                            'users.processed_by' => $auth->id, 
+                                            'users.processed_at' => Carbon::now()
+                                        ]);
+
+            }
+
+            $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->disapprove_remarks]);
+
+            $remarks_logs = $request->disapprove_remarks;
         
         }elseif($request->operation == 'pending'){
             
             $operation = 'pending';
-            $changeStatus = User::where('id', $user->id)->update(['users.status' => 'pending', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
+            $changeStatus = User::where('id', $user->id)->update([
+                                                            'users.status' => 'pending', 
+                                                            'users.processed_by' => $auth->id, 
+                                                            'users.processed_at' => Carbon::now()
+                                                        ]);
         
         }elseif($request->operation == 'review'){
 
             $operation = 'reviewed';
-            $changeStatus = User::where('id', $user->id)->update(['users.review_by' => $auth->id, 'users.status' => 'pending']);
+            $changeStatus = User::where('id', $user->id)->update([
+                                                'users.review_by' => $auth->id, 
+                                                'users.status' => 'pending', 
+                                                'users.site_status' => 'submitted'
+                                            ]);
+
+        }elseif($request->operation == 'return'){
+
+            $operation = 'returned';
+            $changeStatus = User::where('id', $user->id)->update(['users.processed_by' => $auth->id, 'users.site_status' => 'returned']);
+
+            $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->return_remarks]);
+
+            $remarks_logs = $request->return_remarks;
 
         }else{
 
@@ -222,7 +266,7 @@ class HelpDeskController extends Controller
                 ])
             ]);
 
-            return back()->with('success','Player account '.$operation);
+            return back()->with('success','Player application '.$operation);
         }else{
             return back()->with('error','Something went wrong');
         }
@@ -307,15 +351,14 @@ class HelpDeskController extends Controller
     {
         $auth = auth()->user();
 
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_by','users.updated_at as updated_at')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_by','users.updated_at as updated_at','is_black_listed')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
+                                ->where('status', 'disapproved')
                                 ->orderBy('id','desc');
         
         if($auth->user_type_id == 4){
-            $players = $players->where('group_code', $auth->group_code)->where('status', 'disapproved');
-        }else{
-            $players = $players->where('status', 'disapproved');
+            $players = $players->where('group_code', $auth->group_code);
         }
 
         $keyword = $request->keyword;

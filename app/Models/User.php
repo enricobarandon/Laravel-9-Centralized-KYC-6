@@ -33,7 +33,8 @@ class User extends Authenticatable
         'group_code',
         'processed_by',
         'processed_at',
-        'review_by'
+        'review_by',
+        'site_status'
     ];
 
     /**

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('user_type_id');
             $table->boolean('is_active')->default(1);
             $table->char('status', 30)->nullable();
+            $table->char('site_status', 30)->nullable();
             $table->integer('contact',11)->unique();
             $table->text('session_id')->nullable();
             $table->char('group_code',5)->nullable();

@@ -85,8 +85,8 @@
                                     <td>{{ $player->role }}</td>
                                     <td>{{ $player->group_code }}</td>
                                     <td>{{ isset($player->processed_by) ? $processedBy[$player->processed_by] : '' }}</td>
-                                    <td>{{ $player->processed_at ? date("M d, Y h:i:s a",strtotime($player->processed_at)) : '' }}</td>
-                                    <td>{{ date("M d, Y h:i:s a",strtotime($player->created_at)) }}</td>
+                                    <td>{{ $player->processed_at ? date("M d, Y h:i a",strtotime($player->processed_at)) : '' }}</td>
+                                    <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
                                     <td>
                                         <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
                                             {{ $player->is_active ? 'Active' : 'Deactivated' }}
