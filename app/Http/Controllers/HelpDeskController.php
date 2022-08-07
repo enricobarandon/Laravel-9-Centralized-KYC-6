@@ -362,7 +362,7 @@ class HelpDeskController extends Controller
     {
         $auth = auth()->user();
 
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_by','users.updated_at as updated_at','is_black_listed')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_by','users.updated_at as updated_at','is_black_listed','site_status')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
                                 ->where('user_type_id', 5)
                                 ->where('status', 'disapproved')
