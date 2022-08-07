@@ -188,7 +188,7 @@ class HelpDeskController extends Controller
 
             SendSms::send([
                 'number' =>     $user->contact,
-                'message' =>    "Good day ". $user->first_name ."! This is Lucky 8. Congratulations! Your application has been approved."
+                'message' =>    "Good day ". $user->first_name ."! This is Lucky 8. Congratulations! Your application has been approved. Please login to your account to view your QR Code."
             ]);
         
         }elseif($request->operation == 'disapprove'){

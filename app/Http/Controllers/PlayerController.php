@@ -27,12 +27,18 @@ class PlayerController extends Controller
         
         $playerInfo = User::where('id', $id)->first();
         
-        if($auth->status != 'disapproved' || $playerInfo->user_type_id != 5){
-            return back()->with('error','Access Denied!');
+        if($playerInfo->user_type_id != 5){
+            return redirect('/home')->with('error','Page Not Found!');
         }
 
         if($auth->user_type_id == 5){
             if($auth->id != $id){
+                return redirect('/home')->with('error','Page Not Found!');
+            }
+            
+            if($auth->status == 'disapproved' || $auth->site_status == 'returned'){
+                //can access
+            }else{
                 return redirect('/home')->with('error','Access Denied!');
             }
         }
@@ -87,17 +93,34 @@ class PlayerController extends Controller
         
         $playerId = $request->hdnId;
 
+        $playerInfo = User::where('id', $playerId)->first();
+
+        $siteStatus = '';
+        $status = '';
+
+        if($auth->user_type_id == 5){
+            if(in_array($playerInfo->site_status, ['rejected','returned'])){
+                $siteStatus = 'pending';
+                $status = 'review';
+            }else{
+                $siteStatus = $playerInfo->site_status;
+                $status = 'pending';
+            }
+        }else{
+            $siteStatus = $playerInfo->site_status;
+            $status = $playerInfo->status;
+        }
+
         $updatePlayer = User::where('id',$playerId)->update([
             'first_name' =>     $data['first_name'],
             'middle_name' =>    $data['middle_name'],
-            'last_name' =>      $data['last_name']
+            'last_name' =>      $data['last_name'],
+            'status' =>         $status,
+            'site_status' =>    $siteStatus
         ]);
 
         
         if($updatePlayer) {
-            if($auth->user_type_id == 5){
-                User::where('id',$playerId)->update(['status' => 'pending']);
-            }
 
             UserDetails::where('user_id',$playerId)->update([
                 'date_of_birth' =>      date("Y-m-d",strtotime($data['date_of_birth'])),
@@ -161,7 +184,7 @@ class PlayerController extends Controller
             
         }
 
-        return back()->with('success','Successfully update player information');
+        return redirect('/home')->with('success','Successfully update player information');
     }
     
     public function updatePassword(Request $request)
