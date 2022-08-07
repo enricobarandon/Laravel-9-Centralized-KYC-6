@@ -5,8 +5,10 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">{{ __('Dashboard') }}
-            @if($userInfo->user_type_id == 5 and $userInfo->status == 'disapproved')
+            @if($userInfo->user_type_id == 5)
+                @if($userInfo->status == 'disapproved' || $userInfo->site_status == 'returned')
                 <a href='{{ url("/player/$userInfo->id") }}' class="btn btn-normal float-right"><i class="fas fa-cog"></i> Update Details</a>
+                @endif
             @endif
             </div>
             
@@ -59,23 +61,38 @@
                             </div>
 
                             <div class="card-body">
-                            <p><strong>Remarks: {{ isset($userDetails->remarks) ? $userDetails->remarks : '' }}</strong></p>
+                                <h5>Please comply with the with the rules.</h5>
+                                <h5><strong><i class="fa fa-exclamation-triangle"></i> {{ isset($userDetails->remarks) ? $userDetails->remarks : '' }}</strong></h5>
                             </div>
-
                         </div>
                     </div>
                     @elseif(Auth::user()->status == 'review')
-                    <div class="col-md-12 text-center">
-                        <div class="card card-outline card-info mb-2">
-                            <div class="card-header">
-                                <h4><i class="fa fa-info-circle"></i> Your account registration is still under review.</h4>
-                            </div>
+                        @if(Auth::user()->site_status == 'returned')
+                        <div class="col-md-12 text-center">
+                            <div class="card card-outline card-warning mb-2">
+                                <div class="card-header">
+                                    <h4><i class="fa fa-info-circle"></i> Your account has been returned to 'for review' status</h4>
+                                </div>
 
-                            <div class="card-body">
-                                <p><strong>Please ask OCBS/Arena Supervisor for assistance!</strong></p>
+                                <div class="card-body">
+                                    <h5>Please comply with the with the rules.</h5>
+                                    <h5><strong><i class="fa fa-exclamation-triangle"></i> {{ isset($userDetails->remarks) ? $userDetails->remarks : '' }}</strong></h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        @else
+                        <div class="col-md-12 text-center">
+                            <div class="card card-outline card-info mb-2">
+                                <div class="card-header">
+                                    <h4><i class="fa fa-info-circle"></i> Your account registration is still under review.</h4>
+                                </div>
+
+                                <div class="card-body">
+                                    <p><strong>Please ask OCBS/Arena Supervisor for assistance!</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     @endif
 
                     @include('partials.profile')
@@ -86,6 +103,7 @@
                             <h4>Profile QR Code</h4>
                                 <!-- {!! $img !!} -->
                             <img src="data:image/png;base64,{{ $img }}" alt="barcode" style="width: 100%" />
+                            <h5>{{ $userInfo->first_name . ' ' . $userInfo->last_name  }}</h5>
                         </div>
                         <a class="btn btn-primary mt-3" id="downloadQR"><i class="fa fa-download"></i> Download</a>
                     </div>

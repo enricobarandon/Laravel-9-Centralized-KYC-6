@@ -78,7 +78,7 @@
                                         <td>{{ isset($player->processed_by) ? $processedBy[$player->processed_by] : '' }}</td>
                                         <td>{{ date("M d, Y h:i a",strtotime($player->updated_at)) }}</td>
                                         <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
-                                        <td><strong class="{{ $player->status }}">REJECTED</td>
+                                        <td><strong class="{{ isset($player->site_status) ? $player->site_status : '' }}">{{ isset($player->site_status) ? strtoupper($player->site_status) : '--' }}</td>
                                         <td>
                                             <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
                                                 {{ $player->is_active ? 'Active' : 'Deactivated' }}

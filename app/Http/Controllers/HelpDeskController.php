@@ -196,11 +196,19 @@ class HelpDeskController extends Controller
             $operation = 'disapproved';
             $reasonType = explode(' ', trim($request->disapprove_remarks))[0];
 
+            $siteStatus = '';
+
+            if($auth->user_type_id == 4){
+                $siteStatus = 'rejected';
+            }else{
+                $siteStatus = $user->site_status;
+            }
+
             if($reasonType == 'Remarks:'){
 
                 $changeStatus = User::where('id', $user->id)->update([
                                             'users.status' => 'disapproved', 
-                                            'users.site_status' => 'rejected', 
+                                            'users.site_status' => $siteStatus, 
                                             'users.processed_by' => $auth->id, 
                                             'users.processed_at' => Carbon::now()
                                         ]);
@@ -210,7 +218,7 @@ class HelpDeskController extends Controller
                 $changeStatus = User::where('id', $user->id)->update([
                                             'users.is_active' => 0,
                                             'users.status' => 'disapproved', 
-                                            'users.site_status' => 'rejected', 
+                                            'users.site_status' => $siteStatus, 
                                             'users.processed_by' => $auth->id, 
                                             'users.processed_at' => Carbon::now()
                                         ]);
@@ -242,7 +250,10 @@ class HelpDeskController extends Controller
         }elseif($request->operation == 'return'){
 
             $operation = 'returned';
-            $changeStatus = User::where('id', $user->id)->update(['users.processed_by' => $auth->id, 'users.site_status' => 'returned']);
+            $changeStatus = User::where('id', $user->id)->update([
+                                                'users.processed_by' => $auth->id, 
+                                                'users.site_status' => 'returned'
+                                            ]);
 
             $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->return_remarks]);
 
@@ -262,7 +273,7 @@ class HelpDeskController extends Controller
                 'assets' => json_encode([
                     'action' => $operation.' player account',
                     'username' => $user->username,
-                    'remarks' => $request->remarks
+                    'remarks' => $remarks_logs
                 ])
             ]);
 

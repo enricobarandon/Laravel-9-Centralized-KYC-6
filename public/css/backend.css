@@ -96,7 +96,7 @@ input#qrcode {
 .file-css {
     padding: 3px 5px !important;
 }
-strong.deactivated {
+strong.deactivated, .declined {
     background: rgb(230, 17, 6);
     color: white;
     padding: 0px 5px 2px 5px;;
@@ -108,7 +108,7 @@ strong.returned {
     padding: 0px 5px 2px 5px;;
     border-radius: 5px;
 }
-strong.active {
+strong.active, .submitted {
     background: rgb(4, 212, 59);
     color: white;
     padding: 0px 5px 2px 5px;;
