@@ -32,7 +32,7 @@ class SendSms
             'X-API-KEY: ' . env('SMS_API_KEY'),
             'X-API-USERNAME: ' . env('SMS_API_USERNAME'),
             'X-API-PASSWORD: ' . env('SMS_API_PASSWORD'),
-            'Authorization: Basic bHVja3k4c3Q0cjohbHVja3k4JHQ0UiQkQVBJNGNjM3NzQCUk'
+            'Authorization: ' . env('SMS_API_AUTHORIZATION')
         ),
         ));
 
@@ -45,7 +45,7 @@ class SendSms
 
         $decodedResponse = json_decode($response, true);
         
-        if ($decodedResponse['response'] === false) {
+        if (array_key_exists('status', $decodedResponse) === true) {
             ActivityLog::create([
                 'type' => 'sms-failed',
                 'user_id' => $auth->id,
