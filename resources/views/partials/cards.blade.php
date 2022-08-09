@@ -60,11 +60,7 @@
             <div class="icon">
                 <i class="ion ion-pie-graph"></i>
             </div>
-            @if(in_array(Auth::user()->user_type_id, [1,2]))
             <a href="{{ route('reports.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            @else
-            <a href="#" class="small-box-footer"><i class="fa fa-circle"></i></a>
-            @endif
         </div>
     </div>
 
@@ -77,11 +73,7 @@
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
             </div>
-            @if(in_array(Auth::user()->user_type_id, [1,2]))
             <a href="{{ route('reports.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            @else
-            <a href="#" class="small-box-footer"><i class="fa fa-circle"></i></a>
-            @endif
         </div>
     </div>
 </div>

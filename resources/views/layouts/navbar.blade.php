@@ -186,7 +186,7 @@
           </li>
           @endif
 
-          @if(in_array($users->user_type_id, [1,2]))
+          @if(in_array($users->user_type_id, [1,2,3]))
           <li class="nav-item">
             <a href="/reports" class="nav-link {{ (request()->is('reports*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-file"></i>
