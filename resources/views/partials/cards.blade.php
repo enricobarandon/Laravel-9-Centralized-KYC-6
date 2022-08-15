@@ -34,7 +34,7 @@
             <div class="icon">
                 <i class="ion ion-ios-timer"></i>
             </div>
-            <a href="{{ route('helpdesk.for-approval') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('helpdesk.disapproved') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
 
