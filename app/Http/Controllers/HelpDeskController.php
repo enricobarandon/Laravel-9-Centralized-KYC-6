@@ -66,8 +66,9 @@ class HelpDeskController extends Controller
     {
         $auth = auth()->user();
 
-        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by','is_black_listed','site_status')
+        $players = User::select('users.id','first_name','middle_name','last_name','email','user_types.role as role','users.created_at as created_at','is_active','status','username','group_code','processed_at','processed_by','review_by','is_black_listed','site_status','case_id')
                                 ->join('user_types', 'user_types.id','users.user_type_id')
+                                ->join('user_details', 'user_details.user_id','users.id')
                                 ->where('user_type_id', 5)
                                 ->where('status', 'pending')
                                 ->orderBy('id','desc');
@@ -331,7 +332,8 @@ class HelpDeskController extends Controller
         $interviewDetails = [
             "interview_description" => $request['interview_description'],
             "interview_link" => $request['interview_link'],
-            "interview_date_time" => date("Y-m-d H:i:s",strtotime($request['interview_date_time']))
+            "interview_date_time" => date("Y-m-d H:i:s",strtotime($request['interview_date_time'])),
+            "case_id" => $request['case_id'],
         ];
         
         $update = UserDetails::where('user_id', $user->id)->update($interviewDetails);

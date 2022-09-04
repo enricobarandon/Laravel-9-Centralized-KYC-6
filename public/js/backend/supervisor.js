@@ -206,8 +206,8 @@ const approve = async () => {
     let response = await axios.post('/api/v1/users/approve', { params: { userId, uuid }});
     if (response.data) {
         swal({
-            title: "Approve Player",
-            text: "Success Approved Player",
+            title: "Verified Player",
+            text: "Success Verified Player",
             icon: "success",
             timer: 2000,
             button: 'Close'

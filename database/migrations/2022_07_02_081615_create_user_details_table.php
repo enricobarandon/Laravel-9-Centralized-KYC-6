@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('interview_description')->nullable();
             $table->text('remarks')->nullable();
             $table->string('video_app')->nullable();
+            $table->integer('case_id');
             $table->timestamps();
         });
     }

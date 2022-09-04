@@ -79,6 +79,7 @@
                                     <th>Group Code</th>
                                     <th>Reviewed By</th>
                                     <th>Registration Date & Time</th>
+                                    <th>Case Id</th>
                                     <th>Site Review</th>
                                     <th>Account Status</th>
                                     <th>Profile Status</th>
@@ -99,6 +100,7 @@
                                         <td>{{ $player->group_code }}</td>
                                         <td>{{ isset($player->review_by) ? $reviewBy[$player->review_by] : '(Direct Player)' }}</td>
                                         <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
+                                        <td>{{ $player->case_id }}</td>
                                         <td>
                                             <strong class="{{ $player->site_status == 'submitted' ? 'active' : '' }}">
                                                 {{ isset($player->site_status) ? strtoupper($player->site_status) : '--' }}

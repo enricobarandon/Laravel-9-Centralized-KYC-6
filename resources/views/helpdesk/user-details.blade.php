@@ -327,6 +327,13 @@ $id_type = [
                                                                     </div>
 
                                                                     <div class="form-group">
+                                                                        <label for="case_id" class="col-12 control-label">Case Id</label>
+                                                                        <div class="col-sm-12">
+                                                                            <input type="text" class="form-control" id="case_id" name="case_id" placeholder="Case Id" value="{{ isset($userDetails->case_id) ? $userDetails->case_id : '' }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
                                                                         <label for="interview_link" class="col-12 control-label">Interview Link</label>
                                                                         <div class="col-sm-12">
                                                                             <textarea class="form-control" id="interview_link" name="interview_link" placeholder="Interview Link">{{ isset($userDetails->interview_link) ? $userDetails->interview_link : '' }}</textarea>
