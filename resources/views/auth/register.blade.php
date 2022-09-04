@@ -194,7 +194,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <!-- <div class="col-md-4">
                                             <label for="barangay" >Barangay</label>
                                             <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay">
 
@@ -203,20 +203,7 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-md-4">
-                                            <label for="city" >City</label>
-                                            <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
-
-                                            @error('city')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-4">
                                             <label for="zipcode" >Zipcode</label>
                                             <input id="zipcode" type="number" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
@@ -228,16 +215,87 @@
                                             @enderror
                                         </div>
 
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <!-- <div class="col-md-4">
+                                            <label for="city" >City</label>
+                                            <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
+
+                                            @error('city')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div> -->
+                                        <!-- <div class="col-md-4">
+                                            <label for="zipcode" >Zipcode</label>
+                                            <input id="zipcode" type="number" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
+
+                                            @error('zipcode')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div> -->
+                                    </div>
+
+                                    
+                                    <div class="form-group row">
+
+                                        <div class="col-md-4">
+                                            <label for="region">Region</label>
+                                            <select id="region" class="form-control selectCSS @error('region') is-invalid @enderror" name="region" value="{{ old('region') }}" required>
+                                                <option disabled selected value="">-- Select Region --</option>
+                                                
+                                            </select>
+
+                                            @error('region')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
                                         <div class="col-md-4">
                                             <label for="province" >Province</label>
-                                            <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
+                                            <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror"  value="{{ old('province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
-                                                @foreach ($provinces as $province)
-                                                <option value="{{$province->name}}" {{ old('province') == $province->name ? 'selected' : '' }}>{{$province->name}}</option>
-                                                @endforeach
                                             </select>
 
                                             @error('province')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="city">City / Municipality</label>
+                                            <select id="city" class="form-control selectCSS @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required>
+                                                <option disabled selected value="">-- Select City --</option>
+                                                
+                                            </select>
+
+                                            @error('city')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <label for="barangay" >Barangay</label>
+                                            <!-- <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay"> -->
+                                            <select id="barangay" class="form-control selectCSS @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required>
+                                                <option disabled selected value="">-- Select City --</option>
+                                                
+                                            </select>
+
+                                            @error('barangay')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -316,11 +374,11 @@
 
                                         <div class="col-md-4">
                                             <label for="p_province" >Province</label>
-                                            <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
+                                            <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" value="{{ old('p_province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
-                                                @foreach ($provinces as $province)
+                                                <!-- @foreach ($provinces as $province)
                                                 <option value="{{$province->name}}" {{ old('p_province') == $province->name ? 'selected' : '' }}>{{$province->name}}</option>
-                                                @endforeach
+                                                @endforeach -->
                                             </select>
 
                                             @error('p_province')
@@ -557,6 +615,58 @@ $("document").ready(function(){
     $('#selfie_with_id').imoViewer({
       'preview' : '#image-previewer-selfie',
     })
+
+    var PHL = '';
+    var REGION  = '';
+    var PROVINCE = '';
+    var CITY = '';
+    $.getJSON('/ph_address.json', function(data) {
+        console.log(data);
+        PHL = data;
+        $("#region").html('<option>-- Select Region --</option>');
+        $.each(data, function(key, value) {
+            $("#region").append('<option value="' + key + '">' + value.region_name + '</option>');
+        }); // close each()
+    }); // close getJSON()
+
+    $('#region').change(() => {
+        let region = $('#region').find(':selected').val();
+        REGION = region;
+        // alert(region);
+        console.log(PHL[region].province_list);
+        $("#province, #city").html('');
+        $("#province").html('<option>-- Select Province --</option>');
+        $("#city").html('<option>-- Select City --</option>');
+        $.each(PHL[region].province_list, function(key, value) {
+            $("#province").append('<option value="' + key + '">' + key + '</option>');
+        });
+    });
+
+    $('#province').change(() => {
+        let province = $('#province').find(':selected').val();
+        PROVINCE = province;
+        let cities = PHL[REGION].province_list[province].municipality_list;
+        console.log(cities);
+        $("#city").html('');
+        $("#city").html('<option>-- Select City --</option>');
+        $.each(cities, function(key, value) {
+            $("#city").append('<option value="' + key + '">' + key + '</option>');
+        });
+    });
+
+    $('#city').change(() => {
+        let city = $('#city').find(':selected').val();
+        let brgy = PHL[REGION].province_list[PROVINCE].municipality_list[city].barangay_list;
+        CITY = city;
+        console.log('brgy');
+        console.log(brgy);
+        $("#barangay").html('');
+        $("#barangay").html('<option>-- Select Barangay --</option>');
+        $.each(brgy, function(key, value) {
+            $("#barangay").append('<option value="' + value + '">' + value + '</option>');
+        });
+    });
+
 });
 </script>
 </html>
