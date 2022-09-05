@@ -291,7 +291,7 @@
                                             <label for="barangay" >Barangay</label>
                                             <!-- <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay"> -->
                                             <select id="barangay" class="form-control selectCSS @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required>
-                                                <option disabled selected value="">-- Select City --</option>
+                                                <option disabled selected value="">-- Select Barangay --</option>
                                                 
                                             </select>
 
@@ -338,34 +338,30 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label for="p_barangay" >Barangay</label>
-                                            <input id="p_barangay" type="text" class="form-control @error('p_barangay') is-invalid @enderror" name="p_barangay" value="{{ old('p_barangay') }}" required autocomplete="p_barangay">
-
-                                            @error('p_barangay')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-md-4">
-                                            <label for="p_city" >City</label>
-                                            <input id="p_city" type="text" class="form-control @error('p_city') is-invalid @enderror" name="p_city" value="{{ old('p_city') }}" required autocomplete="p_city">
-
-                                            @error('p_city')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                        
                                         <div class="col-md-4">
                                             <label for="p_zipcode" >Zipcode</label>
                                             <input id="p_zipcode" type="number" class="form-control @error('p_zipcode') is-invalid @enderror" name="p_zipcode" value="{{ old('p_zipcode') }}" required autocomplete="p_zipcode">
 
                                             @error('p_zipcode')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row">
+
+                                        <div class="col-md-4">
+                                            <label for="p_region">Region</label>
+                                            <select id="p_region" class="form-control selectCSS @error('p_region') is-invalid @enderror" name="p_region" value="{{ old('p_region') }}" required>
+                                                <option disabled selected value="">-- Select Region --</option>
+                                                
+                                            </select>
+
+                                            @error('p_region')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -387,6 +383,36 @@
                                                 </span>
                                             @enderror
                                         </div>
+
+                                        <div class="col-md-4">
+                                            <label for="p_city">City / Municipality</label>
+                                            <select id="p_city" class="form-control selectCSS @error('p_city') is-invalid @enderror" name="p_city" value="{{ old('p_city') }}" required>
+                                                <option disabled selected value="">-- Select City --</option>
+                                                
+                                            </select>
+
+                                            @error('p_city')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="p_barangay" >Barangay</label>
+                                            <!-- <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay"> -->
+                                            <select id="p_barangay" class="form-control selectCSS @error('p_barangay') is-invalid @enderror" name="p_barangay" value="{{ old('p_barangay') }}" required>
+                                                <option disabled selected value="">-- Select Barangay --</option>
+                                                
+                                            </select>
+
+                                            @error('p_barangay')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
                                     </div>
 
                                     <div class="form-group row">
@@ -552,10 +578,14 @@ $("document").ready(function(){
         if(this.checked) {
             $('#p_house_number').val($('#house_number').val()).attr('readonly', true);
             $('#p_street').val($('#street').val()).attr('readonly', true);
-            $('#p_barangay').val($('#barangay').val()).attr('readonly', true);
-            $('#p_city').val($('#city').val()).attr('readonly', true);
             $('#p_zipcode').val($('#zipcode').val()).attr('readonly', true);
-            $('#p_province').val($('#province').val());
+            $('#p_region').val($('#region').val());
+            // $('#p_province').val($('#province').val());
+            // $('#p_barangay').val($('#barangay').val()).attr('readonly', true);
+            // $('#p_city').val($('#city').val()).attr('readonly', true);
+            $('#p_province').append('<option selected value="'+ $('#province').val() +'">'+ $('#province').val() +'</option>');
+            $('#p_city').append('<option selected value="'+ $('#city').val() +'">'+ $('#city').val() +'</option>');
+            $('#p_barangay').append('<option selected value="'+ $('#barangay').val() +'">'+ $('#barangay').val() +'</option>');
         }else{
             $('#p_house_number').val("").attr('readonly', false);
             $('#p_street').val("").attr('readonly', false);
@@ -617,15 +647,15 @@ $("document").ready(function(){
     })
 
     var PHL = '';
-    var REGION  = '';
-    var PROVINCE = '';
-    var CITY = '';
+    var REGION, P_REGION  = '';
+    var PROVINCE, P_PROVINCE = '';
+    var CITY, P_CITY = '';
     $.getJSON('/ph_address.json', function(data) {
         console.log(data);
         PHL = data;
-        $("#region").html('<option>-- Select Region --</option>');
+        $("#region, #p_region").html('<option>-- Select Region --</option>');
         $.each(data, function(key, value) {
-            $("#region").append('<option value="' + key + '">' + value.region_name + '</option>');
+            $("#region, #p_region").append('<option value="' + key + '">' + value.region_name + '</option>');
         }); // close each()
     }); // close getJSON()
 
@@ -664,6 +694,42 @@ $("document").ready(function(){
         $("#barangay").html('<option>-- Select Barangay --</option>');
         $.each(brgy, function(key, value) {
             $("#barangay").append('<option value="' + value + '">' + value + '</option>');
+        });
+    });
+
+
+
+    $('#p_region').change(() => {
+        let region = $('#p_region').find(':selected').val();
+        P_REGION = region;
+        $("#p_province, #p_city").html('');
+        $("#p_province").html('<option>-- Select Province --</option>');
+        $("#p_city").html('<option>-- Select City --</option>');
+        $.each(PHL[region].province_list, function(key, value) {
+            $("#p_province").append('<option value="' + key + '">' + key + '</option>');
+        });
+    });
+    
+    $('#p_province').change(() => {
+        let province = $('#p_province').find(':selected').val();
+        P_PROVINCE = province;
+        let cities = PHL[P_REGION].province_list[province].municipality_list;
+        $("#p_city").html('');
+        $("#p_city").html('<option>-- Select City --</option>');
+        $.each(cities, function(key, value) {
+            $("#p_city").append('<option value="' + key + '">' + key + '</option>');
+        });
+    });
+    
+
+    $('#p_city').change(() => {
+        let city = $('#p_city').find(':selected').val();
+        let brgy = PHL[P_REGION].province_list[P_PROVINCE].municipality_list[city].barangay_list;
+        P_CITY = city;
+        $("#p_barangay").html('');
+        $("#p_barangay").html('<option>-- Select Barangay --</option>');
+        $.each(brgy, function(key, value) {
+            $("#p_barangay").append('<option value="' + value + '">' + value + '</option>');
         });
     });
 
