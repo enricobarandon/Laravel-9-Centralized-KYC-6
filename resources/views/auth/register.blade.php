@@ -309,7 +309,7 @@
                                         </div>
 
                                         <div class="col-sm-12">
-                                            <input class="form-check-input" type="checkbox" value="check" name="sameAddress" id="sameAddress" {{ old('sameAddress') == 'check' ? 'checked' : '' }}>
+                                            <input class="form-check-input" type="checkbox" value="check" name="sameAddress" id="sameAddress">
                                             <label class="form-check-label" for="sameAddress">
                                                     SAME AS PRESENT ADDRESS
                                             </label>
