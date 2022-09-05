@@ -10,8 +10,9 @@
             </div>
 
             <div class="modal-body">
-                <div class="qrcode-div" id="qrcode-div" style="background: #ffffff; padding: 10px;">
-                    <img src="data:image/png;base64,{{ $qrCode }}" alt="barcode" />
+                <div class="qrcode-div text-center" id="qrcode-div" style="background: #ffffff; padding: 10px; width: 100%;">
+                    <img src="/img/pitmasters-live.png" style="width: 65% !important; margin: auto !important">
+                    <img src="data:image/png;base64,{{ $qrCode }}" alt="barcode" style="width: 100%;" />
                 </div>
             </div>
 
