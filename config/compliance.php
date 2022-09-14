@@ -627,18 +627,20 @@ return [
     ],
     
     'reject-remarks' =>  [
-        'reject_reason1' => 'Reason 1',
-        'reject_reason2' => 'Reason 2',
-        'reject_reason3' => 'Reason 3',
-        'reject_reason4' => 'Reason 4',
-        'reject_reason5' => 'Reason 5'
+        'reject_reason1' => 'Submitted scanned ID does not match with the information provided.',
+        'reject_reason2' => 'Documents submitted cannot be verified or not meet our criteria',
+        'reject_reason3' => 'Modified documents',
+        // 'reject_reason4' => 'Reason 4',
+        // 'reject_reason5' => 'Reason 5'
     ],
     
     'return-remarks' =>  [
-        'return_reason1' => 'Reason 1',
-        'return_reason2' => 'Reason 2',
-        'return_reason3' => 'Reason 3',
-        'return_reason4' => 'Reason 4',
-        'return_reason5' => 'Reason 5'
+        'return_reason1' => 'Passport ID submitted - Send all required pages of submitted scanned ID',
+        'return_reason2' => 'Submitted scanned ID is already expired',
+        'return_reason3' => 'Submitted scanned ID does not have any information of date of expiry',
+        'return_reason4' => 'Selfie is not clear.',
+        'return_reason5' => 'Submitted photos are not clear and cannot be recognized.',
+        'return_reason5' => 'Identification information cannot be read.',
+        'return_reason5' => "Submitted scanned ID must contain the player's photo and required KYC data."
     ]
 ];
