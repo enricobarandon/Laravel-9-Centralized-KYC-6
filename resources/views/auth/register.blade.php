@@ -217,29 +217,6 @@
 
                                     </div>
 
-                                    <div class="form-group row">
-                                        <!-- <div class="col-md-4">
-                                            <label for="city" >City</label>
-                                            <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
-
-                                            @error('city')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div> -->
-                                        <!-- <div class="col-md-4">
-                                            <label for="zipcode" >Zipcode</label>
-                                            <input id="zipcode" type="number" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
-
-                                            @error('zipcode')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div> -->
-                                    </div>
-
                                     
                                     <div class="form-group row">
 

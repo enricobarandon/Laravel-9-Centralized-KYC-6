@@ -95,6 +95,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
+        $region = config('compliance.region');
+
         $status = '';
         if($data['group_code']){
             $status = 'review';
@@ -143,6 +146,7 @@ class RegisterController extends Controller
                 'city' =>           $data['city'],
                 'zipcode' =>        $data['zipcode'],
                 'province' =>       $data['province'],
+                'region' =>         $region[$data['region']],
             ]),
             'permanent_address' =>    json_encode([
                 'house_number' =>   $data['p_house_number'],
@@ -151,6 +155,7 @@ class RegisterController extends Controller
                 'city' =>           $data['p_city'],
                 'zipcode' =>        $data['p_zipcode'],
                 'province' =>       $data['p_province'],
+                'region' =>         $region[$data['p_region']],
             ]),
             'occupation' =>         $data['occupation'],
             'source_of_income' =>   json_encode([

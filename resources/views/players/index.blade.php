@@ -163,12 +163,13 @@
                         if(isset($playerDetails->present_address)){
                             $address = json_decode($playerDetails->present_address,true);
 
-                            $house_number = $address['house_number'];
-                            $street = $address['street'];
-                            $barangay = $address['barangay'];
-                            $city = $address['city'];
-                            $zipcode = $address['zipcode'];
-                            $province = $address['province'];
+                            $house_number = isset($address['house_number']) ? $address['house_number'] : '';
+                            $street = isset($address['street']) ? $address['street'] : '';
+                            $barangay = isset($address['barangay']) ? $address['barangay'] : '';
+                            $city = isset($address['city']) ? $address['city'] : '';
+                            $zipcode = isset($address['zipcode']) ? $address['zipcode'] : '';
+                            $province = isset($address['province']) ? $address['province'] : '';
+                            $region = isset($address['region']) ? $address['region'] : '';
                         }
                     @endphp
                     <div class="form-group row">
@@ -229,15 +230,28 @@
 
                         <div class="col-md-4">
                             <label for="province" >Province</label>
-                            <!-- <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required autocomplete="province"> -->
-                            <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
+                            <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ $province }}" required autocomplete="province">
+                            <!-- <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
                                 <option disabled selected value="">-- Select Province --</option>
                                 @foreach ($provinces as $value)
                                 <option value="{{$value->name}}" {{ $value->name == $province ? 'selected' : '' }}>{{$value->name}}</option>
                                 @endforeach
-                            </select>
+                            </select> -->
 
                             @error('province')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="zipcode" >Region</label>
+                            <input id="region" type="text" class="form-control @error('region') is-invalid @enderror" name="region" value="{{ $region }}" required autocomplete="region">
+
+                            @error('region')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -266,14 +280,15 @@
                         $p_zipcode = '';
                         $p_province = '';
                         if(isset($playerDetails->permanent_address)){
-                            $address = json_decode($playerDetails->permanent_address,true);
+                            $p_address = json_decode($playerDetails->permanent_address,true);
 
-                            $p_house_number = $address['house_number'];
-                            $p_street = $address['street'];
-                            $p_barangay = $address['barangay'];
-                            $p_city = $address['city'];
-                            $p_zipcode = $address['zipcode'];
-                            $p_province = $address['province'];
+                            $p_house_number = isset($p_address['house_number']) ? $p_address['house_number'] : '';
+                            $p_street = isset($p_address['street']) ? $p_address['street'] : '';
+                            $p_barangay = isset($p_address['barangay']) ? $p_address['barangay'] : '';
+                            $p_city = isset($p_address['city']) ? $p_address['city'] : '';
+                            $p_zipcode = isset($p_address['zipcode']) ? $p_address['zipcode'] : '';
+                            $p_province = isset($p_address['province']) ? $p_address['province'] : '';
+                            $p_region = isset($p_address['region']) ? $p_address['region'] : '';
                         }
                     @endphp
                     <div class="form-group row">
@@ -334,15 +349,28 @@
 
                         <div class="col-md-4">
                             <label for="p_province" >Province</label>
-                            <!-- <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required autocomplete="p_province"> -->
-                            <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
+                            <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ $p_province }}" required autocomplete="p_province">
+                            <!-- <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
                                 <option disabled selected value="">-- Select Province --</option>
                                 @foreach ($provinces as $value)
                                 <option value="{{$value->name}}" {{ $value->name == $p_province ? 'selected' : '' }}>{{$value->name}}</option>
                                 @endforeach
-                            </select>
+                            </select> -->
 
                             @error('p_province')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="zipcode" >Region</label>
+                            <input id="p_region" type="text" class="form-control @error('p_region') is-invalid @enderror" name="p_region" value="{{ $p_region }}" required autocomplete="region">
+
+                            @error('p_region')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

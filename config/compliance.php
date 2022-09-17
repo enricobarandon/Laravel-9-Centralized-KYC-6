@@ -642,5 +642,34 @@ return [
         'return_reason5' => 'Submitted photos are not clear and cannot be recognized.',
         'return_reason5' => 'Identification information cannot be read.',
         'return_reason5' => "Submitted scanned ID must contain the player's photo and required KYC data."
-    ]
+    ],
+    
+    'decline-remarks' =>  [
+        'reject_reason1' => 'Documents submitted cannot be verified or do not meet our criteria.',
+        'reject_reason2' => "Submitted scanned ID does not contain the player's photo and required KYC data.",
+        'reject_reason3' => 'Your applocation cannot be processed at this time.',
+        // 'reject_reason4' => 'Reason 4',
+        // 'reject_reason5' => 'Reason 5'
+    ],
+
+    'region' =>  [
+        '1' => 'REGION I – Ilocos Region',
+        '2' => 'REGION II – Cagayan Valley',
+        '3' => 'REGION III – Central Luzon',
+        '4' => 'REGION IV-A – CALABARZON',
+        '5' => 'REGION IV-B - MIMAROPA Region',
+        '6' => 'REGION V – Bicol Region',
+        '7' => 'REGION VI – Western Visayas',
+        '8' => 'REGION VII – Central Visayas',
+        '9' => 'REGION VIII – Eastern Visayas',
+        '10' => 'REGION IX – Zamboanga Peninsula',
+        '11' => 'REGION X – Northern Mindanao',
+        '12' => 'REGION XI – Davao Region',
+        '13' => 'REGION XII – SOCCSKSARGEN',
+        '14' => 'REGION XIII – Caraga',
+        '15' => 'NCR – National Capital Region',
+        '16' => 'CAR – Cordillera Administrative Region',
+        '17' => 'BARMM – Bangsamoro Autonomous Region in Muslim Mindanao'
+    ],
+
 ];
