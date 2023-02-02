@@ -100,7 +100,7 @@
                     @if(Auth::user()->status == 'verified')
                     <div class="col-md-4 text-center" style="height: 100%;">
                         <div class="qrcode-div" id="qrcode-div" style="background: #ffffff; height: 100%; padding: 10px;">
-                            <h4>Profile QR Code</h4>
+                            <img src="/img/pitmasters-live.png" class="img-responsive" style="width: 60% !important">
                                 <!-- {!! $img !!} -->
                             <img src="data:image/png;base64,{{ $img }}" alt="barcode" style="width: 100%" />
                             <h5>{{ $userInfo->first_name . ' ' . $userInfo->last_name  }}</h5>

@@ -134,6 +134,7 @@ class PlayerController extends Controller
                     'city' =>           $data['city'],
                     'zipcode' =>        $data['zipcode'],
                     'province' =>       $data['province'],
+                    'region' =>         $data['region'],
                 ]),
                 'permanent_address' =>    json_encode([
                     'house_number' =>   $data['p_house_number'],
@@ -142,6 +143,7 @@ class PlayerController extends Controller
                     'city' =>           $data['p_city'],
                     'zipcode' =>        $data['p_zipcode'],
                     'province' =>       $data['p_province'],
+                    'region' =>         $data['p_region'],
                 ]),
                 'occupation' =>         $data['occupation'],
                 'source_of_income' =>   json_encode([
