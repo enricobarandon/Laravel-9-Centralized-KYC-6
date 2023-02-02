@@ -40,6 +40,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::factory()->create([
+            'first_name' => 'admin',
+            'middle_name' => 'D',
+            'last_name' => 'nistrator',
+            'username' => 'admin',
+            'email' => 'admin@lucky8',
+            'user_type_id' => 1
+        ]);
+
+        \App\Models\User::factory()->create([
             'first_name' => 'Foo',
             'middle_name' => 'D',
             'last_name' => 'Bar',
