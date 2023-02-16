@@ -95,17 +95,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
+
         $region = config('compliance.region');
 
-        $status = '';
-        if($data['group_code']){
-            $status = 'review';
-            $site_status = 'pending';
-        }else{
-            $status = 'pending';
-            $site_status = 'direct';
-        }
+        // $status = '';
+        // if($data['group_code']){
+        //     $status = 'review';
+        //     $site_status = 'pending';
+        // }else{
+        //     $status = 'pending';
+        //     $site_status = 'direct';
+        // }
         $userId = User::insertGetId([
             'uuid' =>           $data['uuid'],
             'first_name' =>     $data['first_name'],
@@ -115,17 +115,17 @@ class RegisterController extends Controller
             'password' =>       Hash::make($data['password']),
             'user_type_id' =>   5, // player
             'is_active' =>      1,
-            'status' =>         $status,
-            'site_status' =>    $site_status,
+            'status' =>         'pending',
+            // 'site_status' =>    $site_status,
             'contact' =>        $data['contact'],
             'group_code' =>     $data['group_code'],
             'created_at' =>     Carbon::now(),
             'updated_at' =>     Carbon::now()
         ]);
 
-        $id_picture = 'ID'.$userId.time().'.'.$data['id_picture']->extension();  
-        $selfie_with_id = 'SID'.$userId.time().'.'.$data['selfie_with_id']->extension();  
-        
+        $id_picture = 'ID'.$userId.time().'.'.$data['id_picture']->extension();
+        $selfie_with_id = 'SID'.$userId.time().'.'.$data['selfie_with_id']->extension();
+
         if($userId) {
             //ID picture
             $data['id_picture']->move(public_path('img/id_picture'), $id_picture);
@@ -168,7 +168,7 @@ class RegisterController extends Controller
             'selfie_with_id' =>     $selfie_with_id,
             'video_app' =>          $data['video_app']
         ]);
-        
+
 
     }
 
@@ -221,7 +221,7 @@ class RegisterController extends Controller
     {
         return view('players.terms-condition');
     }
-    
+
     public function policy()
     {
         return view('players.privacy-policy');
@@ -249,7 +249,7 @@ class RegisterController extends Controller
         $full_name = $data['first_name'] . ' ' . $data['middle_name'] . ' ' . $data['last_name'];
         $duplicate = false;
         $findDuplicate = User::where(DB::raw("CONCAT(first_name,' ',middle_name,' ',last_name)"), 'like' ,"%$full_name%")
-                            ->where('user_type_id', 5)    
+                            ->where('user_type_id', 5)
                             ->first();
         if ($findDuplicate) {
             // ProcessBlackListDetected::dispatch($findDuplicate->id);

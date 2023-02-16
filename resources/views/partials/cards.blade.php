@@ -67,7 +67,11 @@
     <div class="col-md-3">
         <div class="small-box bg-green">
             <div class="inner">
+                @if($loggedTotay)
                 <h3>{{ isset($verified) ? number_format(($loggedTotay * 100)/ $verified, 1) : '0' }}<sup style="font-size: 20px">%</sup></h3>
+                @else
+                <h3>0</h3>
+                @endif
                 <p>Logged in Today</p>
             </div>
             <div class="icon">

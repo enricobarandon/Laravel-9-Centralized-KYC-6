@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Bar',
             'username' => 'kikoadmin',
             'email' => 'kiko@lucky8',
-            'user_type_id' => 1
+            'user_type_id' => 1,
+            'contact' => '111'
         ]);
 
         \App\Models\User::factory()->create([
@@ -36,7 +37,8 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Bar',
             'username' => 'samadmin',
             'email' => 'sam@lucky8',
-            'user_type_id' => 1
+            'user_type_id' => 1,
+            'contact' => '222'
         ]);
 
         \App\Models\User::factory()->create([
@@ -45,9 +47,10 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Bar',
             'username' => 'helpdesk',
             'email' => 'helpdesk@lucky8',
-            'user_type_id' => 3
+            'user_type_id' => 3,
+            'contact' => '333'
         ]);
-        
+
         $this->call(UserTypeSeeder::class);
     }
 }

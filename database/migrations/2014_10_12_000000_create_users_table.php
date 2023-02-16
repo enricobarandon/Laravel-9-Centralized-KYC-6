@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->char('uuid', 36)->nullable();
+            $table->char('uuid')->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
@@ -25,11 +25,11 @@ return new class extends Migration
             $table->string('password');
             $table->integer('user_type_id');
             $table->boolean('is_active')->default(1);
-            $table->char('status', 30)->nullable();
-            $table->char('site_status', 30)->nullable();
-            $table->integer('contact',11)->unique();
+            $table->char('status')->nullable();
+            $table->char('site_status')->nullable();
+            $table->string('contact')->nullable();
             $table->text('session_id')->nullable();
-            $table->char('group_code',5)->nullable();
+            $table->char('group_code')->nullable();
             $table->dateTime('processed_at')->nullable();
             $table->integer('processed_by')->nullable();
             $table->integer('review_by')->nullable();

@@ -72,7 +72,7 @@ class HelpDeskController extends Controller
                                 ->where('user_type_id', 5)
                                 ->where('status', 'pending')
                                 ->orderBy('id','desc');
-                                
+
         if($auth->user_type_id == 4){
             $players = $players->where('group_code', $auth->group_code);
         }
@@ -82,9 +82,9 @@ class HelpDeskController extends Controller
             ->where('status', 'pending')
             ->where('user_type_id', 5)
             ->get()->pluck('id')->toArray();
-            
+
             $random_keys = array_rand($randomUser,2);
-            
+
             $players = $players->where('users.id',$randomUser[$random_keys[0]]);
         }
 
@@ -128,7 +128,7 @@ class HelpDeskController extends Controller
                                 ->where('user_type_id', 5)
                                 ->where('status', 'review')
                                 ->orderBy('id','desc');
-        
+
         if($auth->user_type_id == 4){
             $players = $players->where('group_code', $auth->group_code);
         }
@@ -167,7 +167,7 @@ class HelpDeskController extends Controller
         $qrCode = $qrcode->getBarcodePNG($uuid, 'QRCODE',15,15);
 
         $processedBy = User::select('username')->where('id', $user->processed_by)->first();
-        
+
         $rejectRemarks = config('compliance.reject-remarks');
         $returnRemarks = config('compliance.return-remarks');
 
@@ -179,21 +179,21 @@ class HelpDeskController extends Controller
         $auth = auth()->user();
 
         $operation = '';
-        
+
         $remarks_logs = '';
 
         if($request->operation == 'approve'){
 
             $operation = 'approved';
             $changeStatus = User::where('id', $user->id)->update(['users.status' => 'verified', 'users.processed_by' => $auth->id, 'users.processed_at' => Carbon::now()]);
+            //Temporary remove sms function
+            // SendSms::send([
+            //     'number' =>     $user->contact,
+            //     'message' =>    "Good day ". $user->first_name ."! This is Lucky 8. Congratulations! Your application has been approved. Please login to your account to view your QR Code."
+            // ]);
 
-            SendSms::send([
-                'number' =>     $user->contact,
-                'message' =>    "Good day ". $user->first_name ."! This is Lucky 8. Congratulations! Your application has been approved. Please login to your account to view your QR Code."
-            ]);
-        
         }elseif($request->operation == 'disapprove'){
-            
+
             $operation = 'disapproved';
             $reasonType = explode(' ', trim($request->disapprove_remarks))[0];
 
@@ -208,9 +208,9 @@ class HelpDeskController extends Controller
             if($reasonType == 'Remarks:'){
 
                 $changeStatus = User::where('id', $user->id)->update([
-                                            'users.status' => 'disapproved', 
-                                            'users.site_status' => $siteStatus, 
-                                            'users.processed_by' => $auth->id, 
+                                            'users.status' => 'disapproved',
+                                            'users.site_status' => $siteStatus,
+                                            'users.processed_by' => $auth->id,
                                             'users.processed_at' => Carbon::now()
                                         ]);
 
@@ -218,9 +218,9 @@ class HelpDeskController extends Controller
 
                 $changeStatus = User::where('id', $user->id)->update([
                                             'users.is_active' => 0,
-                                            'users.status' => 'disapproved', 
-                                            'users.site_status' => $siteStatus, 
-                                            'users.processed_by' => $auth->id, 
+                                            'users.status' => 'disapproved',
+                                            'users.site_status' => $siteStatus,
+                                            'users.processed_by' => $auth->id,
                                             'users.processed_at' => Carbon::now()
                                         ]);
 
@@ -229,22 +229,22 @@ class HelpDeskController extends Controller
             $remarks = UserDetails::where('user_id', $user->id)->update(['remarks' => $request->disapprove_remarks]);
 
             $remarks_logs = $request->disapprove_remarks;
-        
+
         }elseif($request->operation == 'pending'){
-            
+
             $operation = 'pending';
             $changeStatus = User::where('id', $user->id)->update([
-                                                            'users.status' => 'pending', 
-                                                            'users.processed_by' => $auth->id, 
+                                                            'users.status' => 'pending',
+                                                            'users.processed_by' => $auth->id,
                                                             'users.processed_at' => Carbon::now()
                                                         ]);
-        
+
         }elseif($request->operation == 'review'){
 
             $operation = 'reviewed';
             $changeStatus = User::where('id', $user->id)->update([
-                                                'users.review_by' => $auth->id, 
-                                                'users.status' => 'pending', 
+                                                'users.review_by' => $auth->id,
+                                                'users.status' => 'pending',
                                                 'users.site_status' => 'submitted'
                                             ]);
 
@@ -252,7 +252,7 @@ class HelpDeskController extends Controller
 
             $operation = 'returned';
             $changeStatus = User::where('id', $user->id)->update([
-                                                'users.processed_by' => $auth->id, 
+                                                'users.processed_by' => $auth->id,
                                                 'users.site_status' => 'returned'
                                             ]);
 
@@ -290,7 +290,7 @@ class HelpDeskController extends Controller
         // dd($auth->id);
 
         $saveSnapshot = '';
-        
+
         $validator = Validator::make($request->all(), [
             'snapshot' => ['required', 'mimes:jpeg,JPEG,PNG,png,jpg,JPG,gif,svg', 'max:2048']
         ]);
@@ -299,7 +299,7 @@ class HelpDeskController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }else{
-            $snapshot = 'SS'.$auth->id.time().'.'.$request->snapshot->extension();  
+            $snapshot = 'SS'.$auth->id.time().'.'.$request->snapshot->extension();
             $saveSnapshot = UserDetails::where('user_id', $request->hdnId)->update(['snapshot' => $snapshot]);
         }
 
@@ -311,7 +311,7 @@ class HelpDeskController extends Controller
 
             ActivityLog::create([
                 'type' => 'update-snapshot',
-                'user_id' => $auth->id, 
+                'user_id' => $auth->id,
                 'assets' => json_encode([
                     'action' => 'Update Snapshot of Player',
                     'name' => $playerInfo->first_name . ' ' . $playerInfo->last_name,
@@ -335,14 +335,14 @@ class HelpDeskController extends Controller
             "interview_date_time" => date("Y-m-d H:i:s",strtotime($request['interview_date_time'])),
             "case_id" => $request['case_id'],
         ];
-        
+
         $update = UserDetails::where('user_id', $user->id)->update($interviewDetails);
         if($update){
-            
-            SendSms::send([
-                'number' =>     $user->contact,
-                'message' =>    "Good day players! This is Lucky 8. Your interview appointment via " . $user->user_details->video_app . " is set on " . date('M d, Y h:i A', strtotime($user->user_details->interview_date_time)) . ". Please login to your account to view the interview link."
-            ]);
+            //Temporary remove sms function
+            // SendSms::send([
+            //     'number' =>     $user->contact,
+            //     'message' =>    "Good day players! This is Lucky 8. Your interview appointment via " . $user->user_details->video_app . " is set on " . date('M d, Y h:i A', strtotime($user->user_details->interview_date_time)) . ". Please login to your account to view the interview link."
+            // ]);
 
             ActivityLog::create([
                 'type' => 'update-interview-details',
@@ -351,7 +351,7 @@ class HelpDeskController extends Controller
                     'action' => 'Update Interview Details',
                     'name' => $user->first_name . ' ' . $user->last_name,
                     'username' => $user->username
-                    
+
                 ],$interviewDetails))
             ]);
 
@@ -369,7 +369,7 @@ class HelpDeskController extends Controller
                                 ->where('user_type_id', 5)
                                 ->where('status', 'disapproved')
                                 ->orderBy('id','desc');
-        
+
         if($auth->user_type_id == 4){
             $players = $players->where('group_code', $auth->group_code);
         }
