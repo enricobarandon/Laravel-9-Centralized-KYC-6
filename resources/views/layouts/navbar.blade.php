@@ -1,5 +1,5 @@
 <!-- Navbar -->
-@php 
+@php
   $users = Auth::user();
   $user_role = [
     1 => 'Administrator',
@@ -22,7 +22,7 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      
+
 
     <li class="nav-item dropdown">
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -47,7 +47,7 @@
         </div>
         <div class="dropdown">
     </li>
-      
+
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -75,7 +75,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-         
+
           <li class="nav-item">
             <a href="/home" class="nav-link {{ (request()->is('home')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
@@ -133,12 +133,12 @@
                 <p>For Approval</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="/helpdesk/for-review" class="nav-link {{ (request()->is('helpdesk/for-review*')) ? 'custom-active' : '' }}">
                 <i class="far fa-address-card  nav-icon"></i>
                 <p>For Review</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
           @endif
@@ -187,27 +187,27 @@
           @endif
 
           @if(in_array($users->user_type_id, [1,2,3]))
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="/reports" class="nav-link {{ (request()->is('reports*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-file"></i>
               <p>
                 Reports
               </p>
             </a>
-          </li>
+          </li> --}}
           @endif
 
           @if(in_array($users->user_type_id, [1,2,3]))
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="/groups" class="nav-link {{ (request()->is('groups*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-object-group"></i>
               <p>
                 Groups
               </p>
             </a>
-          </li>
+          </li> --}}
           @endif
-          
+
           @if($users->user_type_id == 1)
           <li class="nav-item">
             <a href="/activity-logs" class="nav-link {{ (request()->is('activity-logs*')) ? 'active' : '' }}">

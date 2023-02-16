@@ -44,7 +44,7 @@ class SendSms
         // if ($response) {
 
         $decodedResponse = json_decode($response, true);
-        
+
         if (array_key_exists('status', $decodedResponse) === true) {
             ActivityLog::create([
                 'type' => 'sms-failed',
