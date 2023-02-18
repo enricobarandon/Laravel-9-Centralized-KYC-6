@@ -8,7 +8,7 @@
                 <h3 class="card-title"><i class="fa fa-info-circle"></i> Player Information</h3>
                 <a href='{{ url("/") }}' class="btn btn-normal float-right"><i class="fas fa-backward"></i> Back to dashboard</a>
             </div>
-            
+
             <div class="card-body">
                 @if (session('success'))
                     <div class="alert alert-success" role="alert">
@@ -23,34 +23,6 @@
                     @csrf
                     <input type="hidden" name="hdnStatus" value="{{ $playerInfo->status }}">
                     <input type="hidden" name="hdnId" value="{{ $playerInfo->id }}">
-                    <!-- <div class="form-group row">
-                        <div class="col-md-4">
-                            <label for="username" >Username</label>
-                            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                            @error('username')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
-                            <label for="password" >Password</label>
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                            <img class="view-password1" src="{{ asset('img/icons/eye.png') }}">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="password_confirmation" >Confirm Password</label>
-                            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            <img class="view-password2" src="{{ asset('img/icons/eye.png') }}">
-                        </div>
-                    </div> -->
 
                     <div class="form-group row">
                         <div class="col-md-4">
@@ -119,7 +91,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="nationality" >Nationality</label>
@@ -139,7 +111,7 @@
                                 <option value="{{$value}}" {{ $value  == $playerDetails->country ? 'selected' : '' }}>{{$value}}</option>
                                 @endforeach
                             </select>
-                            
+
                             @error('country')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -258,7 +230,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label>Permanent Address</label>
@@ -364,7 +336,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-12">
                             <label for="zipcode" >Region</label>
@@ -462,7 +434,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="id_picture" >ID Picture</label>
@@ -479,7 +451,7 @@
                             @endif
                         </div>
 
-                        
+
                         <div class="col-md-6">
                             <label for="selfie_with_id" >Selfie with ID</label>
                             <input class="form-control fileCSS" type="file" name="selfie_with_id" id="selfie_with_id" accept="capture">
@@ -495,7 +467,7 @@
                             @endif
                         </div>
                     </div>
-                    
+
                     <div class="form-group form-group--sm">
                         <div>
                         <button type="submit" class="btn btn-primary btn-lg btn-block btn-class">
@@ -504,7 +476,7 @@
                         </div>
                     </div>
                 </form>
-                
+
 
             </div>
 
@@ -522,14 +494,14 @@
 <script>
 $("document").ready(function(){
     $('.view-password1').hover(function () {
-        $('#password').attr('type', 'text'); 
+        $('#password').attr('type', 'text');
     }, function () {
-        $('#password').attr('type', 'password'); 
+        $('#password').attr('type', 'password');
     });
     $('.view-password2').hover(function () {
-        $('#password_confirmation').attr('type', 'text'); 
+        $('#password_confirmation').attr('type', 'text');
     }, function () {
-        $('#password_confirmation').attr('type', 'password'); 
+        $('#password_confirmation').attr('type', 'password');
     });
     $('#sameAddress').change(function() {
         if(this.checked) {
@@ -558,13 +530,13 @@ $("document").ready(function(){
             $('.income-label').text('Provide Business Name');
         }
     });
-    
+
     $("#date_of_birth").datetimepicker({
         timepicker: false,
         format: 'M d, Y',
         maxDate: 0
     });
-    
+
     $('#id_picture').imoViewer({
       'preview' : '#image-previewer-id',
     })

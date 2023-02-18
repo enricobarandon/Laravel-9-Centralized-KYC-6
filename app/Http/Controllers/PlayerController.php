@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class PlayerController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,9 +24,9 @@ class PlayerController extends Controller
         $auth = auth()->user();
 
         $id = $request->segment(2);
-        
+
         $playerInfo = User::where('id', $id)->first();
-        
+
         if($playerInfo->user_type_id != 5){
             return redirect('/home')->with('error','Page Not Found!');
         }
@@ -35,7 +35,7 @@ class PlayerController extends Controller
             if($auth->id != $id){
                 return redirect('/home')->with('error','Page Not Found!');
             }
-            
+
             if($auth->status == 'disapproved' || $auth->site_status == 'returned'){
                 //can access
             }else{
@@ -60,14 +60,14 @@ class PlayerController extends Controller
                 ));
     }
 
-    
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'first_name' =>     ['required', 'string', 'max:255'],
             'middle_name' =>    ['required','string', 'max:255'],
             'last_name' =>      ['required', 'string', 'max:255'],
-            
+
             'date_of_birth' =>  ['required','date','before:21 years ago'],
             'place_of_birth' => ['required', 'max:255'],
             'nationality' =>    ['required', 'max:255'],
@@ -90,7 +90,7 @@ class PlayerController extends Controller
         $this->validator($request->all())->validate();
 
         $data = $request->all();
-        
+
         $playerId = $request->hdnId;
 
         $playerInfo = User::where('id', $playerId)->first();
@@ -101,7 +101,7 @@ class PlayerController extends Controller
         if($auth->user_type_id == 5){
             if(in_array($playerInfo->site_status, ['rejected','returned'])){
                 $siteStatus = 'pending';
-                $status = 'review';
+                $status = 'pending';
             }else{
                 $siteStatus = $playerInfo->site_status;
                 $status = 'pending';
@@ -119,7 +119,7 @@ class PlayerController extends Controller
             'site_status' =>    $siteStatus
         ]);
 
-        
+
         if($updatePlayer) {
 
             UserDetails::where('user_id',$playerId)->update([
@@ -157,20 +157,20 @@ class PlayerController extends Controller
 
             //if id picture has change
             if (!empty($_FILES['id_picture']['name'])){
-                $id_picture = 'ID'.$playerId.time().'.'.$data['id_picture']->extension();  
+                $id_picture = 'ID'.$playerId.time().'.'.$data['id_picture']->extension();
                 //ID picture
                 $data['id_picture']->move(public_path('img/id_picture'), $id_picture);
 
                 UserDetails::where('user_id',$playerId)->update(['id_picture' => $id_picture]);
-            
+
             }
 
             //if selfie with id picture has change
             if (!empty($_FILES['selfie_with_id']['name'])){
-                $selfie_with_id = 'SID'.$playerId.time().'.'.$data['selfie_with_id']->extension();  
+                $selfie_with_id = 'SID'.$playerId.time().'.'.$data['selfie_with_id']->extension();
                 //selfie with id picture
                 $data['selfie_with_id']->move(public_path('/img/id_picture_selfie'), $selfie_with_id);
-                
+
                 UserDetails::where('user_id',$playerId)->update(['selfie_with_id' => $selfie_with_id]);
             }
 
@@ -183,33 +183,33 @@ class PlayerController extends Controller
                     'role' => 'Player'
                 ])
             ]);
-            
+
         }
 
         return redirect('/home')->with('success','Successfully update player information');
     }
-    
+
     public function updatePassword(Request $request)
     {
         $usersInfo = auth()->user();
 
         return view('players.update-password', compact('usersInfo'));
     }
-    
+
     public function submitPassword(Request $request)
     {
         $auth = auth()->user();
 
         $validator = Validator::make($request->all(), [
-            'cpassword' => 'required|min:8',
-            'ccpassword' => 'required',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }else{
-            if($request->cpassword == $request->ccpassword){
+            if($request->password == $request->confirm_password){
 
-                $newPassword = Hash::make($request->cpassword);
+                $newPassword = Hash::make($request->password);
 
                 $updatePassword = User::where('users.id', $auth->id)->update(
                     array(
@@ -232,7 +232,7 @@ class PlayerController extends Controller
                 'user_id' => $auth->id,
                 'assets' => json_encode($logs)
             ]);
-            
+
             return redirect('/home')->with('success','Password successfully updated.');
         }
     }

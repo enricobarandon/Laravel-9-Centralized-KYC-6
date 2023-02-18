@@ -46,10 +46,10 @@ input#qrcode {
     margin: 10px auto;
 }
 .img-avatar {
-    width: 50px;
+    width: 150px;
     border: 3px solid;
     border-radius: 28px;
-    height: 50px;
+    height: 150px;
 }
 .img-avatar-player {
     width: 150px;
@@ -141,7 +141,7 @@ strong.active, .submitted {
     margin: auto;
 }
 .qrcode-div img {
-    width: 100% !important;
+    width: 95% !important;
 }
 .callout .form-group {
     margin-bottom: 0 !important;
@@ -182,4 +182,12 @@ strong.active, .submitted {
     position: absolute;
     right: 10px;
     top: 5px;
+}
+.upload-image {
+    position: absolute;
+    top: 35px;
+    right: 52px;
+    font-size: 25px;
+    border: 2px solid;
+    border-radius: 7px;
 }

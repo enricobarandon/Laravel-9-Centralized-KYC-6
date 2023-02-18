@@ -11,7 +11,7 @@
                 @endif
             @endif
             </div>
-            
+
             <div class="card-body">
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -26,33 +26,47 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                
+
                 @if(Auth::user()->user_type_id == 5)
                 <!-- for Player role -->
                 <div class="row">
                     @if(Auth::user()->status == 'pending')
-                    <div class="col-md-12 text-center qrcode-div">
-                        <h5><strong><i class="fa fa-info-circle"></i> Your account is not yet verified</strong></h5>
-                        <h5>Please wait for your account to be verified!</h5>
+                        @if(Auth::user()->site_status == 'returned')
+                            <div class="col-md-12 text-center">
+                                <div class="card card-outline card-warning mb-2">
+                                    <div class="card-header">
+                                        <h4><i class="fa fa-info-circle"></i> Your account has been returned to 'for review' status</h4>
+                                    </div>
 
-                        @if($userDetails->interview_link)
-                        <div class="card card-outline card-info mb-2">
-                            <div class="card-header">
-                                <h4><i class="fa fa-info-circle"></i> You have received an interview link! Please take the interview to finish the registration.</h4>
+                                    <div class="card-body">
+                                        <h5>Please comply with the rules.</h5>
+                                        <h5><strong><i class="fa fa-exclamation-triangle"></i> {{ isset($userDetails->remarks) ? $userDetails->remarks : '' }}</strong></h5>
+                                    </div>
+                                </div>
                             </div>
+                        @else
+                            <div class="col-md-12 text-center qrcode-div">
+                                <h5><strong><i class="fa fa-info-circle"></i> Your account is not yet verified</strong></h5>
+                                <h5>Please wait for your account to be verified!</h5>
 
-                            <div class="card-body">
-                            <p>{{ $userDetails->interview_description }}</p>
-                                @if(isset($userDetails->interview_date_time))
-                                    <p><strong>Date & Time: {{ date('M d, Y h:i A', strtotime($userDetails->interview_date_time)) }}</strong></p>
+                                @if($userDetails->interview_link)
+                                <div class="card card-outline card-info mb-2">
+                                    <div class="card-header">
+                                        <h4><i class="fa fa-info-circle"></i> You have received an interview link! Please take the interview to finish the registration.</h4>
+                                    </div>
+
+                                    <div class="card-body">
+                                    <p>{{ $userDetails->interview_description }}</p>
+                                        @if(isset($userDetails->interview_date_time))
+                                            <p><strong>Date & Time: {{ date('M d, Y h:i A', strtotime($userDetails->interview_date_time)) }}</strong></p>
+                                        @endif
+                                        <a href="{{ $userDetails->interview_link }}" target="_blank" class="btn btn-primary btn-sm">CLICK ME TO JOIN THE MEETING!</a>
+                                    </div>
+                                </div>
                                 @endif
-                                <a href="{{ $userDetails->interview_link }}" target="_blank" class="btn btn-primary btn-sm">CLICK ME TO JOIN THE MEETING!</a>
                             </div>
-
-                        </div>
                         @endif
 
-                    </div>
                     @elseif(Auth::user()->status == 'disapproved')
                     <div class="col-md-12 text-center qrcode-div">
                         <div class="card card-outline card-danger mb-2">
@@ -61,7 +75,7 @@
                             </div>
 
                             <div class="card-body">
-                                <h5>Please comply with the with the rules.</h5>
+                                <h5>Please comply with the rules.</h5>
                                 <h5><strong><i class="fa fa-exclamation-triangle"></i> {{ isset($userDetails->remarks) ? $userDetails->remarks : '' }}</strong></h5>
                             </div>
                         </div>
@@ -75,7 +89,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5>Please comply with the with the rules.</h5>
+                                    <h5>Please comply with the rules.</h5>
                                     <h5><strong><i class="fa fa-exclamation-triangle"></i> {{ isset($userDetails->remarks) ? $userDetails->remarks : '' }}</strong></h5>
                                 </div>
                             </div>
@@ -98,7 +112,7 @@
                     @include('partials.profile')
 
                     @if(Auth::user()->status == 'verified')
-                    <div class="col-md-4 text-center" style="height: 100%;">
+                    {{-- <div class="col-md-4 text-center" style="height: 100%;">
                         <div class="qrcode-div" id="qrcode-div" style="background: #ffffff; height: 100%; padding: 10px;">
                             <img src="/img/pitmasters-live.png" class="img-responsive">
                                 <!-- {!! $img !!} -->
@@ -113,7 +127,7 @@
                     $(document).ready(function(){
                         var element = $("#qrcode-div"); // global variable
                         var getCanvas; // global variable
-                    
+
                         html2canvas(element, {
                         onrendered: function (canvas) {
                             getCanvas = canvas;
@@ -131,7 +145,7 @@
                     });
 
                     </script>
-                    @endsection
+                    @endsection --}}
                     @endif
                 </div>
                 @elseif(Auth::user()->user_type_id == 4)

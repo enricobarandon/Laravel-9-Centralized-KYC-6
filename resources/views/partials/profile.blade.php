@@ -1,4 +1,4 @@
-<div class="{{ in_array($userInfo->status, ['pending','disapproved','review']) ? 'col-md-12' : 'col-md-8' }}">
+<div class="col-md-12">
     <div class="card card-widget widget-user shadow-lg">
 
         <div class="widget-user-header text-white" style="background: url('/dist/img/bg2.jpg') center center;">
@@ -6,7 +6,7 @@
             <h5 class="widget-user-desc text-right">{{ $userInfo->status == 'review' ? 'FOR '.strtoupper($userInfo->status) : strtoupper($userInfo->status) }} ACCOUNT</h5>
         </div>
         <div class="widget-user-image">
-            
+
             <img class="img-circle" src="/img/id_picture_selfie/{{ $userDetails->selfie_with_id }}" alt="User Avatar">
 
         </div>
@@ -30,7 +30,7 @@
             </div>
 
             <hr>
-            
+
             <div class="row">
 
                 <div class="col-sm-6 border-right">
@@ -50,7 +50,7 @@
             </div>
 
             <hr>
-            
+
             <div class="row">
 
                 <div class="col-sm-6 border-right">
@@ -63,7 +63,7 @@
 
                                 $presentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                             }else{
-                                $presentAddress = '--';  
+                                $presentAddress = '--';
                             }
                         @endphp
                         {{ $presentAddress }}
@@ -82,7 +82,7 @@
 
                                 $permanentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                             }else{
-                                $permanentAddress = '--';  
+                                $permanentAddress = '--';
                             }
                         @endphp
                         {{ $permanentAddress }}
@@ -92,9 +92,9 @@
                 </div>
 
             </div>
-            
+
             <hr>
-            
+
             <div class="row">
 
                 <div class="col-sm-4 border-right">
@@ -121,7 +121,7 @@
             </div>
 
             <hr>
-            
+
             <div class="row">
 
                 <div class="col-sm-6 border-right">
@@ -137,7 +137,7 @@
                                         $source_income = $userDetails->source_of_income;
                                     }
                                 }else{
-                                    $source_income = '--';  
+                                    $source_income = '--';
                                 }
                             @endphp
                             {{ $source_income }}</h5>

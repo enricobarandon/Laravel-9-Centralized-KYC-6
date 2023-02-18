@@ -36,7 +36,7 @@
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" name="group_code" id="group_code" placeholder="Group Code" value="{{ $code }}">
                                 </div>
-                                
+
                                 @endif
                                 <div class="col">
                                     <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
@@ -53,11 +53,11 @@
                                     <th>#</th>
                                     <th>Player Name</th>
                                     <th>Username</th>
-                                    <th>Group Code</th>
+                                    {{-- <th>Group Code</th> --}}
                                     <th>Processed By</th>
                                     <th>Process Date & Time</th>
                                     <th>Registration Date & Time</th>
-                                    <th>Site Review</th>
+                                    {{-- <th>Site Review</th> --}}
                                     <th>Account Status</th>
                                     <th>Profile Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
@@ -74,11 +74,11 @@
                                         <td>{{ $playersCount++ }}</td>
                                         <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                         <td>{{ $player->username }}</td>
-                                        <td>{{ $player->group_code }}</td>
+                                        {{-- <td>{{ $player->group_code }}</td> --}}
                                         <td>{{ isset($player->processed_by) ? $processedBy[$player->processed_by] : '' }}</td>
                                         <td>{{ date("M d, Y h:i a",strtotime($player->updated_at)) }}</td>
                                         <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
-                                        <td><strong class="{{ isset($player->site_status) ? $player->site_status : '' }}">{{ isset($player->site_status) ? strtoupper($player->site_status) : '--' }}</td>
+                                        {{-- <td><strong class="{{ isset($player->site_status) ? $player->site_status : '' }}">{{ isset($player->site_status) ? strtoupper($player->site_status) : '--' }}</td> --}}
                                         <td>
                                             <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
                                                 {{ $player->is_active ? 'Active' : 'Deactivated' }}
@@ -129,8 +129,8 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>   
-                    </div>  
+                        </table>
+                    </div>
 
                     <div class="col">
                         <div class="float-right">
@@ -147,7 +147,7 @@
 @section('script')
 <script>
     $("document").ready(function(){
-        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="tooltip"]').tooltip();
         $('.users-status').on('click', function(){
             if($(this).hasClass('activate') == true){
                 $text = 'activate';

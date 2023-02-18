@@ -617,7 +617,7 @@ return [
         'zm' => 'Zambian',
         'zw' => 'Zimbabwean',
     ],
-    
+
     'video' =>  [
         '1' => 'Zoom',
         '2' => 'Google Meet',
@@ -625,7 +625,7 @@ return [
         '4' => 'Skype',
         '5' => 'Microsoft Teams'
     ],
-    
+
     'reject-remarks' =>  [
         'reject_reason1' => 'Submitted scanned ID does not match with the information provided.',
         'reject_reason2' => 'Documents submitted cannot be verified or not meet our criteria',
@@ -633,17 +633,17 @@ return [
         // 'reject_reason4' => 'Reason 4',
         // 'reject_reason5' => 'Reason 5'
     ],
-    
+
     'return-remarks' =>  [
         'return_reason1' => 'Passport ID submitted - Send all required pages of submitted scanned ID',
         'return_reason2' => 'Submitted scanned ID is already expired',
         'return_reason3' => 'Submitted scanned ID does not have any information of date of expiry',
         'return_reason4' => 'Selfie is not clear.',
         'return_reason5' => 'Submitted photos are not clear and cannot be recognized.',
-        'return_reason5' => 'Identification information cannot be read.',
-        'return_reason5' => "Submitted scanned ID must contain the player's photo and required KYC data."
+        'return_reason6' => 'Identification information cannot be read.',
+        'return_reason7' => "Submitted scanned ID must contain the player's photo and required KYC data."
     ],
-    
+
     'decline-remarks' =>  [
         'reject_reason1' => 'Documents submitted cannot be verified or do not meet our criteria.',
         'reject_reason2' => "Submitted scanned ID does not contain the player's photo and required KYC data.",

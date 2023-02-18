@@ -31,13 +31,13 @@ class UserController extends Controller
     {
         $users = User::select('users.id','first_name','middle_name','last_name','email','users.created_at as created_at','is_active','status','username','user_type_id','group_code')
                                 ->whereIn('user_type_id', [1,2,3,4]);
-                                
+
         $keyword = $request->keyword;
 
         if($request->keyword){
             $users = $users->where(DB::raw('concat(first_name,last_name,username,group_code)'), 'like', '%' . $request->keyword . '%');
         }
-        
+
         $userType = $request->userType;
 
         if($request->userType){
@@ -79,6 +79,7 @@ class UserController extends Controller
      */
     public function store(UserRequests $request)
     {
+        $role = UserType::select('role')->where('id',$request->user_type_id)->first();
         $form = $request->validated();
         $form['password'] = Hash::make($form['password']);
         $form['uuid'] = (string) Str::orderedUuid();
@@ -92,7 +93,7 @@ class UserController extends Controller
                     'action' => 'created a user account',
                     'name' => $request->first_name . ' ' . $request->last_name,
                     'username' => $request->username,
-                    'role' => 'Player'
+                    'role' => $role->role
                 ])
             ]);
             return redirect('/users')->with('success','New user account created.');
@@ -151,8 +152,8 @@ class UserController extends Controller
         $auth = auth()->user();
         $userId = $user->id;
         $update = User::where('id', $userId)->update(['is_active' => DB::raw('!is_active')]);
-        
-        
+
+
         if ($update) {
 
             if (!$user->is_active == 0) {
@@ -177,9 +178,9 @@ class UserController extends Controller
 
     public function updateUser(Request $request){
         $auth = auth()->user();
-        
+
         $userTypes = UserType::select('id','role')->where('role','!=','Player')->get();
-        
+
         $groups = Group::select('code','name')->where('code','!=','')->whereNotNull('code')->get();
 
         $userId = $request->segment(3);
@@ -269,7 +270,7 @@ class UserController extends Controller
             }
 
         }
-        
+
         if($updateUsers){
             ActivityLog::create([
                 'type' => 'update-user',

@@ -39,11 +39,17 @@ $id_type = [
                                     <i class="fas fa-check"></i> Approve Application
                                 </button>
                             </form>
+
+                            @if($user->site_status != 'returned')
+                                <button type="button" class="btn btn-warning btn-sm float-right mr-3 btn-return" data-toggle="modal" data-target="#modal-return">
+                                    <i class="fas fa-undo"></i> Return
+                                </button>
+                            @endif
                             <form action='{{ url("/helpdesk/approve/$user->id") }}' method="POST">
                             @csrf
                                 <input type="hidden" name="operation" value="disapprove" />
                                 <input type="hidden" name="remarks" id="remarks" value="">
-                                <button type="button" class="btn btn-danger btn-normal btn-sm float-right btn-reject mr-3" data-toggle="modal" data-target="#modal-reject">
+                                <button type="button" class="btn btn-danger btn-sm float-right btn-reject mr-3" data-toggle="modal" data-target="#modal-reject">
                                     <i class="fas fa-times"></i> Decline Application
                                 </button>
                             </form>
@@ -119,7 +125,7 @@ $id_type = [
                         </div>
                     @endif
 
-                    
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -131,7 +137,7 @@ $id_type = [
                     @endif
 
                     <!-- {{ $userDetails }} -->
-                       
+
                     <div class="row justify-content-center align-items-center h-100">
                         <div class="col col-12">
                             <div class="card mb-3" style="border-radius: .5rem;">
@@ -163,17 +169,28 @@ $id_type = [
                                                 </div>
                                                 <div class="col-6 mb-1">
                                                     <h6>Status</h6>
-                                                    <p class="text-muted">
-                                                        <strong class="{{ $user->status }}">
-                                                            {{ isset($user->status) ? strtoupper($user->status) : '--' }}
-                                                            @if($user->status == 'review')
-                                                            ({{ isset($user->site_status) ? strtoupper($user->site_status) : '' }})
+                                                    @if($user->site_status == 'returned')
+                                                        <p class="text-muted">
+                                                            <strong class="returned">
+                                                                RETURNED
+                                                            </strong>
+                                                            @if($user->status == 'disapproved' || $user->site_status == 'returned')
+                                                                <h6>Remarks: <i class="text-muted">{{ isset($userDetails->remarks) ? $userDetails->remarks : '--' }}</i></h6>
                                                             @endif
-                                                        </strong>
-                                                        @if($user->status == 'disapproved' || $user->site_status == 'returned')
-                                                            <h6>Remarks: <i class="text-muted">{{ isset($userDetails->remarks) ? $userDetails->remarks : '--' }}</i></h6>
-                                                        @endif
-                                                    </p>
+                                                        </p>
+                                                    @else
+                                                        <p class="text-muted">
+                                                            <strong class="{{ $user->status }}">
+                                                                {{ isset($user->status) ? strtoupper($user->status) : '--' }}
+                                                                @if($user->status == 'review')
+                                                                ({{ isset($user->site_status) ? strtoupper($user->site_status) : '' }})
+                                                                @endif
+                                                            </strong>
+                                                            @if($user->status == 'disapproved' || $user->site_status == 'returned')
+                                                                <h6>Remarks: <i class="text-muted">{{ isset($userDetails->remarks) ? $userDetails->remarks : '--' }}</i></h6>
+                                                            @endif
+                                                        </p>
+                                                    @endif
                                                 </div>
                                             </div>
                                             @if($user->status == 'disapproved' || $user->site_status == 'returned')
@@ -188,7 +205,7 @@ $id_type = [
                                                     <h6>Processed at</h6>
                                                     <p class="text-muted">{{ isset($user->processed_at) ? date("M. d, Y",strtotime($user->processed_at)) : '--' }}</p>
                                                 </div>
-                                            </div>    
+                                            </div>
                                             @endif
 
                                             <hr class="mt-0 mb-0">
@@ -217,7 +234,7 @@ $id_type = [
 
                                                                 $presentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                                                             }else{
-                                                                $presentAddress = '--';  
+                                                                $presentAddress = '--';
                                                             }
                                                         @endphp
                                                         {{ $presentAddress }}
@@ -233,7 +250,7 @@ $id_type = [
 
                                                                 $permanentAddress = $address['house_number'] . " " . $address['street'] . " " . $address['barangay'] . " " . $address['city'] . " " . $address['province'] . " " . $address['zipcode'];
                                                             }else{
-                                                                $permanentAddress = '--';  
+                                                                $permanentAddress = '--';
                                                             }
                                                         @endphp
                                                         {{ $permanentAddress }}
@@ -270,7 +287,7 @@ $id_type = [
                                                                     $source_income = $userDetails->source_of_income;
                                                                 }
                                                             }else{
-                                                                $source_income = '--';  
+                                                                $source_income = '--';
                                                             }
                                                         @endphp
                                                         {{ $source_income }}
@@ -296,7 +313,7 @@ $id_type = [
                                             </div>
 
                                             <hr class="mt-0 mb-0">
-                                            
+
                                             @if(in_array(Auth::user()->user_type_id, [1,3]) && $user->status != 'review')
                                             <div class="pt-1">
 
@@ -359,7 +376,7 @@ $id_type = [
 
                                                     <div class="col-md-6">
                                                         <form action='{{ url("/helpdesk/snapshot/$user->id") }}' method="POST" enctype="multipart/form-data">
-                                                            @csrf    
+                                                            @csrf
                                                             <input type="hidden" name="hdnId" value="{{ $user->id }}">
                                                             <div class="mb-1 text-center">
                                                                 <div style="margin: auto;">
@@ -375,11 +392,11 @@ $id_type = [
                                                                     @else
                                                                     <img src="/img/not-available.gif" alt="No Picture Available" id="image-previewer" class="img-responsive my-2 snapshot-img img-thumbnail" />
                                                                     @endif
-                                                                    
+
                                                                     <input type="submit" class="btn btn-primary" value="Update Snapshot">
                                                                 </div>
                                                             </div>
-                                                            
+
                                                         </form>
                                                     </div>
 
@@ -421,7 +438,7 @@ $('document').ready(function() {
         });
     })
 
-    
+
     $('.submit-pending').on('click', function(){
         swal({
             title: "Return to Pending",
@@ -435,7 +452,7 @@ $('document').ready(function() {
             }
         });
     })
-    
+
     // $('.submit-disapprove').on('click', function(){
     //     swal({
     //         title: "Disapprove Player",
@@ -519,7 +536,7 @@ $('document').ready(function() {
         });
     })
 
-    
+
     $('.btn-return').on('click', function(){
         $('#form_return').trigger("reset");
         $('#returnOthers').hide();
@@ -592,7 +609,7 @@ $('document').ready(function() {
     $("#interview_date_time").datetimepicker({
         format: 'M d, Y h:i a',
         validateOnBlur: false,
-        step: 10, 
+        step: 10,
     });
 });
 function MyPrintFunction(id)
@@ -600,38 +617,38 @@ function MyPrintFunction(id)
 	var windowContent = '<!DOCTYPE html>';
 	//Starting HTML Tags
 	windowContent += '<html>'
-	
+
 	//Setting Print Page Title
 	windowContent += '<head><title>Print Content</title></head>';
-	
+
 	//Starting Body Tag
 	windowContent += '<body>'
-	
+
 	//Getting Div HTML
 	windowContent +=  document.getElementById(id).innerHTML;
-	
+
 	//Closing Body Tag and HTML Tag
 	windowContent += '</body>';
 	windowContent += '</html>';
-	
+
 	//Calling Print Window
 	var printWin = window.open('','','fullscreen=yes');
-	
+
 	//Opening Print Window
 	printWin.document.open();
-	
+
 	//Adding Content in Print Window
 	printWin.document.write(windowContent);
-	
+
 	//Closing Print Window
 	printWin.document.close();
-	
+
 	//Focusing User to Print Window
 	printWin.focus();
-	
+
 	//Calling Default Browser Printer
 	printWin.print();
-	
+
 	//Closing Print Window
 	printWin.close();
 }

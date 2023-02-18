@@ -168,7 +168,7 @@ class HelpDeskController extends Controller
 
         $processedBy = User::select('username')->where('id', $user->processed_by)->first();
 
-        $rejectRemarks = config('compliance.reject-remarks');
+        $rejectRemarks = config('compliance.decline-remarks');
         $returnRemarks = config('compliance.return-remarks');
 
         return view('helpdesk.user-details', compact('user','userDetails','processedBy','qrCode','rejectRemarks','returnRemarks'));
@@ -202,7 +202,7 @@ class HelpDeskController extends Controller
             if($auth->user_type_id == 4){
                 $siteStatus = 'rejected';
             }else{
-                $siteStatus = $user->site_status;
+                $siteStatus = '';
             }
 
             if($reasonType == 'Remarks:'){
@@ -338,6 +338,7 @@ class HelpDeskController extends Controller
 
         $update = UserDetails::where('user_id', $user->id)->update($interviewDetails);
         if($update){
+            $saveSetInterviewBy = User::where('id', $user->id)->update(['users.review_by' => $auth->id]);
             //Temporary remove sms function
             // SendSms::send([
             //     'number' =>     $user->contact,

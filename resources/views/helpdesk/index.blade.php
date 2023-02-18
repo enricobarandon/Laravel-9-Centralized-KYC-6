@@ -37,7 +37,7 @@
                                 <div class="col-md-3">
                                     <input type="text" class="form-control" name="group_code" id="group_code" placeholder="Group Code" value="{{ $code }}">
                                 </div>
-                                
+
                                 <div class="col-md-2">
                                     <select class="form-control" name="player_status" id="player_status">
                                         <option value="" selected disabled>Select Status</option>
@@ -46,7 +46,7 @@
                                     </select>
                                 </div>
                                 @endif
-                                
+
                                 <div class="col">
                                     <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
                                     <a href="{{ url('/helpdesk') }}" class="btn btn-danger"><i class="fas fa-eraser"></i> Reset</a>
@@ -62,7 +62,7 @@
                                 <th>Player Name</th>
                                 <th>Username</th>
                                 <th>User Role</th>
-                                <th>Group Code</th>
+                                {{-- <th>Group Code</th> --}}
                                 <th>Processed By</th>
                                 <th>Process Date & Time</th>
                                 <th>Registration Date & Time</th>
@@ -83,7 +83,7 @@
                                     <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                     <td>{{ $player->username }}</td>
                                     <td>{{ $player->role }}</td>
-                                    <td>{{ $player->group_code }}</td>
+                                    {{-- <td>{{ $player->group_code }}</td> --}}
                                     <td>{{ isset($player->processed_by) ? $processedBy[$player->processed_by] : '' }}</td>
                                     <td>{{ $player->processed_at ? date("M d, Y h:i a",strtotime($player->processed_at)) : '' }}</td>
                                     <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
@@ -123,6 +123,21 @@
                                             </form>
                                         @endif
                                         @if(in_array(Auth::user()->user_type_id, [1,3]))
+                                            @if(Auth::user()->user_type_id == 3)
+                                                <form action='{{ url("/users/is_black_listed/$player->id") }}' method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="black-list-remarks" class="black-list-remarks" value="">
+                                                    @if($player->is_black_listed)
+                                                        <button type="button" class="btn btn-xs btn-light users-black-list black-listed mr-2 btn-padding" data-toggle="tooltip" data-placement="top" title="Remove from Black List">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    @else
+                                                        <button type="button" class="btn btn-xs btn-dark users-black-list not-black-listed mr-2 check-padding"  data-toggle="tooltip" data-placement="top" title="Add to Black List">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    @endif
+                                                </form>
+                                            @endif
                                             <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" class="mr-2" title="Review Details"><i class="fa fa-eye"></i></a>
                                             <a href='{{ url("/users/update/$player->id/password") }}' data-toggle="tooltip" data-placement="top" title="Update Password"><i class="fa fa-cog"></i></a>
                                             @if(Auth::user()->user_type_id == 1)
@@ -137,7 +152,7 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>     
+                    </table>
 
                     <div class="col">
                         <div class="float-right">
@@ -154,7 +169,7 @@
 @section('script')
 <script>
     $("document").ready(function(){
-        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="tooltip"]').tooltip();
         $('.users-status').on('click', function(){
             if($(this).hasClass('activate') == true){
                 $text = 'activate';

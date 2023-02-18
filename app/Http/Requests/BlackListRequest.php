@@ -25,9 +25,9 @@ class BlackListRequest extends FormRequest
     {
         return [
             'type' =>                   ['required','alpha'],
-            'first_name' =>             ['required','alpha'],
-            'middle_name' =>            ['required','alpha'],
-            'last_name' =>              ['required','alpha'],
+            'first_name' =>             ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'middle_name' =>            ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
+            'last_name' =>              ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
             'date_of_birth' =>          ['required','date_format:Y-m-d'],
         ];
     }

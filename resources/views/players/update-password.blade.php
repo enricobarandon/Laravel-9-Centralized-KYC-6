@@ -26,15 +26,15 @@
                             <label for="name" class="col-md-2 col-form-label text-md-end" minlength="8">New Password</label>
 
                             <div class="col-md-6">
-                                <input id="cpassword" type="password" class="form-control" minlength="8" name="cpassword" required autofocus>
+                                <input id="password" type="password" class="form-control" minlength="8" name="password" required autofocus>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="name" class="col-md-2 col-form-label text-md-end">Confirm Password</label>
 
                             <div class="col-md-6">
-                                <input id="ccpassword" type="password" class="form-control" name="ccpassword" required>
+                                <input id="confirm_password" type="password" class="form-control" name="confirm_password" required>
                             </div>
                         </div>
 

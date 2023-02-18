@@ -139,7 +139,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row">
                                         <div class="col-md-6">
                                             <label for="nationality" >Nationality</label>
@@ -194,16 +194,6 @@
                                             @enderror
                                         </div>
 
-                                        <!-- <div class="col-md-4">
-                                            <label for="barangay" >Barangay</label>
-                                            <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay">
-
-                                            @error('barangay')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div> -->
                                         <div class="col-md-4">
                                             <label for="zipcode" >Zipcode</label>
                                             <input id="zipcode" type="number" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
@@ -217,14 +207,14 @@
 
                                     </div>
 
-                                    
+
                                     <div class="form-group row">
 
                                         <div class="col-md-4">
                                             <label for="region">Region</label>
                                             <select id="region" class="form-control selectCSS @error('region') is-invalid @enderror" name="region" value="{{ old('region') }}" required>
                                                 <option disabled selected value="">-- Select Region --</option>
-                                                
+
                                             </select>
 
                                             @error('region')
@@ -251,7 +241,7 @@
                                             <label for="city">City / Municipality</label>
                                             <select id="city" class="form-control selectCSS @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required>
                                                 <option disabled selected value="">-- Select City --</option>
-                                                
+
                                             </select>
 
                                             @error('city')
@@ -269,7 +259,7 @@
                                             <!-- <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay"> -->
                                             <select id="barangay" class="form-control selectCSS @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required>
                                                 <option disabled selected value="">-- Select Barangay --</option>
-                                                
+
                                             </select>
 
                                             @error('barangay')
@@ -279,7 +269,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             <label>Permanent Address</label>
@@ -315,7 +305,7 @@
                                             @enderror
                                         </div>
 
-                                        
+
                                         <div class="col-md-4">
                                             <label for="p_zipcode" >Zipcode</label>
                                             <input id="p_zipcode" type="number" class="form-control @error('p_zipcode') is-invalid @enderror" name="p_zipcode" value="{{ old('p_zipcode') }}" required autocomplete="p_zipcode">
@@ -335,7 +325,7 @@
                                             <label for="p_region">Region</label>
                                             <select id="p_region" class="form-control selectCSS @error('p_region') is-invalid @enderror" name="p_region" value="{{ old('p_region') }}" required>
                                                 <option disabled selected value="">-- Select Region --</option>
-                                                
+
                                             </select>
 
                                             @error('p_region')
@@ -365,7 +355,7 @@
                                             <label for="p_city">City / Municipality</label>
                                             <select id="p_city" class="form-control selectCSS @error('p_city') is-invalid @enderror" name="p_city" value="{{ old('p_city') }}" required>
                                                 <option disabled selected value="">-- Select City --</option>
-                                                
+
                                             </select>
 
                                             @error('p_city')
@@ -380,7 +370,7 @@
                                             <!-- <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay"> -->
                                             <select id="p_barangay" class="form-control selectCSS @error('p_barangay') is-invalid @enderror" name="p_barangay" value="{{ old('p_barangay') }}" required>
                                                 <option disabled selected value="">-- Select Barangay --</option>
-                                                
+
                                             </select>
 
                                             @error('p_barangay')
@@ -468,7 +458,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row">
                                         <div class="col-md-6">
                                             <label for="id_picture" >ID Picture</label>
@@ -481,7 +471,7 @@
                                             <img src="/img/picture_of_id.png" id="image-previewer-id" class="img-fluid img-responsive">
                                         </div>
 
-                                        
+
                                         <div class="col-md-6">
                                             <label for="selfie_with_id" >Selfie with ID</label>
                                             <input class="form-control fileCSS" type="file" name="selfie_with_id" id="selfie_with_id" accept="capture" required>
@@ -494,7 +484,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="form-group row">
                                         <div class="form-group form-check">
                                             <input class="form-check-input" type="checkbox" name="agree_terms_privacy" id="agree_terms_privacy" value="1" required="">
@@ -509,7 +499,7 @@
                                             <div class="invalid-feedback"></div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group form-group--sm">
                                         <div>
                                         <button type="submit" class="btn btn-primary btn-lg btn-block btn-class">
@@ -542,14 +532,14 @@
 <script>
 $("document").ready(function(){
     $('.view-password1').hover(function () {
-        $('#password').attr('type', 'text'); 
+        $('#password').attr('type', 'text');
     }, function () {
-        $('#password').attr('type', 'password'); 
+        $('#password').attr('type', 'password');
     });
     $('.view-password2').hover(function () {
-        $('#password_confirmation').attr('type', 'text'); 
+        $('#password_confirmation').attr('type', 'text');
     }, function () {
-        $('#password_confirmation').attr('type', 'password'); 
+        $('#password_confirmation').attr('type', 'password');
     });
     $('#sameAddress').change(function() {
         if(this.checked) {
@@ -598,7 +588,7 @@ $("document").ready(function(){
             $('.income-label').text('Provide Business Name');
         }
     });
-    
+
     if($('#select_source_of_income').val()){
         if($('#select_source_of_income').val() == 'others'){
             $('.income-label').text('Provide Business Name');
@@ -614,7 +604,7 @@ $("document").ready(function(){
         format: 'M d, Y',
         maxDate: 0
     });
-    
+
     $('#id_picture').imoViewer({
       'preview' : '#image-previewer-id',
     })
@@ -630,7 +620,7 @@ $("document").ready(function(){
     $.getJSON('/ph_address.json', function(data) {
         console.log(data);
         PHL = data;
-        $("#region, #p_region").html('<option>-- Select Region --</option>');
+        $("#region, #p_region").html('<option disabled selected value="">-- Select Region --</option>');
         $.each(data, function(key, value) {
             $("#region, #p_region").append('<option value="' + key + '">' + value.region_name + '</option>');
         }); // close each()
@@ -642,8 +632,8 @@ $("document").ready(function(){
         // alert(region);
         console.log(PHL[region].province_list);
         $("#province, #city").html('');
-        $("#province").html('<option>-- Select Province --</option>');
-        $("#city").html('<option>-- Select City --</option>');
+        $("#province").html('<option disabled selected value="">-- Select Province --</option>');
+        $("#city").html('<option disabled selected value="">-- Select City --</option>');
         $.each(PHL[region].province_list, function(key, value) {
             $("#province").append('<option value="' + key + '">' + key + '</option>');
         });
@@ -655,7 +645,7 @@ $("document").ready(function(){
         let cities = PHL[REGION].province_list[province].municipality_list;
         console.log(cities);
         $("#city").html('');
-        $("#city").html('<option>-- Select City --</option>');
+        $("#city").html('<option disabled selected value="">-- Select City --</option>');
         $.each(cities, function(key, value) {
             $("#city").append('<option value="' + key + '">' + key + '</option>');
         });
@@ -668,7 +658,7 @@ $("document").ready(function(){
         console.log('brgy');
         console.log(brgy);
         $("#barangay").html('');
-        $("#barangay").html('<option>-- Select Barangay --</option>');
+        $("#barangay").html('<option disabled selected value="">-- Select Barangay --</option>');
         $.each(brgy, function(key, value) {
             $("#barangay").append('<option value="' + value + '">' + value + '</option>');
         });
@@ -680,31 +670,31 @@ $("document").ready(function(){
         let region = $('#p_region').find(':selected').val();
         P_REGION = region;
         $("#p_province, #p_city").html('');
-        $("#p_province").html('<option>-- Select Province --</option>');
-        $("#p_city").html('<option>-- Select City --</option>');
+        $("#p_province").html('<option disabled selected value="">-- Select Province --</option>');
+        $("#p_city").html('<option disabled selected value="">-- Select City --</option>');
         $.each(PHL[region].province_list, function(key, value) {
             $("#p_province").append('<option value="' + key + '">' + key + '</option>');
         });
     });
-    
+
     $('#p_province').change(() => {
         let province = $('#p_province').find(':selected').val();
         P_PROVINCE = province;
         let cities = PHL[P_REGION].province_list[province].municipality_list;
         $("#p_city").html('');
-        $("#p_city").html('<option>-- Select City --</option>');
+        $("#p_city").html('<option disabled selected value="">-- Select City --</option>');
         $.each(cities, function(key, value) {
             $("#p_city").append('<option value="' + key + '">' + key + '</option>');
         });
     });
-    
+
 
     $('#p_city').change(() => {
         let city = $('#p_city').find(':selected').val();
         let brgy = PHL[P_REGION].province_list[P_PROVINCE].municipality_list[city].barangay_list;
         P_CITY = city;
         $("#p_barangay").html('');
-        $("#p_barangay").html('<option>-- Select Barangay --</option>');
+        $("#p_barangay").html('<option disabled selected value="">-- Select Barangay --</option>');
         $.each(brgy, function(key, value) {
             $("#p_barangay").append('<option value="' + value + '">' + value + '</option>');
         });

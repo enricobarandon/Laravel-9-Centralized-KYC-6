@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> For Approval Page</h3>
                     <!-- <a href='#' class="btn btn-normal float-right"><i class="fas fa-plus"></i> Create Player</a> -->
-                    
+
                     @if(Auth::user()->user_type_id != 4)
                     <form class="form-horizontal" method="get">
                         <input type="hidden" name="id" value="random">
@@ -44,7 +44,7 @@
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" name="group_code" id="group_code" placeholder="Group Code" value="{{ $code }}">
                                 </div>
-                                
+
                                 <div class="col-md-2">
                                     <select class="form-control" name="player_status" id="player_status">
                                         <option value="" selected disabled>Player Status</option>
@@ -52,7 +52,7 @@
                                         <option value="0" {{ $status == '0' ? 'selected' : '' }}>Deactivated</option>
                                     </select>
                                 </div>
-                                
+
                                 <!-- <div class="col-md-2">
                                     <select class="form-control" name="account_status" id="player_status">
                                         <option value="" selected disabled>Account Status</option>
@@ -76,11 +76,11 @@
                                     <th>#</th>
                                     <th>Player Name</th>
                                     <th>Username</th>
-                                    <th>Group Code</th>
-                                    <th>Reviewed By</th>
+                                    {{-- <th>Group Code</th> --}}
+                                    <th>Assisted By</th>
                                     <th>Registration Date & Time</th>
                                     <th>Case Id</th>
-                                    <th>Site Review</th>
+                                    {{-- <th>Site Review</th> --}}
                                     <th>Account Status</th>
                                     <th>Profile Status</th>
                                     @if(in_array(Auth::user()->user_type_id, [1,3,4]))
@@ -97,21 +97,22 @@
                                         <td>{{ $playersCount++ }}</td>
                                         <td>{{ $player->first_name . ' ' . $player->last_name }}</td>
                                         <td>{{ $player->username }}</td>
-                                        <td>{{ $player->group_code }}</td>
-                                        <td>{{ isset($player->review_by) ? $reviewBy[$player->review_by] : '(Direct Player)' }}</td>
+                                        {{-- <td>{{ $player->group_code }}</td> --}}
+                                        <td>{{ isset($player->review_by) ? $reviewBy[$player->review_by] : '--' }}</td>
                                         <td>{{ date("M d, Y h:i a",strtotime($player->created_at)) }}</td>
                                         <td>{{ $player->case_id }}</td>
-                                        <td>
+                                        {{-- <td>
                                             <strong class="{{ $player->site_status == 'submitted' ? 'active' : '' }}">
                                                 {{ isset($player->site_status) ? strtoupper($player->site_status) : '--' }}
                                             </strong>
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <strong class="{{ $player->is_active ? 'active' : 'deactivated' }}">
                                                 {{ $player->is_active ? 'Active' : 'Deactivated' }}
                                             </strong>
                                         </td>
-                                        <td><strong class="{{ $player->status }}">SCHEDULED</td>
+                                        {{-- <td><strong class="{{ $player->status }}">{{ isset($player->review_by) ? 'SCHEDULED' : 'PENDING' }} {{ $player->site_status == 'returned' ? '(RETURNED)' : '' }}</td> --}}
+                                        <td><strong class="{{ $player->site_status == 'returned' ? 'returned' : $player->status }}">{{ $player->site_status == 'returned' ? 'RETURNED' : (isset($player->review_by) ? 'SCHEDULED' : 'PENDING') }}</td>
                                         <td>
                                             <div class="form-inline" style="justify-content: center">
                                             @if(in_array(Auth::user()->user_type_id, [1,2]))
@@ -156,8 +157,8 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>   
-                    </div>  
+                        </table>
+                    </div>
 
                     <div class="col">
                         <div class="float-right">
@@ -174,7 +175,7 @@
 @section('script')
 <script>
     $("document").ready(function(){
-        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="tooltip"]').tooltip();
         $('.users-status').on('click', function(){
             if($(this).hasClass('activate') == true){
                 $text = 'activate';
