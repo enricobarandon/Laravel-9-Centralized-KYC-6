@@ -54,23 +54,35 @@ class LoginController extends Controller
 
             $user = Auth::user();
 
-            ActivityLog::create([
-                'type' => 'login',
-                'user_id' => Auth::id(),
-                'assets' => json_encode([
-                    'action' => 'User login',
-                    'username' => $user->username,
-                    'user_role' => UserType::getUserRole($user->user_type_id)->role
-                ])
-            ]);
 
             if (Auth::user()->is_active == 0) {
+
+                ActivityLog::create([
+                    'type' => 'attempt-login',
+                    'user_id' => Auth::id(),
+                    'assets' => json_encode([
+                        'action' => 'Attempt login deactivated account',
+                        'username' => $user->username,
+                        'user_role' => UserType::getUserRole($user->user_type_id)->role
+                    ])
+                ]);
+
                 Auth::logout();
                 $request->session()->flush();
                 $request->session()->regenerate();
                 return back()
                     ->withErrors([
-                        'error' => 'User account is Deactivated. Please contact a administrator to activate your account.',
+                        'error' => 'User account is Deactivated. Please contact a Helpdesk to activate your account.',
+                ]);
+            } else {
+                ActivityLog::create([
+                    'type' => 'login',
+                    'user_id' => Auth::id(),
+                    'assets' => json_encode([
+                        'action' => 'User login',
+                        'username' => $user->username,
+                        'user_role' => UserType::getUserRole($user->user_type_id)->role
+                    ])
                 ]);
             }
 

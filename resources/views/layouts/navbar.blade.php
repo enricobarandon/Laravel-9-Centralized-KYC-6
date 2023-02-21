@@ -30,7 +30,7 @@
         </a>
 
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="right: 0 !important;">
-          @if($users->user_type_id == 5)
+          @if(in_array($users->user_type_id, [3,5]))
             <a class="dropdown-item" href='/update-password'><i class="fa fa-cog"></i>
                 Change Password
             </a>

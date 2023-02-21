@@ -7,7 +7,7 @@ Route::middleware('role:Administrator,Player')->group(function(){
 });
 
 
-Route::middleware('role:Player')->group(function(){
+Route::middleware('role:Player,Help Desk')->group(function(){
     Route::get('update-password', [PlayerController::class, 'updatePassword'])->name('players.update-password');
     Route::post('submitPassword', [PlayerController::class, 'submitPassword'])->name('players.submitPassword');
 });

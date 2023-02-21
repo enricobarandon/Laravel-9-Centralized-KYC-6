@@ -44,7 +44,7 @@
                                     @csrf
                                     <input type="hidden" name="group_code" value="{{ isset($_GET['code']) ? $_GET['code'] : '' }}">
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="username" >Username</label>
                                             <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 
@@ -54,7 +54,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="password" >Password</label>
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                             <img class="view-password1" src="{{ asset('img/icons/eye.png') }}">
@@ -65,7 +65,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="password_confirmation" >Confirm Password</label>
                                             <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                             <img class="view-password2" src="{{ asset('img/icons/eye.png') }}">
@@ -73,7 +73,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="first_name" >First Name</label>
                                             <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" >
 
@@ -83,7 +83,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="middle_name" >Middle Name</label>
                                             <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ old('middle_name') }}" required autocomplete="middle_name" >
 
@@ -94,7 +94,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="last_name" >Last Name</label>
                                             <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" >
 
@@ -107,7 +107,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="contact" >Contact</label>
                                             <input id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact" >
 
@@ -117,7 +117,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="date_of_birth" >Date of Birth</label>
                                             <input id="date_of_birth" type="text" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" >
 
@@ -128,7 +128,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="place_of_birth" >Place of Birth</label>
                                             <input id="place_of_birth" type="text" class="form-control @error('place_of_birth') is-invalid @enderror" name="place_of_birth" value="{{ old('place_of_birth') }}" required autocomplete="place_of_birth" >
 
@@ -141,7 +141,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mb-16">
                                             <label for="nationality" >Nationality</label>
                                             <input id="nationality" type="text" class="form-control @error('nationality') is-invalid @enderror" name="nationality" value="{{ old('nationality') }}" required autocomplete="nationality">
 
@@ -151,7 +151,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mb-16">
                                             <label for="country" >Country</label>
                                             <!-- <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required autocomplete="country"> -->
                                             <select id="country" name="country" class="form-control selectCSS @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required>
@@ -173,9 +173,9 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="house_number" >House Number</label>
-                                            <input id="house_number" type="text" class="form-control @error('house_number') is-invalid @enderror" name="house_number" value="{{ old('house_number') }}" required autocomplete="house_number">
+                                            <input id="house_number" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('house_number') is-invalid @enderror" name="house_number" value="{{ old('house_number') }}" required autocomplete="house_number">
 
                                             @error('house_number')
                                                 <span class="invalid-feedback" role="alert">
@@ -183,9 +183,9 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="street" >Street</label>
-                                            <input id="street" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ old('street') }}" required autocomplete="street">
+                                            <input id="street" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ old('street') }}" required autocomplete="street">
 
                                             @error('street')
                                                 <span class="invalid-feedback" role="alert">
@@ -194,7 +194,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="zipcode" >Zipcode</label>
                                             <input id="zipcode" type="number" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
 
@@ -210,7 +210,7 @@
 
                                     <div class="form-group row">
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="region">Region</label>
                                             <select id="region" class="form-control selectCSS @error('region') is-invalid @enderror" name="region" value="{{ old('region') }}" required>
                                                 <option disabled selected value="">-- Select Region --</option>
@@ -224,7 +224,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="province" >Province</label>
                                             <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror"  value="{{ old('province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
@@ -237,7 +237,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="city">City / Municipality</label>
                                             <select id="city" class="form-control selectCSS @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required>
                                                 <option disabled selected value="">-- Select City --</option>
@@ -254,7 +254,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="barangay" >Barangay</label>
                                             <!-- <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay"> -->
                                             <select id="barangay" class="form-control selectCSS @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required>
@@ -271,7 +271,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12 mb-16">
                                             <label>Permanent Address</label>
                                         </div>
 
@@ -284,9 +284,9 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="p_house_number" >House Number</label>
-                                            <input id="p_house_number" type="text" class="form-control @error('house_number') is-invalid @enderror" name="p_house_number" value="{{ old('p_house_number') }}" required autocomplete="p_house_number">
+                                            <input id="p_house_number" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('house_number') is-invalid @enderror" name="p_house_number" value="{{ old('p_house_number') }}" required autocomplete="p_house_number">
 
                                             @error('p_house_number')
                                                 <span class="invalid-feedback" role="alert">
@@ -294,8 +294,8 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="p_street" >Street</label>
+                                        <div class="col-md-4 mb-16">
+                                            <label for="p_street" oninput="this.value = this.value.toUpperCase()" >Street</label>
                                             <input id="p_street" type="text" class="form-control @error('p_street') is-invalid @enderror" name="p_street" value="{{ old('p_street') }}" required autocomplete="p_street">
 
                                             @error('p_street')
@@ -306,7 +306,7 @@
                                         </div>
 
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="p_zipcode" >Zipcode</label>
                                             <input id="p_zipcode" type="number" class="form-control @error('p_zipcode') is-invalid @enderror" name="p_zipcode" value="{{ old('p_zipcode') }}" required autocomplete="p_zipcode">
 
@@ -321,7 +321,7 @@
 
                                     <div class="form-group row">
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="p_region">Region</label>
                                             <select id="p_region" class="form-control selectCSS @error('p_region') is-invalid @enderror" name="p_region" value="{{ old('p_region') }}" required>
                                                 <option disabled selected value="">-- Select Region --</option>
@@ -335,7 +335,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="p_province" >Province</label>
                                             <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" value="{{ old('p_province') }}" required>
                                                 <option disabled selected value="">-- Select Province --</option>
@@ -351,7 +351,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="p_city">City / Municipality</label>
                                             <select id="p_city" class="form-control selectCSS @error('p_city') is-invalid @enderror" name="p_city" value="{{ old('p_city') }}" required>
                                                 <option disabled selected value="">-- Select City --</option>
@@ -365,7 +365,10 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4 mb-16">
                                             <label for="p_barangay" >Barangay</label>
                                             <!-- <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay"> -->
                                             <select id="p_barangay" class="form-control selectCSS @error('p_barangay') is-invalid @enderror" name="p_barangay" value="{{ old('p_barangay') }}" required>
@@ -379,11 +382,10 @@
                                                 </span>
                                             @enderror
                                         </div>
-
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="occupation" >Occupation</label>
                                             <input id="occupation" type="text" class="form-control @error('occupation') is-invalid @enderror" name="occupation" value="{{ old('occupation') }}" required autocomplete="occupation">
 
@@ -393,7 +395,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="select_source_of_income" >Source of Income</label>
                                             <select id="select_source_of_income" name="select_source_of_income" type="text" class="form-control @error('select_source_of_income') is-invalid @enderror selectCSS" name="select_source_of_income" value="{{ old('select_source_of_income') }}" required autocomplete="select_source_of_income">
                                                 <option selected disabled> Select source of income</option>
@@ -407,7 +409,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4 div-others-income">
+                                        <div class="col-md-4 div-others-income mb-16">
                                             <label for="source_of_income" class="income-label">Specify Source of Income</label>
                                             <input id="source_of_income" type="text" class="form-control" name="source_of_income" value="{{ old('source_of_income') }}" required autocomplete="source_of_income">
                                         </div>
@@ -419,7 +421,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="facebook" >Facebook</label>
                                             <input id="facebook" type="text" class="form-control @error('facebook') is-invalid @enderror" name="facebook" value="{{ old('facebook') }}" required autocomplete="facebook">
 
@@ -429,7 +431,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="video_app">Prefer Video Interview App</label>
                                             <select class="form-control selectCSS" name="video_app" id="video_app" required>
                                                 <option disabled selected value="">-- Select Video App --</option>
@@ -443,7 +445,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-16">
                                             <label for="valid_id_type">Valid ID Type</label>
                                             <select class="form-control selectCSS" name="valid_id_type" id="valid_id_type" required>
                                                 <option disabled selected value="">-- Select Valid ID --</option>
@@ -468,7 +470,7 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                            <img src="/img/picture_of_id.png" id="image-previewer-id" class="img-fluid img-responsive">
+                                            <img src="/img/picture_of_id.png" id="image-previewer-id" class="img-fluid img-responsive mt-4">
                                         </div>
 
 
@@ -480,7 +482,7 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                            <img src="/img/holding_id.png" id="image-previewer-selfie" class="img-fluid img-responsive">
+                                            <img src="/img/holding_id.png" id="image-previewer-selfie" class="img-fluid img-responsive mt-4">
                                         </div>
                                     </div>
 
@@ -527,10 +529,93 @@
     </div>
 </body>
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js') }}"></script>
 <script src="{{ asset('js/jquery.datetimepicker.full.min.js') }}"></script>
 <script src="{{ asset('js/imoViewer-min.js') }}"></script>
+
 <script>
 $("document").ready(function(){
+    $('#formRegister').validate({
+    rules: {
+        password: {
+            minlength: 8
+        },
+        password_confirmation: {
+            minlength: 8,
+            equalTo: '[name="password"]'
+        },
+        date_of_birth : {
+            validDOB : true
+        },
+        contact : {
+            minlength: 11,
+            maxlength: 11,
+            number: true
+        },
+        id_picture : {
+            extension: "jpg|jpeg|png|svg|gif",
+            imageSize: true
+        },
+        selfie_with_id : {
+            extension: "jpg|jpeg|png|svg|gif",
+            imageSize: true
+        }
+    },
+    messages: {
+        password_confirmation : {
+            equalTo : "Password and Confirm Password not Match"
+        },
+        contact : {
+            minlength: "Please Enter 11 Digit.",
+            maxlength: "Please Enter 11 Digit."
+        }
+    }
+    });
+    jQuery.validator.addMethod(
+        "validDOB",
+        function(value, element) {
+            var date_string = moment(value).format('DD/MM/YYYY');
+            var from = date_string.split("/"); // DD MM YYYY
+            // var from = value.split("/"); // DD/MM/YYYY
+
+            var day = from[0];
+            var month = from[1];
+            var year = from[2];
+            var age = 21;
+
+            var mydate = new Date();
+            mydate.setFullYear(year, month-1, day);
+
+            var currdate = new Date();
+            var setDate = new Date();
+
+            setDate.setFullYear(mydate.getFullYear() + age, month-1, day);
+
+            if ((currdate - setDate) > 0){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        "Sorry, you must be 21 years of age and above."
+    );
+
+    $.validator.addMethod( "extension", function( value, element, param ) {
+        param = typeof param === "string" ? param.replace( /,/g, "|" ) : "png|jpe?g|gif";
+        return this.optional( element ) || value.match( new RegExp( "\\.(" + param + ")$", "i" ) );
+    }, $.validator.format( "Invalid format." ) );
+
+    $.validator.addMethod( "imageSize", function( value, element ) {
+        var a = (element.files[0].size);
+
+        if(a > 3000000) {
+            return false;
+        }else{
+            return true;
+        };
+    }, $.validator.format( "Image Size only accept less than 3mb." ) );
+
     $('.view-password1').hover(function () {
         $('#password').attr('type', 'text');
     }, function () {

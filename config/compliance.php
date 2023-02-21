@@ -647,7 +647,7 @@ return [
     'decline-remarks' =>  [
         'reject_reason1' => 'Documents submitted cannot be verified or do not meet our criteria.',
         'reject_reason2' => "Submitted scanned ID does not contain the player's photo and required KYC data.",
-        'reject_reason3' => 'Your applocation cannot be processed at this time.',
+        'reject_reason3' => 'Your application cannot be processed at this time.',
         // 'reject_reason4' => 'Reason 4',
         // 'reject_reason5' => 'Reason 5'
     ],

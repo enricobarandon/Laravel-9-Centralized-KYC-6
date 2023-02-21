@@ -58,7 +58,7 @@
 .arena-overview th {
     background-color: #17a2b8;
     color: #fff;
-    
+
 }
 
 .text-value {
@@ -199,7 +199,7 @@
     color: #fff;
     text-align: center;
 }
-.full-sched-table td, 
+.full-sched-table td,
 .full-sched-table th {
     padding: 0 !important;
     font-size: 13px;
@@ -270,4 +270,18 @@
 .btn-normal {
     background: transparent;
     border-color: #ffffff;
+}
+label.error {
+    text-transform: unset !important;
+    color: red;
+    position: absolute;
+}
+label#agree_terms_privacy-error,
+label#over_age-error {
+    top: 20px;
+}
+@media (max-width: 768px){
+    .mb-16 {
+        margin-bottom: 16px;
+    }
 }
