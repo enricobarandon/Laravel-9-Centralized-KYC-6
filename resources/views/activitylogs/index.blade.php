@@ -20,6 +20,15 @@
                                 </div>
 
                                 <div class="col-md-3">
+                                    <select class="form-control" name="action" id="action">
+                                        <option value="" selected disabled>Select Action</option>
+                                        @foreach ($actions as $key => $value)
+                                            <option value="{{ $key }}" {{ $action == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
                                     <input type="text" class="form-control" name="date" id="date" placeholder="Select Date" value="{{ $datepicker != '' ? date('M d, Y',strtotime($datepicker)) : '' }}">
                                 </div>
 
@@ -46,13 +55,13 @@
                             $i = ($activityLogs->currentpage()-1)* $activityLogs->perpage() + 1;
                         @endphp
                             @if(!$activityLogs->isEmpty())
-                            
+
                                 @foreach($activityLogs as $index => $value)
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ date("M d, Y h:i:s a",strtotime($value->created_at)) }}</td>
                                         <td>{{ $value->type }}</td>
-                                        
+
                                         <td>
                                             {{ $value->username. ' - ' . $value->role  }}
                                         </td>
@@ -60,7 +69,7 @@
                                             @php
 
                                                 $decoded_data = json_decode($value->assets,true);
-                                                
+
                                                 if(json_last_error() === JSON_ERROR_NONE){
 
                                                     $description = '';

@@ -81,11 +81,16 @@ class HelpDeskController extends Controller
             $randomUser = User::select('id')
             ->where('status', 'pending')
             ->where('user_type_id', 5)
+            ->where('review_by', null)
+            ->where('site_status', null)
             ->get()->pluck('id')->toArray();
-
-            $random_keys = array_rand($randomUser,2);
-
-            $players = $players->where('users.id',$randomUser[$random_keys[0]]);
+            shuffle($randomUser);
+            // $random_keys = array_rand($randomUser,2);
+            if($randomUser){
+                $players = $players->where('users.id',$randomUser[0]);
+            }else{
+                return redirect('/helpdesk/for-approval')->with('info','Noting to Review.');
+            }
         }
 
         $keyword = $request->keyword;
@@ -156,11 +161,37 @@ class HelpDeskController extends Controller
 
         $userDetails = UserDetails::where('user_id', $user->id)->first();
 
-        if($auth->user_type_id == 4){
+        if($user->status == 'pending'){
+            if($auth->user_type_id == 3){
+                if($user->review_by != null and $user->review_by != $auth->id){
+                    return back()->with('error','This account is already reviewed.');
+                }
+            }
+        }
+
+        if($auth->user_type_id == 3){
+
             if($user->group_code != $auth->group_code){
                 return redirect('/home')->with('error','Access Denied');
             }
+
         }
+
+        if($auth->user_type_id == 3){
+            $updateReview = User::where('id',$user->id)->update(['review_by' => $auth->id]);
+            if($updateReview){
+                ActivityLog::create([
+                    'type' => 'review-account',
+                    'user_id' => $auth->id,
+                    'assets' => json_encode([
+                        'action' => 'Review Players Account',
+                        'username' => $user->username
+                    ])
+                ]);
+            }
+        }
+
+
 
         $uuid = $user->uuid;
         $qrcode = new DNS2D();

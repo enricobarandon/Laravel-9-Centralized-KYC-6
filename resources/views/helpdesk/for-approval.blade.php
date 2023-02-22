@@ -30,6 +30,10 @@
                         <div class="alert alert-danger" role="alert">
                             {{ session('error') }}
                         </div>
+                    @elseif(session('info'))
+                        <div class="alert alert-primary" role="alert">
+                            {{ session('info') }}
+                        </div>
                     @endif
 
                     <div class="callout callout-info">
@@ -77,7 +81,7 @@
                                     <th>Player Name</th>
                                     <th>Username</th>
                                     {{-- <th>Group Code</th> --}}
-                                    <th>Assisted By</th>
+                                    <th>Review By</th>
                                     <th>Registration Date & Time</th>
                                     <th>Case Id</th>
                                     {{-- <th>Site Review</th> --}}
@@ -112,7 +116,7 @@
                                             </strong>
                                         </td>
                                         {{-- <td><strong class="{{ $player->status }}">{{ isset($player->review_by) ? 'SCHEDULED' : 'PENDING' }} {{ $player->site_status == 'returned' ? '(RETURNED)' : '' }}</td> --}}
-                                        <td><strong class="{{ $player->site_status == 'returned' ? 'returned' : $player->status }}">{{ $player->site_status == 'returned' ? 'RETURNED' : (isset($player->review_by) ? 'SCHEDULED' : 'PENDING') }}</td>
+                                        <td><strong class="{{ $player->site_status == 'returned' ? 'returned' : $player->status }}">{{ $player->site_status == 'returned' ? 'RETURNED' : (isset($player->interview_date_time) ? 'SCHEDULED' : 'PENDING') }}</td>
                                         <td>
                                             <div class="form-inline" style="justify-content: center">
                                             @if(in_array(Auth::user()->user_type_id, [1,2]))
