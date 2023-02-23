@@ -169,7 +169,7 @@ class HelpDeskController extends Controller
             }
         }
 
-        if($auth->user_type_id == 3){
+        if($auth->user_type_id == 4){
 
             if($user->group_code != $auth->group_code){
                 return redirect('/home')->with('error','Access Denied');
