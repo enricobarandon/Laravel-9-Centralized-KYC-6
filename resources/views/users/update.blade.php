@@ -44,7 +44,7 @@
                                 <input type="text" class="form-control" value="{{ $usersInfo->username }}" readonly>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-2 col-form-label text-md-end">{{ __('First Name') }}</label>
 
@@ -52,7 +52,7 @@
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $usersInfo->first_name }}" required autocomplete="first_name" autofocus>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="last_name" class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
@@ -81,7 +81,7 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="group_code" class="col-md-2 col-form-label text-md-end">{{ __('Group') }}</label>
 
@@ -132,7 +132,7 @@
                                 <input type="text" class="form-control" value="{{ $usersInfo->first_name }}" readonly>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label class="col-md-2 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
@@ -144,15 +144,15 @@
                             <label for="name" class="col-md-2 col-form-label text-md-end" minlength="8">New Password</label>
 
                             <div class="col-md-6">
-                                <input id="cpassword" type="password" class="form-control" minlength="8" name="cpassword" required autofocus>
+                                <input id="password" type="password" class="form-control" minlength="8" name="password" required autofocus>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="name" class="col-md-2 col-form-label text-md-end">Confirm Password</label>
 
                             <div class="col-md-6">
-                                <input id="ccpassword" type="password" class="form-control" name="ccpassword" required>
+                                <input id="confirm_password" type="password" class="form-control" name="confirm_password" required>
                             </div>
                         </div>
 

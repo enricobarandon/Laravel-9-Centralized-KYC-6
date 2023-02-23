@@ -67,7 +67,7 @@ class RegisterController extends Controller
             'first_name' =>                 ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
             'middle_name' =>                ['required','string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
             'last_name' =>                  ['required', 'string', 'max:255', 'regex:/^[a-z\d\-_\s]+$/i'],
-            'username' =>                   ['required', 'string', 'max:255', 'regex:/^[A-Za-z0-9_]+$/', 'unique:users'],
+            'username' =>                   ['required', 'string', 'min:6', 'max:50', 'regex:/^[A-Za-z0-9_]+$/', 'unique:users'],
             'password' =>                   ['required', 'string', 'min:8', 'confirmed'],
             'contact' =>                    ['required', 'digits:11', 'unique:users'],
             'group_code' =>                 ['nullable', 'max:10'],

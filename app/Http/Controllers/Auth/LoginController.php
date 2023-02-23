@@ -72,7 +72,7 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 return back()
                     ->withErrors([
-                        'error' => 'User account is Deactivated. Please contact a Helpdesk to activate your account.',
+                        'error' => 'User account is Deactivated. Please contact a ' . ($user->user_type_id == 5 ? 'Helpdesk' : 'Administrator') . ' to activate your account.',
                 ]);
             } else {
                 ActivityLog::create([

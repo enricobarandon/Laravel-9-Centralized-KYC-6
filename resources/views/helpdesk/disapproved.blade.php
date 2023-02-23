@@ -115,6 +115,21 @@
                                                 </form>
                                             @endif
                                             @if(in_array(Auth::user()->user_type_id, [1,3]))
+                                                @if(Auth::user()->user_type_id == 3)
+                                                    <form action='{{ url("/users/is_black_listed/$player->id") }}' method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="black-list-remarks" class="black-list-remarks" value="">
+                                                        @if($player->is_black_listed)
+                                                            <button type="button" class="btn btn-xs btn-light users-black-list black-listed mr-2 btn-padding" data-toggle="tooltip" data-placement="top" title="Remove from Black List">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        @else
+                                                            <button type="button" class="btn btn-xs btn-dark users-black-list not-black-listed mr-2 check-padding"  data-toggle="tooltip" data-placement="top" title="Add to Black List">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        @endif
+                                                    </form>
+                                                @endif
                                                 <a href='{{ url("/helpdesk/user/$player->id") }}' data-toggle="tooltip" data-placement="top" class="mr-2" title="Review Details"><i class="fa fa-eye"></i></a>
                                                 <a href='{{ url("/users/update/$player->id/password") }}' data-toggle="tooltip" data-placement="top" title="Update Password"><i class="fa fa-cog"></i></a>
                                                 @if(Auth::user()->user_type_id == 1)

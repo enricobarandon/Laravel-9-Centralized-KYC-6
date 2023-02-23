@@ -75,7 +75,7 @@
                                     <div class="form-group row">
                                         <div class="col-md-4 mb-16">
                                             <label for="first_name" >First Name</label>
-                                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" >
+                                            <input id="first_name" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" >
 
                                             @error('first_name')
                                                 <span class="invalid-feedback" role="alert">
@@ -85,7 +85,7 @@
                                         </div>
                                         <div class="col-md-4 mb-16">
                                             <label for="middle_name" >Middle Name</label>
-                                            <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ old('middle_name') }}" required autocomplete="middle_name" >
+                                            <input id="middle_name" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ old('middle_name') }}" required autocomplete="middle_name" >
 
                                             @error('middle_name')
                                                 <span class="invalid-feedback" role="alert">
@@ -96,7 +96,7 @@
 
                                         <div class="col-md-4 mb-16">
                                             <label for="last_name" >Last Name</label>
-                                            <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" >
+                                            <input id="last_name" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" >
 
                                             @error('last_name')
                                                 <span class="invalid-feedback" role="alert">
@@ -130,7 +130,7 @@
 
                                         <div class="col-md-4 mb-16">
                                             <label for="place_of_birth" >Place of Birth</label>
-                                            <input id="place_of_birth" type="text" class="form-control @error('place_of_birth') is-invalid @enderror" name="place_of_birth" value="{{ old('place_of_birth') }}" required autocomplete="place_of_birth" >
+                                            <input id="place_of_birth" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('place_of_birth') is-invalid @enderror" name="place_of_birth" value="{{ old('place_of_birth') }}" required autocomplete="place_of_birth" >
 
                                             @error('place_of_birth')
                                                 <span class="invalid-feedback" role="alert">
@@ -143,7 +143,7 @@
                                     <div class="form-group row">
                                         <div class="col-md-6 mb-16">
                                             <label for="nationality" >Nationality</label>
-                                            <input id="nationality" type="text" class="form-control @error('nationality') is-invalid @enderror" name="nationality" value="{{ old('nationality') }}" required autocomplete="nationality">
+                                            <input id="nationality" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('nationality') is-invalid @enderror" name="nationality" value="{{ old('nationality') }}" required autocomplete="nationality">
 
                                             @error('nationality')
                                                 <span class="invalid-feedback" role="alert">
@@ -387,7 +387,7 @@
                                     <div class="form-group row">
                                         <div class="col-md-4 mb-16">
                                             <label for="occupation" >Occupation</label>
-                                            <input id="occupation" type="text" class="form-control @error('occupation') is-invalid @enderror" name="occupation" value="{{ old('occupation') }}" required autocomplete="occupation">
+                                            <input id="occupation" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('occupation') is-invalid @enderror" name="occupation" value="{{ old('occupation') }}" required autocomplete="occupation">
 
                                             @error('occupation')
                                                 <span class="invalid-feedback" role="alert">
@@ -399,9 +399,9 @@
                                             <label for="select_source_of_income" >Source of Income</label>
                                             <select id="select_source_of_income" name="select_source_of_income" type="text" class="form-control @error('select_source_of_income') is-invalid @enderror selectCSS" name="select_source_of_income" value="{{ old('select_source_of_income') }}" required autocomplete="select_source_of_income">
                                                 <option selected disabled> Select source of income</option>
-                                                <option value="salary" {{ old('select_source_of_income') == 'salary' ? 'selected' : '' }}>Salary</option>
-                                                <option value="business" {{ old('select_source_of_income') == 'business' ? 'selected' : '' }}>Business</option>
-                                                <option value="others" {{ old('select_source_of_income') == 'others' ? 'selected' : '' }}>Others</option>
+                                                <option value="SALARY" {{ old('select_source_of_income') == 'SALARY' ? 'selected' : '' }}>SALARY</option>
+                                                <option value="BUSINESS" {{ old('select_source_of_income') == 'BUSINESS' ? 'selected' : '' }}>BUSINESS</option>
+                                                <option value="OTHERS" {{ old('select_source_of_income') == 'OTHERS' ? 'selected' : '' }}>OTHERS</option>
                                             </select>
                                             @error('select_source_of_income')
                                                 <span class="invalid-feedback" role="alert">
@@ -411,7 +411,7 @@
                                         </div>
                                         <div class="col-md-4 div-others-income mb-16">
                                             <label for="source_of_income" class="income-label">Specify Source of Income</label>
-                                            <input id="source_of_income" type="text" class="form-control" name="source_of_income" value="{{ old('source_of_income') }}" required autocomplete="source_of_income">
+                                            <input id="source_of_income" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control" name="source_of_income" value="{{ old('source_of_income') }}" required autocomplete="source_of_income">
                                         </div>
                                         @error('source_of_income')
                                             <span class="invalid-feedback" role="alert">
@@ -432,7 +432,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-16">
-                                            <label for="video_app">Prefer Video Interview App</label>
+                                            <label for="video_app">Prefered Video Interview App</label>
                                             <select class="form-control selectCSS" name="video_app" id="video_app" required>
                                                 <option disabled selected value="">-- Select Video App --</option>
                                                 @foreach ($video_apps as $key => $value)
@@ -538,6 +538,10 @@
 $("document").ready(function(){
     $('#formRegister').validate({
     rules: {
+        username: {
+            regex: "^[a-zA-Z0-9]+$",
+            minlength: 6,
+        },
         password: {
             minlength: 8
         },
@@ -615,6 +619,11 @@ $("document").ready(function(){
             return true;
         };
     }, $.validator.format( "Image Size only accept less than 3mb." ) );
+
+    $.validator.addMethod("regex", function(value, element, regexp) {
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+    },  "Invalid format.");
 
     $('.view-password1').hover(function () {
         $('#password').attr('type', 'text');

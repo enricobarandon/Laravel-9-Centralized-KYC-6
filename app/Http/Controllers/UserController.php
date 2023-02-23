@@ -241,8 +241,8 @@ class UserController extends Controller
             }
         }else{
             $validator = Validator::make($request->all(), [
-                'cpassword' => 'required|min:8',
-                'ccpassword' => 'required',
+                'password' => 'required|min:8',
+                'confirm_password' => 'required',
             ]);
             if ($validator->fails()) {
                 return redirect('/users/update/'.$request->id.'/password')
@@ -323,7 +323,8 @@ class UserController extends Controller
                     'action' =>                 'Change user blacklist status',
                     'username' =>               $user->username,
                     'old blacklist status' =>   $user->is_black_listed == '0' ? 'whitelisted' : 'blacklisted',
-                    'new blacklist status' =>   !$user->is_black_listed == '0' ? 'whitelisted' : 'blacklisted'
+                    'new blacklist status' =>   !$user->is_black_listed == '0' ? 'whitelisted' : 'blacklisted',
+                    'remarks' =>                $request->input('black-list-remarks')
                 ])
             ]);
             return back()->with('success','User blacklist status updated');

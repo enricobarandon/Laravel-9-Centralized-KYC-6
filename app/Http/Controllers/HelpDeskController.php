@@ -89,7 +89,7 @@ class HelpDeskController extends Controller
             if($randomUser){
                 $players = $players->where('users.id',$randomUser[0]);
             }else{
-                return redirect('/helpdesk/for-approval')->with('info','Noting to Review.');
+                return redirect('/helpdesk/for-approval')->with('info','Nothing to Review.');
             }
         }
 
@@ -161,13 +161,6 @@ class HelpDeskController extends Controller
 
         $userDetails = UserDetails::where('user_id', $user->id)->first();
 
-        if($user->status == 'pending'){
-            if($auth->user_type_id == 3){
-                if($user->review_by != null and $user->review_by != $auth->id){
-                    return back()->with('error','This account is already reviewed.');
-                }
-            }
-        }
 
         if($auth->user_type_id == 4){
 
@@ -177,7 +170,15 @@ class HelpDeskController extends Controller
 
         }
 
-        if($auth->user_type_id == 3){
+        // if($user->status == 'pending'){
+        //     if($auth->user_type_id == 3){
+        //         if($user->review_by != null and $user->review_by != $auth->id){
+        //             return back()->with('error','This account is already reviewed.');
+        //         }
+        //     }
+        // }
+
+        if($auth->user_type_id == 3 and $user->review_by == null){
             $updateReview = User::where('id',$user->id)->update(['review_by' => $auth->id]);
             if($updateReview){
                 ActivityLog::create([

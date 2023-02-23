@@ -136,6 +136,14 @@ $id_type = [
                         </div>
                     @endif
 
+                    @if(Auth::user()->user_type_id == 3)
+                        @if($user->status == 'pending' and $user->review_by != null and $user->review_by != Auth::user()->id)
+                        <div class="alert alert-danger" role="alert">
+                            This account is already reviewed.
+                        </div>
+                        @endif
+                    @endif
+
                     <!-- {{ $userDetails }} -->
 
                     <div class="row justify-content-center align-items-center h-100">

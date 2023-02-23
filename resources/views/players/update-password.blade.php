@@ -22,6 +22,15 @@
                                 </ul>
                             </div>
                         @endif
+
+                        <div class="row mb-3">
+                            <label for="name" class="col-md-2 col-form-label text-md-end" minlength="8">Current Password</label>
+
+                            <div class="col-md-6">
+                                <input id="current_password" type="password" class="form-control" minlength="8" name="current_password" required autofocus>
+                            </div>
+                        </div>
+
                         <div class="row mb-3">
                             <label for="name" class="col-md-2 col-form-label text-md-end" minlength="8">New Password</label>
 

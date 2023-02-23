@@ -207,22 +207,26 @@ class PlayerController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }else{
-            if($request->password == $request->confirm_password){
+            if(Hash::check($request->current_password, $auth->password)){
+                if($request->password == $request->confirm_password){
 
-                $newPassword = Hash::make($request->password);
+                    $newPassword = Hash::make($request->password);
 
-                $updatePassword = User::where('users.id', $auth->id)->update(
-                    array(
-                        'password' => $newPassword
-                    )
-                );
-                $logs = array(
-                    'action' => 'Update password',
-                    'username' => $auth->username,
-                    'name' => $auth->first_name. ' ' . $auth->last_name
-                );
+                    $updatePassword = User::where('users.id', $auth->id)->update(
+                        array(
+                            'password' => $newPassword
+                        )
+                    );
+                    $logs = array(
+                        'action' => 'Update password',
+                        'username' => $auth->username,
+                        'name' => $auth->first_name. ' ' . $auth->last_name
+                    );
+                }else{
+                    return back()->withErrors('Password and Confirm password not match!');
+                }
             }else{
-                return back()->withErrors('Password and Confirm password not match!');
+                return back()->withErrors('Current password is incorrect!');
             }
         }
 
