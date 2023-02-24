@@ -1401,7 +1401,7 @@ input#qrcode {
     width: 100%;
     /* max-height: 300px; */
 }
-.pending {
+.pending, strong.pending {
     background: rgb(51, 64, 240);
     color: white;
     padding: 0px 5px 2px 5px;;
@@ -1422,13 +1422,19 @@ input#qrcode {
 .file-css {
     padding: 3px 5px !important;
 }
-strong.deactivated {
+strong.deactivated, .rejected {
     background: rgb(230, 17, 6);
     color: white;
     padding: 0px 5px 2px 5px;;
     border-radius: 5px;
 }
-strong.active {
+strong.returned {
+    background: rgb(251, 243, 6);
+    color: #000000;
+    padding: 0px 5px 2px 5px;;
+    border-radius: 5px;
+}
+strong.active, .submitted {
     background: rgb(4, 212, 59);
     color: white;
     padding: 0px 5px 2px 5px;;
@@ -1497,4 +1503,9 @@ strong.active {
 }
 .table-responsive {
     box-shadow: 0px 0px 9px 4px rgb(0 0 0 / 30%);
+}
+.notif-css {
+    position: absolute;
+    right: 10px;
+    top: 5px;
 }

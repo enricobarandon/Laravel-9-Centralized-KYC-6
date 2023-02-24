@@ -91,6 +91,10 @@ class HelpDeskController extends Controller
             }else{
                 return redirect('/helpdesk/for-approval')->with('info','Nothing to Review.');
             }
+
+            $random_keys = array_rand($randomUser,2);
+
+            $players = $players->where('users.id',$randomUser[$random_keys[0]]);
         }
 
         $keyword = $request->keyword;
@@ -201,6 +205,7 @@ class HelpDeskController extends Controller
         $processedBy = User::select('username')->where('id', $user->processed_by)->first();
 
         $rejectRemarks = config('compliance.decline-remarks');
+        $rejectRemarks = config('compliance.reject-remarks');
         $returnRemarks = config('compliance.return-remarks');
 
         return view('helpdesk.user-details', compact('user','userDetails','processedBy','qrCode','rejectRemarks','returnRemarks'));
