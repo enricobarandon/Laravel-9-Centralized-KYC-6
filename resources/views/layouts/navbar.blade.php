@@ -1,4 +1,5 @@
 <!-- Navbar -->
+@if (auth()->check())
 @php
   $users = Auth::user();
   $user_role = [
@@ -252,3 +253,8 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+@else
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light"></nav>
+<aside class="main-sidebar sidebar-dark-primary elevation-4"></aside>
+@endif
