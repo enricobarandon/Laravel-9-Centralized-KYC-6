@@ -147,6 +147,16 @@
                                             </div>
                                         </div>
                                     </form>
+
+
+                                    <div class="form-group form-group--sm">
+                                        <div class="text-center">
+                                            <a href="/forgot-password" class="t-white ">
+                                                Forgot password?
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <hr>
                                     <div class="form-group form-group--sm">
                                         <div>
                                             <a href="/register" class="btn btn-secondary btn-lg btn-block btn-class">
