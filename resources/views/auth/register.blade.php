@@ -141,7 +141,17 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-6 mb-16">
+                                        <div class="col-md-4 mb-16">
+                                            <label for="email" >Email Address</label>
+                                            <input id="email" oninput="this.value = this.value.toUpperCase()" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-16">
                                             <label for="nationality" >Nationality</label>
                                             <input id="nationality" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('nationality') is-invalid @enderror" name="nationality" value="{{ old('nationality') }}" required autocomplete="nationality">
 
@@ -151,7 +161,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-6 mb-16">
+                                        <div class="col-md-4 mb-16">
                                             <label for="country" >Country</label>
                                             <!-- <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required autocomplete="country"> -->
                                             <select id="country" name="country" class="form-control selectCSS @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required>
@@ -564,7 +574,11 @@ $("document").ready(function(){
         selfie_with_id : {
             extension: "jpg|jpeg|png|svg|gif",
             imageSize: true
-        }
+        },
+        email: {
+            email: true,
+            required: true,
+        },
     },
     messages: {
         password_confirmation : {

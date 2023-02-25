@@ -332,4 +332,24 @@ class UserController extends Controller
             return back()->with('error','Something went wrong');
         }
     }
+
+    public function logout(Request $request)
+    {
+        $auth = auth()->user();
+        ActivityLog::create([
+            'type' => 'logout-user',
+            'user_id' => $auth->id,
+            'assets' => json_encode([
+                'action' => 'Logout User',
+                'username' => $auth->username,
+                'user_role' => UserType::getUserRole($auth->user_type_id)->role
+            ])
+        ]);
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
 }

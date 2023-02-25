@@ -34,11 +34,11 @@ Auth::routes();
 Route::middleware(['auth'])->group(function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    
+
     Route::middleware('role:Administrator')->group(function(){
         Route::get('/api-data', [App\Http\Controllers\ApiDataController::class, 'index'])->name('api-data.index');
         Route::post('/api-data/groups', [App\Http\Controllers\ApiDataController::class, 'getGroups'])->name('api.getGroups');
-        
+
         Route::get('/activity-logs', [App\Http\Controllers\ActivityLogsController::class, 'index'])->name('activitylogs.index');
     });
 
@@ -88,7 +88,9 @@ Route::middleware(['auth'])->group(function(){
     //     echo 'sucess';
     //     // echo $response;
     });
-    
+
+    Route::post('logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
+
 });
 
 Route::get('forgot-password', function () {

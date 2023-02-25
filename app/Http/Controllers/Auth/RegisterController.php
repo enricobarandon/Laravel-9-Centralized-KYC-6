@@ -70,6 +70,7 @@ class RegisterController extends Controller
             'username' =>                   ['required', 'string', 'min:6', 'max:50', 'regex:/^[A-Za-z0-9_]+$/', 'unique:users'],
             'password' =>                   ['required', 'string', 'min:8', 'confirmed'],
             'contact' =>                    ['required', 'digits:11', 'unique:users'],
+            'email' =>                      ['required', 'string', 'unique:users'],
             'group_code' =>                 ['nullable', 'max:10'],
 
             'date_of_birth' =>              ['required','date','before:21 years ago'],
@@ -118,6 +119,7 @@ class RegisterController extends Controller
             'status' =>         'pending',
             // 'site_status' =>    $site_status,
             'contact' =>        $data['contact'],
+            'email' =>          $data['email'],
             'group_code' =>     $data['group_code'],
             'created_at' =>     Carbon::now(),
             'updated_at' =>     Carbon::now()

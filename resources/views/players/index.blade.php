@@ -27,7 +27,7 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label for="first_name" >First Name</label>
-                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ isset($playerInfo->first_name) ? $playerInfo->first_name : '' }}" required autocomplete="first_name" >
+                            <input id="first_name" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ isset($playerInfo->first_name) ? $playerInfo->first_name : '' }}" required autocomplete="first_name" >
 
                             @error('first_name')
                                 <span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="middle_name" >Middle Name</label>
-                            <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ isset($playerInfo->middle_name) ? $playerInfo->middle_name : '' }}" required autocomplete="middle_name" >
+                            <input id="middle_name" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ isset($playerInfo->middle_name) ? $playerInfo->middle_name : '' }}" required autocomplete="middle_name" >
 
                             @error('middle_name')
                                 <span class="invalid-feedback" role="alert">
@@ -48,7 +48,7 @@
 
                         <div class="col-md-4">
                             <label for="last_name" >Last Name</label>
-                            <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ isset($playerInfo->middle_name) ? $playerInfo->last_name : '' }}" required autocomplete="last_name" >
+                            <input id="last_name" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ isset($playerInfo->middle_name) ? $playerInfo->last_name : '' }}" required autocomplete="last_name" >
 
                             @error('last_name')
                                 <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
 
                         <div class="col-md-4">
                             <label for="place_of_birth" >Place of Birth</label>
-                            <input id="place_of_birth" type="text" class="form-control @error('place_of_birth') is-invalid @enderror" name="place_of_birth" value="{{ isset($playerDetails->place_of_birth) ? $playerDetails->place_of_birth : '' }}" required autocomplete="place_of_birth" >
+                            <input id="place_of_birth" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('place_of_birth') is-invalid @enderror" name="place_of_birth" value="{{ isset($playerDetails->place_of_birth) ? $playerDetails->place_of_birth : '' }}" required autocomplete="place_of_birth" >
 
                             @error('place_of_birth')
                                 <span class="invalid-feedback" role="alert">
@@ -93,9 +93,19 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-6">
+                        <div class="col-md-4 mb-16">
+                            <label for="email" >Email Address</label>
+                            <input id="email" oninput="this.value = this.value.toUpperCase()" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ isset($playerInfo->email) ? $playerInfo->email : '' }}" required autocomplete="email">
+
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
                             <label for="nationality" >Nationality</label>
-                            <input id="nationality" type="text" class="form-control @error('nationality') is-invalid @enderror" name="nationality" value="{{ isset($playerDetails->nationality) ? $playerDetails->nationality : '' }}" required autocomplete="nationality">
+                            <input id="nationality" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('nationality') is-invalid @enderror" name="nationality" value="{{ isset($playerDetails->nationality) ? $playerDetails->nationality : '' }}" required autocomplete="nationality">
 
                             @error('nationality')
                                 <span class="invalid-feedback" role="alert">
@@ -103,7 +113,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="country" >Country</label>
                             <!-- <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required autocomplete="country"> -->
                             <select id="country" name="country" class="form-control selectCSS @error('country') is-invalid @enderror" name="country" required>
@@ -157,7 +167,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="street" >Street</label>
-                            <input id="street" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ $street }}" required autocomplete="street">
+                            <input id="street" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ $street }}" required autocomplete="street">
 
                             @error('street')
                                 <span class="invalid-feedback" role="alert">
@@ -168,7 +178,7 @@
 
                         <div class="col-md-4">
                             <label for="barangay" >Barangay</label>
-                            <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ $barangay }}" required autocomplete="barangay">
+                            <input id="barangay" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ $barangay }}" required autocomplete="barangay">
 
                             @error('barangay')
                                 <span class="invalid-feedback" role="alert">
@@ -181,7 +191,7 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label for="city" >City</label>
-                            <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ $city }}" required autocomplete="city">
+                            <input id="city" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ $city }}" required autocomplete="city">
 
                             @error('city')
                                 <span class="invalid-feedback" role="alert">
@@ -202,7 +212,7 @@
 
                         <div class="col-md-4">
                             <label for="province" >Province</label>
-                            <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ $province }}" required autocomplete="province">
+                            <input id="province" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ $province }}" required autocomplete="province">
                             <!-- <select id="province" name="province" class="form-control selectCSS @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" required>
                                 <option disabled selected value="">-- Select Province --</option>
                                 @foreach ($provinces as $value)
@@ -221,7 +231,7 @@
                     <div class="form-group row">
                         <div class="col-md-12">
                             <label for="zipcode" >Region</label>
-                            <input id="region" type="text" class="form-control @error('region') is-invalid @enderror" name="region" value="{{ $region }}" required autocomplete="region">
+                            <input id="region" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('region') is-invalid @enderror" name="region" value="{{ $region }}" required autocomplete="region">
 
                             @error('region')
                                 <span class="invalid-feedback" role="alert">
@@ -276,7 +286,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="p_street" >Street</label>
-                            <input id="p_street" type="text" class="form-control @error('p_street') is-invalid @enderror" name="p_street" value="{{ $p_street }}" required autocomplete="p_street">
+                            <input id="p_street" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('p_street') is-invalid @enderror" name="p_street" value="{{ $p_street }}" required autocomplete="p_street">
 
                             @error('p_street')
                                 <span class="invalid-feedback" role="alert">
@@ -287,7 +297,7 @@
 
                         <div class="col-md-4">
                             <label for="p_barangay" >Barangay</label>
-                            <input id="p_barangay" type="text" class="form-control @error('p_barangay') is-invalid @enderror" name="p_barangay" value="{{ $p_barangay }}" required autocomplete="p_barangay">
+                            <input id="p_barangay" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('p_barangay') is-invalid @enderror" name="p_barangay" value="{{ $p_barangay }}" required autocomplete="p_barangay">
 
                             @error('p_barangay')
                                 <span class="invalid-feedback" role="alert">
@@ -300,7 +310,7 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label for="p_city" >City</label>
-                            <input id="p_city" type="text" class="form-control @error('p_city') is-invalid @enderror" name="p_city" value="{{ $p_city }}" required autocomplete="p_city">
+                            <input id="p_city" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('p_city') is-invalid @enderror" name="p_city" value="{{ $p_city }}" required autocomplete="p_city">
 
                             @error('p_city')
                                 <span class="invalid-feedback" role="alert">
@@ -321,7 +331,7 @@
 
                         <div class="col-md-4">
                             <label for="p_province" >Province</label>
-                            <input id="p_province" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ $p_province }}" required autocomplete="p_province">
+                            <input id="p_province" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('p_province') is-invalid @enderror" name="p_province" value="{{ $p_province }}" required autocomplete="p_province">
                             <!-- <select id="p_province" name="p_province" class="form-control selectCSS @error('p_province') is-invalid @enderror" name="p_province" value="{{ old('p_province') }}" required>
                                 <option disabled selected value="">-- Select Province --</option>
                                 @foreach ($provinces as $value)
@@ -340,7 +350,7 @@
                     <div class="form-group row">
                         <div class="col-md-12">
                             <label for="zipcode" >Region</label>
-                            <input id="p_region" type="text" class="form-control @error('p_region') is-invalid @enderror" name="p_region" value="{{ $p_region }}" required autocomplete="region">
+                            <input id="p_region" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('p_region') is-invalid @enderror" name="p_region" value="{{ $p_region }}" required autocomplete="region">
 
                             @error('p_region')
                                 <span class="invalid-feedback" role="alert">
@@ -353,7 +363,7 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label for="occupation" >Occupation</label>
-                            <input id="occupation" type="text" class="form-control @error('occupation') is-invalid @enderror" name="occupation" value="{{ isset($playerDetails->occupation) ? $playerDetails->occupation : '' }}" required autocomplete="occupation">
+                            <input id="occupation" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control @error('occupation') is-invalid @enderror" name="occupation" value="{{ isset($playerDetails->occupation) ? $playerDetails->occupation : '' }}" required autocomplete="occupation">
 
                             @error('occupation')
                                 <span class="invalid-feedback" role="alert">
@@ -390,7 +400,7 @@
                         </div>
                         <div class="col-md-4 div-others-income">
                             <label for="source_of_income" class="income-label">Specify Source of Income</label>
-                            <input id="source_of_income" type="text" class="form-control" name="source_of_income" value="{{ isset($source_of_income) ? $source_of_income : '' }}" required autocomplete="source_of_income">
+                            <input id="source_of_income" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control" name="source_of_income" value="{{ isset($source_of_income) ? $source_of_income : '' }}" required autocomplete="source_of_income">
                         </div>
                             @error('source_of_income')
                                 <span class="invalid-feedback" role="alert">

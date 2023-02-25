@@ -67,6 +67,7 @@ class PlayerController extends Controller
             'first_name' =>     ['required', 'string', 'max:255'],
             'middle_name' =>    ['required','string', 'max:255'],
             'last_name' =>      ['required', 'string', 'max:255'],
+            'email' =>          ['required', 'string', 'unique:users'],
 
             'date_of_birth' =>  ['required','date','before:21 years ago'],
             'place_of_birth' => ['required', 'max:255'],
@@ -115,6 +116,7 @@ class PlayerController extends Controller
             'first_name' =>     $data['first_name'],
             'middle_name' =>    $data['middle_name'],
             'last_name' =>      $data['last_name'],
+            'email' =>          $data['email'],
             'status' =>         $status,
             'site_status' =>    $siteStatus
         ]);
